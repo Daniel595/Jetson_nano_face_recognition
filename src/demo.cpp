@@ -8,9 +8,6 @@
 #include "includes/loadImage.h"
 #include "includes/cudaRGB.h"
 
-#define LOG
-//#define SHOW
-
 gstCamera* getCamera(){
     gstCamera* camera = gstCamera::Create(gstCamera::DefaultWidth, gstCamera::DefaultHeight, NULL);
 	if( !camera ){
