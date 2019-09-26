@@ -4,14 +4,14 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/nvidia/Workspace/gpu_mtcnn/MTCNN_FaceDetection_TensorRT/src/baseEngine.cpp" "/home/nvidia/Workspace/gpu_mtcnn/MTCNN_FaceDetection_TensorRT/CMakeFiles/main.dir/src/baseEngine.cpp.o"
-  "/home/nvidia/Workspace/gpu_mtcnn/MTCNN_FaceDetection_TensorRT/src/common.cpp" "/home/nvidia/Workspace/gpu_mtcnn/MTCNN_FaceDetection_TensorRT/CMakeFiles/main.dir/src/common.cpp.o"
-  "/home/nvidia/Workspace/gpu_mtcnn/MTCNN_FaceDetection_TensorRT/src/demo.cpp" "/home/nvidia/Workspace/gpu_mtcnn/MTCNN_FaceDetection_TensorRT/CMakeFiles/main.dir/src/demo.cpp.o"
-  "/home/nvidia/Workspace/gpu_mtcnn/MTCNN_FaceDetection_TensorRT/src/mtcnn.cpp" "/home/nvidia/Workspace/gpu_mtcnn/MTCNN_FaceDetection_TensorRT/CMakeFiles/main.dir/src/mtcnn.cpp.o"
-  "/home/nvidia/Workspace/gpu_mtcnn/MTCNN_FaceDetection_TensorRT/src/network.cpp" "/home/nvidia/Workspace/gpu_mtcnn/MTCNN_FaceDetection_TensorRT/CMakeFiles/main.dir/src/network.cpp.o"
-  "/home/nvidia/Workspace/gpu_mtcnn/MTCNN_FaceDetection_TensorRT/src/onet_rt.cpp" "/home/nvidia/Workspace/gpu_mtcnn/MTCNN_FaceDetection_TensorRT/CMakeFiles/main.dir/src/onet_rt.cpp.o"
-  "/home/nvidia/Workspace/gpu_mtcnn/MTCNN_FaceDetection_TensorRT/src/pnet_rt.cpp" "/home/nvidia/Workspace/gpu_mtcnn/MTCNN_FaceDetection_TensorRT/CMakeFiles/main.dir/src/pnet_rt.cpp.o"
-  "/home/nvidia/Workspace/gpu_mtcnn/MTCNN_FaceDetection_TensorRT/src/rnet_rt.cpp" "/home/nvidia/Workspace/gpu_mtcnn/MTCNN_FaceDetection_TensorRT/CMakeFiles/main.dir/src/rnet_rt.cpp.o"
+  "/home/nvidia/Workspace/gpu_mtcnn/src/baseEngine.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/baseEngine.cpp.o"
+  "/home/nvidia/Workspace/gpu_mtcnn/src/common.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/common.cpp.o"
+  "/home/nvidia/Workspace/gpu_mtcnn/src/demo.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/demo.cpp.o"
+  "/home/nvidia/Workspace/gpu_mtcnn/src/mtcnn.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/mtcnn.cpp.o"
+  "/home/nvidia/Workspace/gpu_mtcnn/src/network.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/network.cpp.o"
+  "/home/nvidia/Workspace/gpu_mtcnn/src/onet_rt.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/onet_rt.cpp.o"
+  "/home/nvidia/Workspace/gpu_mtcnn/src/pnet_rt.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/pnet_rt.cpp.o"
+  "/home/nvidia/Workspace/gpu_mtcnn/src/rnet_rt.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/rnet_rt.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -24,8 +24,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/include/glib-2.0"
   "/usr/include/libxml2"
   "/usr/lib/aarch64-linux-gnu/glib-2.0/include"
-  "/usr/local/include"
-  "/usr/local/include/opencv"
+  "/usr/local/include/opencv4"
   )
 
 # Targets to which this target links.

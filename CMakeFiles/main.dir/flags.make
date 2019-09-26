@@ -6,5 +6,5 @@ CXX_FLAGS = -O3   -std=c++11
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/usr/local/cuda/include -I/home/zhou/tensorrt/include -I/usr/include/gstreamer-1.0 -I/usr/lib/aarch64-linux-gnu/gstreamer-1.0/include -I/usr/include/glib-2.0 -I/usr/include/libxml2 -I/usr/lib/aarch64-linux-gnu/glib-2.0/include -isystem /usr/local/include -isystem /usr/local/include/opencv 
+CXX_INCLUDES = -I/usr/local/cuda/include -I/home/zhou/tensorrt/include -I/usr/include/gstreamer-1.0 -I/usr/lib/aarch64-linux-gnu/gstreamer-1.0/include -I/usr/include/glib-2.0 -I/usr/include/libxml2 -I/usr/lib/aarch64-linux-gnu/glib-2.0/include -isystem /usr/local/include/opencv4 
 

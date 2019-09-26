@@ -58,18 +58,18 @@ endif()
 
 # Set these up as variables to make reading the generated file easier
 set(CMAKE_COMMAND "/usr/bin/cmake") # path
-set(source_file "/home/nvidia/Workspace/gpu_mtcnn/MTCNN_FaceDetection_TensorRT/src/kernels.cu") # path
-set(NVCC_generated_dependency_file "/home/nvidia/Workspace/gpu_mtcnn/MTCNN_FaceDetection_TensorRT/CMakeFiles/main.dir/src/main_generated_kernels.cu.o.NVCC-depend") # path
-set(cmake_dependency_file "/home/nvidia/Workspace/gpu_mtcnn/MTCNN_FaceDetection_TensorRT/CMakeFiles/main.dir/src/main_generated_kernels.cu.o.depend") # path
+set(source_file "/home/nvidia/Workspace/gpu_mtcnn/src/kernels.cu") # path
+set(NVCC_generated_dependency_file "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/main_generated_kernels.cu.o.NVCC-depend") # path
+set(cmake_dependency_file "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/main_generated_kernels.cu.o.depend") # path
 set(CUDA_make2cmake "/usr/share/cmake-3.10/Modules/FindCUDA/make2cmake.cmake") # path
 set(CUDA_parse_cubin "/usr/share/cmake-3.10/Modules/FindCUDA/parse_cubin.cmake") # path
 set(build_cubin OFF) # bool
 set(CUDA_HOST_COMPILER "/usr/bin/cc") # path
 # We won't actually use these variables for now, but we need to set this, in
 # order to force this file to be run again if it changes.
-set(generated_file_path "/home/nvidia/Workspace/gpu_mtcnn/MTCNN_FaceDetection_TensorRT/CMakeFiles/main.dir/src/.") # path
-set(generated_file_internal "/home/nvidia/Workspace/gpu_mtcnn/MTCNN_FaceDetection_TensorRT/CMakeFiles/main.dir/src/./main_generated_kernels.cu.o") # path
-set(generated_cubin_file_internal "/home/nvidia/Workspace/gpu_mtcnn/MTCNN_FaceDetection_TensorRT/CMakeFiles/main.dir/src/./main_generated_kernels.cu.o.cubin.txt") # path
+set(generated_file_path "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/.") # path
+set(generated_file_internal "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/./main_generated_kernels.cu.o") # path
+set(generated_cubin_file_internal "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/./main_generated_kernels.cu.o.cubin.txt") # path
 
 set(CUDA_NVCC_EXECUTABLE "/usr/local/cuda/bin/nvcc") # path
 set(CUDA_NVCC_FLAGS  ;; ) # list
@@ -79,7 +79,7 @@ set(CUDA_NVCC_FLAGS_MINSIZEREL  ; )
 set(CUDA_NVCC_FLAGS_RELEASE  ; )
 set(CUDA_NVCC_FLAGS_RELWITHDEBINFO  ; )
 set(nvcc_flags -m64) # list
-set(CUDA_NVCC_INCLUDE_DIRS "/usr/local/cuda/include;/usr/local/cuda/include;/home/zhou/tensorrt/include;/usr/include/gstreamer-1.0;/usr/lib/aarch64-linux-gnu/gstreamer-1.0/include;/usr/include/glib-2.0;/usr/include/libxml2;/usr/lib/aarch64-linux-gnu/glib-2.0/include;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv;/usr/local/include;/usr/local/include/opencv") # list (needs to be in quotes to handle spaces properly).
+set(CUDA_NVCC_INCLUDE_DIRS "/usr/local/cuda/include;/usr/local/cuda/include;/home/zhou/tensorrt/include;/usr/include/gstreamer-1.0;/usr/lib/aarch64-linux-gnu/gstreamer-1.0/include;/usr/include/glib-2.0;/usr/include/libxml2;/usr/lib/aarch64-linux-gnu/glib-2.0/include;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4;/usr/local/include/opencv4") # list (needs to be in quotes to handle spaces properly).
 set(CUDA_NVCC_COMPILE_DEFINITIONS [==[]==]) # list (needs to be in lua quotes see #16510 ).
 set(format_flag "-c") # string
 set(cuda_language_flag ) # list

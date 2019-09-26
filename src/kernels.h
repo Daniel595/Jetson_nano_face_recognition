@@ -3,16 +3,16 @@
 
 #include<cuda.h>
 #include<cuda_runtime.h>
-#include<opencv2/opencv.hpp>
+#include<opencv4/opencv2/opencv.hpp>
 // #include<opencv2/gpu/gpu.hpp> 
 //#include<opencv2/core/cuda_devptrs.hpp> 
-#include<opencv2/core/cuda_types.hpp> 
+#include<opencv4/opencv2/core/cuda_types.hpp> 
 // #include<opencv2/gpu/stream_accessor.hpp> 
-#include <opencv2/core/cuda_stream_accessor.hpp>
+#include <opencv4/opencv2/core/cuda_stream_accessor.hpp>
 #include "device_launch_parameters.h"
-#include <opencv2/cudaimgproc.hpp>
-#include <opencv2/cudafeatures2d.hpp>
-#include <opencv2/cudawarping.hpp>
+#include <opencv4/opencv2/cudaimgproc.hpp>
+#include <opencv4/opencv2/cudafeatures2d.hpp>
+#include <opencv4/opencv2/cudawarping.hpp>
 //using namespace cv;
 
 void gpu_image2Matrix(int width, int height , cv::cuda::GpuMat & image, float* matrix, cudaStream_t& stream);
