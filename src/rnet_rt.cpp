@@ -24,7 +24,7 @@ void Rnet_engine::init(int row, int col) {
     //generate Tensorrt model
     caffeToGIEModel(prototxt, model, std::vector<std::string>{OUTPUT_PROB_NAME, OUTPUT_LOCATION_NAME}, max_batch_size,
                     gieModelStream);
-
+    
 }
 
 

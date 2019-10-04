@@ -322,8 +322,14 @@ CUDA_npps_LIBRARY:FILEPATH=/usr/local/cuda/lib64/libnpps.so
 //Path to a library.
 CUDA_rt_LIBRARY:FILEPATH=/usr/lib/aarch64-linux-gnu/librt.so
 
+//The directory containing a CMake configuration file for DLIB.
+DLIB_DIR:PATH=DLIB_DIR-NOTFOUND
+
 //The directory containing a CMake configuration file for OpenCV.
 OpenCV_DIR:PATH=/usr/local/lib/cmake/opencv4
+
+//The directory containing a CMake configuration file for dlib.
+dlib_DIR:PATH=/usr/local/lib/cmake/dlib
 
 //Value Computed by CMake
 main_BINARY_DIR:STATIC=/home/nvidia/Workspace/gpu_mtcnn

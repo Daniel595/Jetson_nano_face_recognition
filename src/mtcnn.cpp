@@ -1,6 +1,8 @@
 #include "mtcnn.h"
 #include "kernels.h"
-//#define LOG
+#include "includes/cudaOverlay.h"
+
+
 mtcnn::mtcnn(int row, int col){
 
     //set NMS thresholds
@@ -94,7 +96,7 @@ mtcnn::~mtcnn(){
 
 }
 
-void mtcnn::findFace(cv::cuda::GpuMat &image){
+void mtcnn::findFace(cv::cuda::GpuMat &image, vector<struct Bbox> * detections){
     struct orderScore order;
     int count = 0;
 
@@ -245,26 +247,15 @@ void mtcnn::findFace(cv::cuda::GpuMat &image){
     if(count<1)return;
     refineAndSquareBbox(thirdBbox_, image.rows, image.cols, true);
     nms(thirdBbox_, thirdBboxScore_, nms_threshold[2], "Min");
+    *detections = thirdBbox_;
+
 
 #ifdef LOG
     cout<<"Onet time is  "<<1000*(double)(clock()-third_time)/CLOCKS_PER_SEC<<endl;
     cout<<"total run time "<<1000*(double)(clock()-first_time)/CLOCKS_PER_SEC<<endl;
 #endif
 
-    //TODO: CUDA-implementation
-    //draw points and show images
-#ifdef SHOW    
-    cv::Mat cpuImage;
-    image.download(cpuImage); // download to cpu
-    for(vector<struct Bbox>::iterator it=thirdBbox_.begin(); it!=thirdBbox_.end();it++){
-        if((*it).exist){
-            cv::rectangle(cpuImage, cv::Point((*it).y1, (*it).x1), cv::Point((*it).y2, (*it).x2), cv::Scalar(0,0,255), 2,8,0);
-            for(int num=0;num<5;num++)cv::circle(cpuImage,cv::Point((int)*(it->ppoint+num), (int)*(it->ppoint+num+5)),3,cv::Scalar(0,255,255), -1);
-        }
-    }
-    cv::imshow("result", cpuImage);
-    cv::waitKey(0);
-#endif
+
 
     firstBbox_.clear();
     firstOrderScore_.clear();

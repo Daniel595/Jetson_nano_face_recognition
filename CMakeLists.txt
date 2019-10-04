@@ -11,13 +11,15 @@ link_directories(/opt/cuda/lib64)
 include_directories(/usr/include/gstreamer-1.0 /usr/lib/aarch64-linux-gnu/gstreamer-1.0/include /usr/include/glib-2.0 /usr/include/libxml2 /usr/lib/aarch64-linux-gnu/glib-2.0/include/)
 
 find_package( OpenCV REQUIRED)
+find_package( dlib REQUIRED)
 
 AUX_SOURCE_DIRECTORY(./src DIR_SRCS)
-cuda_add_executable( main ${DIR_SRCS} src/pnet_rt.cpp src/common.h src/common.cpp src/pnet_rt.h src/rnet_rt.cpp src/rnet_rt.h src/baseEngine.cpp src/baseEngine.h src/onet_rt.h src/onet_rt.cpp src/kernels.h src/kernels.cu)
+cuda_add_executable( main ${DIR_SRCS} src/pnet_rt.cpp src/common.h src/common.cpp src/pnet_rt.h src/rnet_rt.cpp src/rnet_rt.h src/baseEngine.cpp src/baseEngine.h src/onet_rt.h src/onet_rt.cpp src/kernels.h src/kernels.cu src/recognize.h src/recognize.cpp)
 
 set(CMAKE_CXX_FLAGS  "-lpthread")
 set(CMAKE_CXX_FLAGS  "-O3")
 target_link_libraries( main ${OpenCV_LIBS} )
+target_link_libraries( main dlib::dlib )
 target_link_libraries( main cudart)
 target_link_libraries( main nvinfer)
 target_link_libraries( main nvparsers)

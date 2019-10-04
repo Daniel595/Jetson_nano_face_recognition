@@ -1210,9 +1210,33 @@ CMakeFiles/main.dir/src/pnet_rt.cpp.o.provides: CMakeFiles/main.dir/src/pnet_rt.
 CMakeFiles/main.dir/src/pnet_rt.cpp.o.provides.build: CMakeFiles/main.dir/src/pnet_rt.cpp.o
 
 
+CMakeFiles/main.dir/src/recognize.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/src/recognize.cpp.o: src/recognize.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/main.dir/src/recognize.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/recognize.cpp.o -c /home/nvidia/Workspace/gpu_mtcnn/src/recognize.cpp
+
+CMakeFiles/main.dir/src/recognize.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/src/recognize.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/nvidia/Workspace/gpu_mtcnn/src/recognize.cpp > CMakeFiles/main.dir/src/recognize.cpp.i
+
+CMakeFiles/main.dir/src/recognize.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/src/recognize.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nvidia/Workspace/gpu_mtcnn/src/recognize.cpp -o CMakeFiles/main.dir/src/recognize.cpp.s
+
+CMakeFiles/main.dir/src/recognize.cpp.o.requires:
+
+.PHONY : CMakeFiles/main.dir/src/recognize.cpp.o.requires
+
+CMakeFiles/main.dir/src/recognize.cpp.o.provides: CMakeFiles/main.dir/src/recognize.cpp.o.requires
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/recognize.cpp.o.provides.build
+.PHONY : CMakeFiles/main.dir/src/recognize.cpp.o.provides
+
+CMakeFiles/main.dir/src/recognize.cpp.o.provides.build: CMakeFiles/main.dir/src/recognize.cpp.o
+
+
 CMakeFiles/main.dir/src/rnet_rt.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/rnet_rt.cpp.o: src/rnet_rt.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/main.dir/src/rnet_rt.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/main.dir/src/rnet_rt.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/rnet_rt.cpp.o -c /home/nvidia/Workspace/gpu_mtcnn/src/rnet_rt.cpp
 
 CMakeFiles/main.dir/src/rnet_rt.cpp.i: cmake_force
@@ -1243,6 +1267,7 @@ main_OBJECTS = \
 "CMakeFiles/main.dir/src/network.cpp.o" \
 "CMakeFiles/main.dir/src/onet_rt.cpp.o" \
 "CMakeFiles/main.dir/src/pnet_rt.cpp.o" \
+"CMakeFiles/main.dir/src/recognize.cpp.o" \
 "CMakeFiles/main.dir/src/rnet_rt.cpp.o"
 
 # External object files for target main
@@ -1256,6 +1281,7 @@ main: CMakeFiles/main.dir/src/mtcnn.cpp.o
 main: CMakeFiles/main.dir/src/network.cpp.o
 main: CMakeFiles/main.dir/src/onet_rt.cpp.o
 main: CMakeFiles/main.dir/src/pnet_rt.cpp.o
+main: CMakeFiles/main.dir/src/recognize.cpp.o
 main: CMakeFiles/main.dir/src/rnet_rt.cpp.o
 main: CMakeFiles/main.dir/src/main_generated_kernels.cu.o
 main: CMakeFiles/main.dir/build.make
@@ -1293,6 +1319,7 @@ main: /usr/local/lib/libopencv_videostab.so.4.1.0
 main: /usr/local/lib/libopencv_xfeatures2d.so.4.1.0
 main: /usr/local/lib/libopencv_xobjdetect.so.4.1.0
 main: /usr/local/lib/libopencv_xphoto.so.4.1.0
+main: /usr/local/lib/libdlib.so.19.17.0
 main: /home/nvidia/jetson-inference/build/aarch64/lib/libjetson-utils.so
 main: /usr/local/lib/libopencv_shape.so.4.1.0
 main: /usr/local/lib/libopencv_datasets.so.4.1.0
@@ -1322,8 +1349,23 @@ main: /usr/local/lib/libopencv_imgproc.so.4.1.0
 main: /usr/local/lib/libopencv_cudaarithm.so.4.1.0
 main: /usr/local/lib/libopencv_core.so.4.1.0
 main: /usr/local/lib/libopencv_cudev.so.4.1.0
+main: /usr/local/cuda/lib64/libcudart_static.a
+main: /usr/lib/aarch64-linux-gnu/librt.so
+main: /usr/lib/aarch64-linux-gnu/libnsl.so
+main: /usr/lib/aarch64-linux-gnu/libSM.so
+main: /usr/lib/aarch64-linux-gnu/libICE.so
+main: /usr/lib/aarch64-linux-gnu/libX11.so
+main: /usr/lib/aarch64-linux-gnu/libXext.so
+main: /usr/lib/aarch64-linux-gnu/libpng.so
+main: /usr/lib/aarch64-linux-gnu/libz.so
+main: /usr/lib/aarch64-linux-gnu/libjpeg.so
+main: /usr/lib/aarch64-linux-gnu/libopenblas.so
+main: /usr/local/cuda/lib64/libcublas.so
+main: /usr/lib/aarch64-linux-gnu/libcudnn.so
+main: /usr/local/cuda/lib64/libcurand.so
+main: /usr/local/cuda/lib64/libcusolver.so
 main: CMakeFiles/main.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable main"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/main.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -1338,6 +1380,7 @@ CMakeFiles/main.dir/requires: CMakeFiles/main.dir/src/mtcnn.cpp.o.requires
 CMakeFiles/main.dir/requires: CMakeFiles/main.dir/src/network.cpp.o.requires
 CMakeFiles/main.dir/requires: CMakeFiles/main.dir/src/onet_rt.cpp.o.requires
 CMakeFiles/main.dir/requires: CMakeFiles/main.dir/src/pnet_rt.cpp.o.requires
+CMakeFiles/main.dir/requires: CMakeFiles/main.dir/src/recognize.cpp.o.requires
 CMakeFiles/main.dir/requires: CMakeFiles/main.dir/src/rnet_rt.cpp.o.requires
 
 .PHONY : CMakeFiles/main.dir/requires

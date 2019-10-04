@@ -7,6 +7,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/main.dir/src/network.cpp.o"
   "CMakeFiles/main.dir/src/onet_rt.cpp.o"
   "CMakeFiles/main.dir/src/pnet_rt.cpp.o"
+  "CMakeFiles/main.dir/src/recognize.cpp.o"
   "CMakeFiles/main.dir/src/rnet_rt.cpp.o"
   "main.pdb"
   "main"

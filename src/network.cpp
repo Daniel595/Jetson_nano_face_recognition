@@ -67,6 +67,8 @@ void nms(vector<struct Bbox> &boundingBox_, vector<struct orderScore> &bboxScore
     for(int i=0;i<heros.size();i++)
         boundingBox_.at(heros.at(i)).exist = true;
 }
+
+
 void refineAndSquareBbox(vector<struct Bbox> &vecBbox, const int &height, const int &width, bool square = true){
     if(vecBbox.empty()){
         cout<<"Bbox is empty!!"<<endl;

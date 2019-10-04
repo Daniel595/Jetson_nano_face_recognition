@@ -5,15 +5,14 @@
 #include "rnet_rt.h"
 #include "onet_rt.h"
 
-#define LOG
-//#define SHOW
+//#define LOG   //show the time consumption of the stages
 
 class mtcnn
 {
 public:
     mtcnn(int row, int col);
     ~mtcnn();
-    void findFace(cv::cuda::GpuMat &image);
+    void findFace(cv::cuda::GpuMat &image, vector<struct Bbox> * detections);
 
     //for second stage
     const static int pnet_max_pymid_depth = 256;

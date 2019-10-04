@@ -312,6 +312,33 @@ src/pnet_rt.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/pnet_rt.cpp.s
 .PHONY : src/pnet_rt.cpp.s
 
+src/recognize.o: src/recognize.cpp.o
+
+.PHONY : src/recognize.o
+
+# target to build an object file
+src/recognize.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/recognize.cpp.o
+.PHONY : src/recognize.cpp.o
+
+src/recognize.i: src/recognize.cpp.i
+
+.PHONY : src/recognize.i
+
+# target to preprocess a source file
+src/recognize.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/recognize.cpp.i
+.PHONY : src/recognize.cpp.i
+
+src/recognize.s: src/recognize.cpp.s
+
+.PHONY : src/recognize.s
+
+# target to generate assembly for a file
+src/recognize.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/recognize.cpp.s
+.PHONY : src/recognize.cpp.s
+
 src/rnet_rt.o: src/rnet_rt.cpp.o
 
 .PHONY : src/rnet_rt.o
@@ -369,6 +396,9 @@ help:
 	@echo "... src/pnet_rt.o"
 	@echo "... src/pnet_rt.i"
 	@echo "... src/pnet_rt.s"
+	@echo "... src/recognize.o"
+	@echo "... src/recognize.i"
+	@echo "... src/recognize.s"
 	@echo "... src/rnet_rt.o"
 	@echo "... src/rnet_rt.i"
 	@echo "... src/rnet_rt.s"

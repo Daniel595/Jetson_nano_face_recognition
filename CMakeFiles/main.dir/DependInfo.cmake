@@ -11,6 +11,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/nvidia/Workspace/gpu_mtcnn/src/network.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/network.cpp.o"
   "/home/nvidia/Workspace/gpu_mtcnn/src/onet_rt.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/onet_rt.cpp.o"
   "/home/nvidia/Workspace/gpu_mtcnn/src/pnet_rt.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/pnet_rt.cpp.o"
+  "/home/nvidia/Workspace/gpu_mtcnn/src/recognize.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/recognize.cpp.o"
   "/home/nvidia/Workspace/gpu_mtcnn/src/rnet_rt.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/rnet_rt.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
@@ -25,6 +26,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/include/libxml2"
   "/usr/lib/aarch64-linux-gnu/glib-2.0/include"
   "/usr/local/include/opencv4"
+  "/usr/local/include"
   )
 
 # Targets to which this target links.
