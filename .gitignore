@@ -1,5 +1,5 @@
 CMakeCache.txt
 cmake_install.cmake
 CMakeFiles/*
-src/models/*
+src/models/dlib*
 
