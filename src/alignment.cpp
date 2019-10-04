@@ -1,5 +1,17 @@
 #include "alignment.h"
 
+//local prototypes
+
+
+double get_face_rotation(float left_x, float left_y, float right_x, float right_y);
+void get_new_keypoints(double rotation, cv::Rect *face, float* keypoints);
+void get_face_shift(float* keypoints, double *x_shift, double *y_shift);
+
+
+//----------------------------------------------------------------------------------------------------
+
+//defines
+
 
 double get_face_rotation(float left_x, float left_y, float right_x, float right_y){
     float dy = left_y - right_y; 
@@ -109,9 +121,9 @@ void crop_and_align_faces(cv::cuda::GpuMat &gpuImage,                     //raw 
 
 
 //transform MTCNN detection to cv rectangles and keypoints
-//draw the detections to the original image
+//draw the detections to the original image (if draw == true)
 int get_detections( cv::Mat &origin_cpu, std::vector<struct Bbox> *detections, 
-                    std::vector<cv::Rect> *rects, std::vector<float*> *keypoints, bool draw = false){
+                    std::vector<cv::Rect> *rects, std::vector<float*> *keypoints, bool draw){
     int cnt = 0;
 
     for(std::vector<struct Bbox>::iterator it=(*detections).begin(); it!=(*detections).end();it++){

@@ -6,6 +6,22 @@
 
 #IncludeRegexTransform: 
 
+/home/nvidia/Workspace/gpu_mtcnn/src/alignment.cpp
+alignment.h
+/home/nvidia/Workspace/gpu_mtcnn/src/alignment.h
+
+/home/nvidia/Workspace/gpu_mtcnn/src/alignment.h
+math.h
+-
+opencv2/cudawarping.hpp
+-
+network.h
+/home/nvidia/Workspace/gpu_mtcnn/src/network.h
+mtcnn.h
+/home/nvidia/Workspace/gpu_mtcnn/src/mtcnn.h
+recognize.h
+/home/nvidia/Workspace/gpu_mtcnn/src/recognize.h
+
 /home/nvidia/Workspace/gpu_mtcnn/src/baseEngine.cpp
 baseEngine.h
 /home/nvidia/Workspace/gpu_mtcnn/src/baseEngine.h
@@ -51,17 +67,11 @@ iostream
 -
 
 /home/nvidia/Workspace/gpu_mtcnn/src/demo.cpp
-network.h
-/home/nvidia/Workspace/gpu_mtcnn/src/network.h
 mtcnn.h
 /home/nvidia/Workspace/gpu_mtcnn/src/mtcnn.h
 kernels.h
 /home/nvidia/Workspace/gpu_mtcnn/src/kernels.h
 time.h
--
-math.h
--
-opencv2/cudawarping.hpp
 -
 includes/gstCamera.h
 /home/nvidia/Workspace/gpu_mtcnn/src/includes/gstCamera.h
@@ -73,10 +83,10 @@ includes/cudaRGB.h
 /home/nvidia/Workspace/gpu_mtcnn/src/includes/cudaRGB.h
 includes/cudaMappedMemory.h
 /home/nvidia/Workspace/gpu_mtcnn/src/includes/cudaMappedMemory.h
-includes/cudaOverlay.h
-/home/nvidia/Workspace/gpu_mtcnn/src/includes/cudaOverlay.h
 recognize.h
 /home/nvidia/Workspace/gpu_mtcnn/src/recognize.h
+alignment.h
+/home/nvidia/Workspace/gpu_mtcnn/src/alignment.h
 
 /home/nvidia/Workspace/gpu_mtcnn/src/includes/Event.h
 Mutex.h

@@ -3,7 +3,7 @@
 recognize::recognize(void){
 
     deserialize("src/models/dlib_face_recognition_resnet_model_v1.dat") >> net; 
-    deserialize("src/models/shape_predictor_5_face_landmarks.dat") >> sp;          
+    //deserialize("src/models/shape_predictor_5_face_landmarks.dat") >> sp;          
                          
 }
     

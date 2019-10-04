@@ -1042,9 +1042,33 @@ CMakeFiles/main.dir/src/main_generated_kernels.cu.o: src/kernels.cu
 	cd /home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src && /usr/bin/cmake -E make_directory /home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/.
 	cd /home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src && /usr/bin/cmake -D verbose:BOOL=$(VERBOSE) -D build_configuration:STRING= -D generated_file:STRING=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/./main_generated_kernels.cu.o -D generated_cubin_file:STRING=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/./main_generated_kernels.cu.o.cubin.txt -P /home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/main_generated_kernels.cu.o.cmake
 
+CMakeFiles/main.dir/src/alignment.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/src/alignment.cpp.o: src/alignment.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.dir/src/alignment.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/alignment.cpp.o -c /home/nvidia/Workspace/gpu_mtcnn/src/alignment.cpp
+
+CMakeFiles/main.dir/src/alignment.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/src/alignment.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/nvidia/Workspace/gpu_mtcnn/src/alignment.cpp > CMakeFiles/main.dir/src/alignment.cpp.i
+
+CMakeFiles/main.dir/src/alignment.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/src/alignment.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nvidia/Workspace/gpu_mtcnn/src/alignment.cpp -o CMakeFiles/main.dir/src/alignment.cpp.s
+
+CMakeFiles/main.dir/src/alignment.cpp.o.requires:
+
+.PHONY : CMakeFiles/main.dir/src/alignment.cpp.o.requires
+
+CMakeFiles/main.dir/src/alignment.cpp.o.provides: CMakeFiles/main.dir/src/alignment.cpp.o.requires
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/alignment.cpp.o.provides.build
+.PHONY : CMakeFiles/main.dir/src/alignment.cpp.o.provides
+
+CMakeFiles/main.dir/src/alignment.cpp.o.provides.build: CMakeFiles/main.dir/src/alignment.cpp.o
+
+
 CMakeFiles/main.dir/src/baseEngine.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/baseEngine.cpp.o: src/baseEngine.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.dir/src/baseEngine.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/main.dir/src/baseEngine.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/baseEngine.cpp.o -c /home/nvidia/Workspace/gpu_mtcnn/src/baseEngine.cpp
 
 CMakeFiles/main.dir/src/baseEngine.cpp.i: cmake_force
@@ -1068,7 +1092,7 @@ CMakeFiles/main.dir/src/baseEngine.cpp.o.provides.build: CMakeFiles/main.dir/src
 
 CMakeFiles/main.dir/src/common.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/common.cpp.o: src/common.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/main.dir/src/common.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/main.dir/src/common.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/common.cpp.o -c /home/nvidia/Workspace/gpu_mtcnn/src/common.cpp
 
 CMakeFiles/main.dir/src/common.cpp.i: cmake_force
@@ -1092,7 +1116,7 @@ CMakeFiles/main.dir/src/common.cpp.o.provides.build: CMakeFiles/main.dir/src/com
 
 CMakeFiles/main.dir/src/demo.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/demo.cpp.o: src/demo.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/main.dir/src/demo.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/main.dir/src/demo.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/demo.cpp.o -c /home/nvidia/Workspace/gpu_mtcnn/src/demo.cpp
 
 CMakeFiles/main.dir/src/demo.cpp.i: cmake_force
@@ -1116,7 +1140,7 @@ CMakeFiles/main.dir/src/demo.cpp.o.provides.build: CMakeFiles/main.dir/src/demo.
 
 CMakeFiles/main.dir/src/mtcnn.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/mtcnn.cpp.o: src/mtcnn.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/main.dir/src/mtcnn.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/main.dir/src/mtcnn.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/mtcnn.cpp.o -c /home/nvidia/Workspace/gpu_mtcnn/src/mtcnn.cpp
 
 CMakeFiles/main.dir/src/mtcnn.cpp.i: cmake_force
@@ -1140,7 +1164,7 @@ CMakeFiles/main.dir/src/mtcnn.cpp.o.provides.build: CMakeFiles/main.dir/src/mtcn
 
 CMakeFiles/main.dir/src/network.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/network.cpp.o: src/network.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/main.dir/src/network.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/main.dir/src/network.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/network.cpp.o -c /home/nvidia/Workspace/gpu_mtcnn/src/network.cpp
 
 CMakeFiles/main.dir/src/network.cpp.i: cmake_force
@@ -1164,7 +1188,7 @@ CMakeFiles/main.dir/src/network.cpp.o.provides.build: CMakeFiles/main.dir/src/ne
 
 CMakeFiles/main.dir/src/onet_rt.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/onet_rt.cpp.o: src/onet_rt.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/main.dir/src/onet_rt.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/main.dir/src/onet_rt.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/onet_rt.cpp.o -c /home/nvidia/Workspace/gpu_mtcnn/src/onet_rt.cpp
 
 CMakeFiles/main.dir/src/onet_rt.cpp.i: cmake_force
@@ -1188,7 +1212,7 @@ CMakeFiles/main.dir/src/onet_rt.cpp.o.provides.build: CMakeFiles/main.dir/src/on
 
 CMakeFiles/main.dir/src/pnet_rt.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/pnet_rt.cpp.o: src/pnet_rt.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/main.dir/src/pnet_rt.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/main.dir/src/pnet_rt.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/pnet_rt.cpp.o -c /home/nvidia/Workspace/gpu_mtcnn/src/pnet_rt.cpp
 
 CMakeFiles/main.dir/src/pnet_rt.cpp.i: cmake_force
@@ -1212,7 +1236,7 @@ CMakeFiles/main.dir/src/pnet_rt.cpp.o.provides.build: CMakeFiles/main.dir/src/pn
 
 CMakeFiles/main.dir/src/recognize.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/recognize.cpp.o: src/recognize.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/main.dir/src/recognize.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/main.dir/src/recognize.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/recognize.cpp.o -c /home/nvidia/Workspace/gpu_mtcnn/src/recognize.cpp
 
 CMakeFiles/main.dir/src/recognize.cpp.i: cmake_force
@@ -1236,7 +1260,7 @@ CMakeFiles/main.dir/src/recognize.cpp.o.provides.build: CMakeFiles/main.dir/src/
 
 CMakeFiles/main.dir/src/rnet_rt.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/rnet_rt.cpp.o: src/rnet_rt.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/main.dir/src/rnet_rt.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/main.dir/src/rnet_rt.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/rnet_rt.cpp.o -c /home/nvidia/Workspace/gpu_mtcnn/src/rnet_rt.cpp
 
 CMakeFiles/main.dir/src/rnet_rt.cpp.i: cmake_force
@@ -1260,6 +1284,7 @@ CMakeFiles/main.dir/src/rnet_rt.cpp.o.provides.build: CMakeFiles/main.dir/src/rn
 
 # Object files for target main
 main_OBJECTS = \
+"CMakeFiles/main.dir/src/alignment.cpp.o" \
 "CMakeFiles/main.dir/src/baseEngine.cpp.o" \
 "CMakeFiles/main.dir/src/common.cpp.o" \
 "CMakeFiles/main.dir/src/demo.cpp.o" \
@@ -1274,6 +1299,7 @@ main_OBJECTS = \
 main_EXTERNAL_OBJECTS = \
 "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/main_generated_kernels.cu.o"
 
+main: CMakeFiles/main.dir/src/alignment.cpp.o
 main: CMakeFiles/main.dir/src/baseEngine.cpp.o
 main: CMakeFiles/main.dir/src/common.cpp.o
 main: CMakeFiles/main.dir/src/demo.cpp.o
@@ -1365,7 +1391,7 @@ main: /usr/lib/aarch64-linux-gnu/libcudnn.so
 main: /usr/local/cuda/lib64/libcurand.so
 main: /usr/local/cuda/lib64/libcusolver.so
 main: CMakeFiles/main.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable main"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/main.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -1373,6 +1399,7 @@ CMakeFiles/main.dir/build: main
 
 .PHONY : CMakeFiles/main.dir/build
 
+CMakeFiles/main.dir/requires: CMakeFiles/main.dir/src/alignment.cpp.o.requires
 CMakeFiles/main.dir/requires: CMakeFiles/main.dir/src/baseEngine.cpp.o.requires
 CMakeFiles/main.dir/requires: CMakeFiles/main.dir/src/common.cpp.o.requires
 CMakeFiles/main.dir/requires: CMakeFiles/main.dir/src/demo.cpp.o.requires

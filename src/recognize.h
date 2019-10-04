@@ -52,9 +52,7 @@ public:
 
 private:
     anet_type net;
-    shape_predictor sp;
-    
-
+    //shape_predictor sp; //unused since we so the alignment manual in alignment.h
 };
 
 #endif

@@ -123,6 +123,33 @@ main/fast:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
 .PHONY : main/fast
 
+src/alignment.o: src/alignment.cpp.o
+
+.PHONY : src/alignment.o
+
+# target to build an object file
+src/alignment.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/alignment.cpp.o
+.PHONY : src/alignment.cpp.o
+
+src/alignment.i: src/alignment.cpp.i
+
+.PHONY : src/alignment.i
+
+# target to preprocess a source file
+src/alignment.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/alignment.cpp.i
+.PHONY : src/alignment.cpp.i
+
+src/alignment.s: src/alignment.cpp.s
+
+.PHONY : src/alignment.s
+
+# target to generate assembly for a file
+src/alignment.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/alignment.cpp.s
+.PHONY : src/alignment.cpp.s
+
 src/baseEngine.o: src/baseEngine.cpp.o
 
 .PHONY : src/baseEngine.o
@@ -375,6 +402,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... main"
 	@echo "... edit_cache"
+	@echo "... src/alignment.o"
+	@echo "... src/alignment.i"
+	@echo "... src/alignment.s"
 	@echo "... src/baseEngine.o"
 	@echo "... src/baseEngine.i"
 	@echo "... src/baseEngine.s"

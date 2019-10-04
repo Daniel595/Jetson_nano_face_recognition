@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/main.dir/src/main_generated_kernels.cu.o"
+  "CMakeFiles/main.dir/src/alignment.cpp.o"
   "CMakeFiles/main.dir/src/baseEngine.cpp.o"
   "CMakeFiles/main.dir/src/common.cpp.o"
   "CMakeFiles/main.dir/src/demo.cpp.o"
