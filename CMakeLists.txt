@@ -14,7 +14,7 @@ find_package( OpenCV REQUIRED)
 find_package( dlib REQUIRED)
 
 AUX_SOURCE_DIRECTORY(./src DIR_SRCS)
-cuda_add_executable( main ${DIR_SRCS} src/pnet_rt.cpp src/common.h src/common.cpp src/pnet_rt.h src/rnet_rt.cpp src/rnet_rt.h src/baseEngine.cpp src/baseEngine.h src/onet_rt.h src/onet_rt.cpp src/kernels.h src/kernels.cu src/recognize.h src/recognize.cpp)
+cuda_add_executable( main ${DIR_SRCS} src/pnet_rt.cpp src/common.h src/common.cpp src/pnet_rt.h src/rnet_rt.cpp src/rnet_rt.h src/baseEngine.cpp src/baseEngine.h src/onet_rt.h src/onet_rt.cpp src/kernels.h src/kernels.cu src/recognize.h src/recognize.cpp src/alignment.h src/alignment.cpp)
 
 set(CMAKE_CXX_FLAGS  "-lpthread")
 set(CMAKE_CXX_FLAGS  "-O3")

@@ -1,3 +1,6 @@
 CMakeCache.txt
 cmake_install.cmake
 CMakeFiles/*
+src/rec/*
+src/models/*
+
