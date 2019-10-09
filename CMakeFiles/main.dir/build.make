@@ -1313,6 +1313,8 @@ main: CMakeFiles/main.dir/src/main_generated_kernels.cu.o
 main: CMakeFiles/main.dir/build.make
 main: /usr/local/cuda/lib64/libcudart_static.a
 main: /usr/lib/aarch64-linux-gnu/librt.so
+main: /usr/lib/aarch64-linux-gnu/libboost_system.so
+main: /usr/lib/aarch64-linux-gnu/libboost_filesystem.so
 main: /usr/local/lib/libopencv_gapi.so.4.1.0
 main: /usr/local/lib/libopencv_stitching.so.4.1.0
 main: /usr/local/lib/libopencv_aruco.so.4.1.0

@@ -73,6 +73,10 @@ kernels.h
 /home/nvidia/Workspace/gpu_mtcnn/src/kernels.h
 time.h
 -
+boost/filesystem.hpp
+-
+fstream
+-
 includes/gstCamera.h
 /home/nvidia/Workspace/gpu_mtcnn/src/includes/gstCamera.h
 includes/glDisplay.h

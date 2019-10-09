@@ -35,6 +35,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.10/Modules/Compiler/GNU-C.cmake"
   "/usr/share/cmake-3.10/Modules/Compiler/GNU-CXX.cmake"
   "/usr/share/cmake-3.10/Modules/Compiler/GNU.cmake"
+  "/usr/share/cmake-3.10/Modules/FindBoost.cmake"
   "/usr/share/cmake-3.10/Modules/FindCUDA.cmake"
   "/usr/share/cmake-3.10/Modules/FindCUDA/run_nvcc.cmake"
   "/usr/share/cmake-3.10/Modules/FindCUDA/select_compute_arch.cmake"

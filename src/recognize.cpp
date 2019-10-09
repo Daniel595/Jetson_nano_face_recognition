@@ -15,7 +15,7 @@ void recognize::init(){
     printf("initialization of recognition network!\n");
     matrix<rgb_pixel> img;
     matrix<float,0,1> face_descriptor;
-    load_image(img, "res.jpg");
+    load_image(img, "faces/test.jpg");
     this->embedding(&img, &face_descriptor);
     //check if test image matches
 }
@@ -31,7 +31,11 @@ void recognize::embedding(matrix<rgb_pixel> *face_chip, matrix<float,0,1> *face_
 void recognize::embeddings(std::vector<matrix<rgb_pixel>> *face_chips, std::vector<matrix<float,0,1>> *face_descriptors){
 
     *face_descriptors = net(*face_chips);
-    //cout << "face descriptor for one face: " << trans(face_descriptors[0]) << endl;
+    
+    //std::vector<matrix<float,0,1>> to_print = *face_descriptors;
+
+    //cout << "face descriptor for one face: " << to_print[0] << endl;
+    //cout << "face descriptor for one face: " << trans(to_print[0]) << endl;
 }
 
 
