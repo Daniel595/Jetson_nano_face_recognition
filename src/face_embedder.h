@@ -1,5 +1,5 @@
-#ifndef RECOGNIZE_H
-#define RECOGNIZE_H
+#ifndef FACE_EMBEDDER_H
+#define FACE_EMBEDDER_H
 #include <dlib/dnn.h>
 #include <dlib/gui_widgets.h>
 //#include <dlib/clustering.h>
@@ -9,16 +9,21 @@
 #include "network.h"
 #include "dlib/opencv/cv_image.h"
 
+// Header of embeddings.cpp and classification.cpp
+
 using namespace dlib;
 using namespace std;
 
-class recognize
+class face_embedder
 {
 public:
-    recognize(void);
-    ~recognize(void);
-    void embeddings(std::vector<matrix<rgb_pixel>> *face_chips, std::vector<matrix<float,0,1>> *face_descriptors);
-    void embedding(matrix<rgb_pixel> *face_chip, matrix<float,0,1> *face_descriptor);
+
+    face_embedder(void);
+    ~face_embedder(void);
+
+    //embeddings.cpp
+    void embeddings(std::vector<matrix<rgb_pixel>> *face_chips, std::vector<matrix<float,0,1>> *face_embeddings);
+    void embedding(matrix<rgb_pixel> *face_chip, matrix<float,0,1> *face_embedding);
     void tell();
     void init();
 
@@ -50,7 +55,10 @@ public:
                                 input_rgb_image_sized<150>
                                 >>>>>>>>>>>>;
 
+
+
 private:
+    //embeddings.cpp
     anet_type net;
     //shape_predictor sp; //unused since we so the alignment manual in alignment.h
 };

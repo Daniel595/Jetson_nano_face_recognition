@@ -10,10 +10,13 @@
 #include "includes/cudaRGB.h"
 #include "includes/cudaMappedMemory.h"
 
-#include "recognize.h"
+#include "face_embedder.h"
+#include "face_classifier.h"
 #include "alignment.h"
 
-
+#include <dlib/svm_threaded.h>
+#include <dlib/svm.h>
+#include <vector>
 
 
 gstCamera* getCamera(){
@@ -104,15 +107,16 @@ void nv_camera_stream(){
     double fps = 10.0;
     clock_t clk;
     int num_dets = 0;
+    std::vector<std::string> label_encodings;
 
     //create networks
-    mtcnn find(imgHeight, imgWidth);    //detection network
-    recognize rec;                      //recognition network, generate face embeddings
-    rec.init();                         //run a first recognition to set the network up
-    
+    mtcnn finder(imgHeight, imgWidth);            //detection network
+    face_embedder embedder;                     //recognition network, generate face embeddings
+    face_classifier classifier(&embedder);
     glDisplay* display = getDisplay();
+    classifier.get_label_encoding(&label_encodings);
     
-    //malloc shared memory for access with cpu and gpu without copying data
+    //malloc shared memory for images for access with cpu and gpu without copying data
     uchar* rgb_gpu = NULL;
     uchar* rgb_cpu = NULL;
     cudaAllocMapped( (void**) &rgb_cpu, (void**) &rgb_gpu, imgWidth*imgHeight*3*sizeof(uchar) );
@@ -122,35 +126,32 @@ void nv_camera_stream(){
     cudaAllocMapped( (void**) &cropped_buffer_cpu[1], (void**) &cropped_buffer_gpu[1], 150*150*3*sizeof(uchar) );
   
     while(!user_quit){
-        //fps clock
-        clk = clock();
-        //camera image
-		float* imgOrigin = NULL;   
-        // the 2nd arg 1000 defines timeout, true is for the "zeroCopy"-option which means the image will be at shared memory        
+        
+        clk = clock();              //fps clock
+		float* imgOrigin = NULL;    //camera image  
+        // the 2nd arg 1000 defines timeout, true is for the "zeroCopy" means the image will be at shared memory        
         if( !camera->CaptureRGBA(&imgOrigin, 1000, true))
 			printf("failed to capture RGBA image from camera\n");
         
-        //since the captured image is located at shared mem, we can easily access it from cpu 
-        // - we even can define a Mat for it without copying data. We use the Mat only to draw the detections onto the Image
+        //since the captured image is located at shared memory, we easily can access it from cpu 
+        // - we even can define a cv::Mat for it without copying data. We use the Mat only to draw the detections onto the Image
         cv::Mat origin_cpu(imgHeight, imgWidth, CV_32FC4, imgOrigin);
 
         //the mtcnn pipeline is based on GpuMat 8bit values 3 channels - so we remove the A-channel and size vals down
-        cudaRGBA32ToBGR8( (float4*)imgOrigin, (uchar3*)rgb_gpu, imgWidth, imgHeight );    //correct colors for cv (and for mtcnn?)
-        //cudaRGBA32ToRGB8( (float4*)imgOrigin, (uchar3*)rgb_gpu, imgWidth, imgHeight );  //MTCNN better Performance? TODO: test it
-        cv::cuda::GpuMat imgRGB_gpu(imgHeight, imgWidth, CV_8UC3, rgb_gpu);
-        //cv::Mat imgRGB_cpu(imgHeight, imgWidth, CV_8UC3, rgb_cpu);
+        cudaRGBA32ToBGR8( (float4*)imgOrigin, (uchar3*)rgb_gpu, imgWidth, imgHeight );      //Transform the memory layout 
+        //cudaRGBA32ToRGB8( (float4*)imgOrigin, (uchar3*)rgb_gpu, imgWidth, imgHeight );    //Transform the memory layout  TODO: test which one is better
+        cv::cuda::GpuMat imgRGB_gpu(imgHeight, imgWidth, CV_8UC3, rgb_gpu);                 // Image as opencv cuda format
 
         //pass image to detection Network MTCNN and get face detections
         std::vector<struct Bbox> detections;
-        find.findFace(imgRGB_gpu, &detections);
+        finder.findFace(imgRGB_gpu, &detections);
 
-        //create cv rectangles and keypoints from the detections and draw them to the origin image (if arg 5 is true)
         std::vector<cv::Rect> rects;
         std::vector<float*> keypoints;
-        num_dets = get_detections(origin_cpu, &detections, &rects, &keypoints, true);
-
-        //crop and align the faces -> generate inputs for the recognition CNN
+        std::vector<double> face_labels;
         std::vector<matrix<rgb_pixel>> faces;
+
+        num_dets = get_detections(origin_cpu, &detections, &rects, &keypoints);        
         crop_and_align_faces(imgRGB_gpu, cropped_buffer_gpu, cropped_buffer_cpu, &rects, &faces, &keypoints);
         
         //for testing: show cropped and aligned faces in a separate window for visual check if alignment works well
@@ -158,17 +159,26 @@ void nv_camera_stream(){
             image_window my_win(faces[i], "win");
             my_win.wait_until_closed();
         }*/
-
+        
         //pass the detected faces to the recognition network
-        //TODO: feed the face embeddings into a SVM
-        clock_t emb = clock();
+        //feed the face embeddings into a SVM
         if(num_dets > 0){
-            std::vector<matrix<float,0,1>> face_descriptors;
-            rec.embeddings(&faces, &face_descriptors);
-            cout << "embeddings: " << 1000* (clock() - emb)/CLOCKS_PER_SEC << "ms" << endl;
-            //printf("%d detections!\n",num_dets);
-            //face_descriptors -> SVM
-            //prediction!
+            std::vector<matrix<float,0,1>> face_embeddings;
+            embedder.embeddings(&faces, &face_embeddings);
+            // layout
+            // rect 1       rect 2     rect 3    ...
+            // face 1       face 2     face 3    ...
+            // label 1      label 2    label 3   ...
+            // embedding1   emb 2      emb 3     ...
+            
+            // SVM prediction
+            classifier.prediction(&face_embeddings, &face_labels);
+            //for(int i = 0; i<face_labels.size(); i++){
+            //    cout << "detected face: " << face_labels[i] << " - " << label_encodings[face_labels[i]] << endl;
+            //}
+            draw_detections(origin_cpu, &rects, &face_labels, &label_encodings);
+            
+            // TODO: handle detections - reaction
         }
 
         //Render captured image, print the FPS to the windowbar
@@ -183,6 +193,8 @@ void nv_camera_stream(){
 				user_quit = true;
         }
     }   
+
+
     SAFE_DELETE(camera);
     SAFE_DELETE(display);
     CHECK(cudaFreeHost(rgb_cpu));
@@ -195,68 +207,20 @@ void nv_camera_stream(){
 
 
 
-void test(){
+void ttt(){
     
-    using namespace boost::filesystem;
-    
-    path p ("train_data/database/");   // p reads clearer than argv[1] in the following code
-    int num_labels = 0;
-    path path_label = "";
-    path path_file = "";
-    std::ofstream o("labels.txt");
+    face_embedder embedder;
 
-    std::vector<matrix<float,0,1>> vector_face_descriptors;
-    std::vector<double> vector_labels;
-    
-    try
-    {
-        if (exists(p))    
-        {
-        if (is_regular_file(p))        
-            cout << p << "is a file. \nStart at directory \"parent\", when the following structure is given: \"parent/label/image.jpg\" " << endl;
-        else if (is_directory(p))
-        {
-            //iterate over all included directories and files
-            recursive_directory_iterator dir(p), end; 
-            while(dir != end){
-                if(is_directory(dir->path())) {         // new label
-                    path_label = dir->path().filename();
-                    // write label to file
-                    o << path_label.string() << endl;
-                    num_labels ++;
-                }else {                                 // file
-                    path_file =  dir->path().filename();
+    face_classifier fc(&embedder);
 
-                    // load file
-                    // run detection
-                    // extract faces
-                    // create embeddings and push_back
-                    // push_back label
 
-                    cout << "label: " << num_labels - 1 << "   file: "<< path_file << endl;
-                }
-                ++dir;
-            }
-            o.close();
-        }
-        else
-            cout << p << " exists, but is neither a regular file nor a directory\n";
-        }
-        else
-        cout << p << " does not exist\n";
-    }
-    catch (const filesystem_error& ex)
-    {
-        cout << ex.what() << '\n';
-    }
 
 }
-
-
 
 int main()
 {
     //test();
+    //ttt();
     nv_camera_stream();
     //nv_image_test("4.jpg");
 

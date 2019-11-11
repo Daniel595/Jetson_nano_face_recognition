@@ -1138,9 +1138,57 @@ CMakeFiles/main.dir/src/demo.cpp.o.provides: CMakeFiles/main.dir/src/demo.cpp.o.
 CMakeFiles/main.dir/src/demo.cpp.o.provides.build: CMakeFiles/main.dir/src/demo.cpp.o
 
 
+CMakeFiles/main.dir/src/face_classifier.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/src/face_classifier.cpp.o: src/face_classifier.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/main.dir/src/face_classifier.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/face_classifier.cpp.o -c /home/nvidia/Workspace/gpu_mtcnn/src/face_classifier.cpp
+
+CMakeFiles/main.dir/src/face_classifier.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/src/face_classifier.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/nvidia/Workspace/gpu_mtcnn/src/face_classifier.cpp > CMakeFiles/main.dir/src/face_classifier.cpp.i
+
+CMakeFiles/main.dir/src/face_classifier.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/src/face_classifier.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nvidia/Workspace/gpu_mtcnn/src/face_classifier.cpp -o CMakeFiles/main.dir/src/face_classifier.cpp.s
+
+CMakeFiles/main.dir/src/face_classifier.cpp.o.requires:
+
+.PHONY : CMakeFiles/main.dir/src/face_classifier.cpp.o.requires
+
+CMakeFiles/main.dir/src/face_classifier.cpp.o.provides: CMakeFiles/main.dir/src/face_classifier.cpp.o.requires
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/face_classifier.cpp.o.provides.build
+.PHONY : CMakeFiles/main.dir/src/face_classifier.cpp.o.provides
+
+CMakeFiles/main.dir/src/face_classifier.cpp.o.provides.build: CMakeFiles/main.dir/src/face_classifier.cpp.o
+
+
+CMakeFiles/main.dir/src/face_embedder.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/src/face_embedder.cpp.o: src/face_embedder.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/main.dir/src/face_embedder.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/face_embedder.cpp.o -c /home/nvidia/Workspace/gpu_mtcnn/src/face_embedder.cpp
+
+CMakeFiles/main.dir/src/face_embedder.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/src/face_embedder.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/nvidia/Workspace/gpu_mtcnn/src/face_embedder.cpp > CMakeFiles/main.dir/src/face_embedder.cpp.i
+
+CMakeFiles/main.dir/src/face_embedder.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/src/face_embedder.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nvidia/Workspace/gpu_mtcnn/src/face_embedder.cpp -o CMakeFiles/main.dir/src/face_embedder.cpp.s
+
+CMakeFiles/main.dir/src/face_embedder.cpp.o.requires:
+
+.PHONY : CMakeFiles/main.dir/src/face_embedder.cpp.o.requires
+
+CMakeFiles/main.dir/src/face_embedder.cpp.o.provides: CMakeFiles/main.dir/src/face_embedder.cpp.o.requires
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/face_embedder.cpp.o.provides.build
+.PHONY : CMakeFiles/main.dir/src/face_embedder.cpp.o.provides
+
+CMakeFiles/main.dir/src/face_embedder.cpp.o.provides.build: CMakeFiles/main.dir/src/face_embedder.cpp.o
+
+
 CMakeFiles/main.dir/src/mtcnn.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/mtcnn.cpp.o: src/mtcnn.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/main.dir/src/mtcnn.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/main.dir/src/mtcnn.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/mtcnn.cpp.o -c /home/nvidia/Workspace/gpu_mtcnn/src/mtcnn.cpp
 
 CMakeFiles/main.dir/src/mtcnn.cpp.i: cmake_force
@@ -1164,7 +1212,7 @@ CMakeFiles/main.dir/src/mtcnn.cpp.o.provides.build: CMakeFiles/main.dir/src/mtcn
 
 CMakeFiles/main.dir/src/network.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/network.cpp.o: src/network.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/main.dir/src/network.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/main.dir/src/network.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/network.cpp.o -c /home/nvidia/Workspace/gpu_mtcnn/src/network.cpp
 
 CMakeFiles/main.dir/src/network.cpp.i: cmake_force
@@ -1188,7 +1236,7 @@ CMakeFiles/main.dir/src/network.cpp.o.provides.build: CMakeFiles/main.dir/src/ne
 
 CMakeFiles/main.dir/src/onet_rt.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/onet_rt.cpp.o: src/onet_rt.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/main.dir/src/onet_rt.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/main.dir/src/onet_rt.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/onet_rt.cpp.o -c /home/nvidia/Workspace/gpu_mtcnn/src/onet_rt.cpp
 
 CMakeFiles/main.dir/src/onet_rt.cpp.i: cmake_force
@@ -1212,7 +1260,7 @@ CMakeFiles/main.dir/src/onet_rt.cpp.o.provides.build: CMakeFiles/main.dir/src/on
 
 CMakeFiles/main.dir/src/pnet_rt.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/pnet_rt.cpp.o: src/pnet_rt.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/main.dir/src/pnet_rt.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/main.dir/src/pnet_rt.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/pnet_rt.cpp.o -c /home/nvidia/Workspace/gpu_mtcnn/src/pnet_rt.cpp
 
 CMakeFiles/main.dir/src/pnet_rt.cpp.i: cmake_force
@@ -1234,33 +1282,9 @@ CMakeFiles/main.dir/src/pnet_rt.cpp.o.provides: CMakeFiles/main.dir/src/pnet_rt.
 CMakeFiles/main.dir/src/pnet_rt.cpp.o.provides.build: CMakeFiles/main.dir/src/pnet_rt.cpp.o
 
 
-CMakeFiles/main.dir/src/recognize.cpp.o: CMakeFiles/main.dir/flags.make
-CMakeFiles/main.dir/src/recognize.cpp.o: src/recognize.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/main.dir/src/recognize.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/recognize.cpp.o -c /home/nvidia/Workspace/gpu_mtcnn/src/recognize.cpp
-
-CMakeFiles/main.dir/src/recognize.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/src/recognize.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/nvidia/Workspace/gpu_mtcnn/src/recognize.cpp > CMakeFiles/main.dir/src/recognize.cpp.i
-
-CMakeFiles/main.dir/src/recognize.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/src/recognize.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nvidia/Workspace/gpu_mtcnn/src/recognize.cpp -o CMakeFiles/main.dir/src/recognize.cpp.s
-
-CMakeFiles/main.dir/src/recognize.cpp.o.requires:
-
-.PHONY : CMakeFiles/main.dir/src/recognize.cpp.o.requires
-
-CMakeFiles/main.dir/src/recognize.cpp.o.provides: CMakeFiles/main.dir/src/recognize.cpp.o.requires
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/recognize.cpp.o.provides.build
-.PHONY : CMakeFiles/main.dir/src/recognize.cpp.o.provides
-
-CMakeFiles/main.dir/src/recognize.cpp.o.provides.build: CMakeFiles/main.dir/src/recognize.cpp.o
-
-
 CMakeFiles/main.dir/src/rnet_rt.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/rnet_rt.cpp.o: src/rnet_rt.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/main.dir/src/rnet_rt.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/main.dir/src/rnet_rt.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/rnet_rt.cpp.o -c /home/nvidia/Workspace/gpu_mtcnn/src/rnet_rt.cpp
 
 CMakeFiles/main.dir/src/rnet_rt.cpp.i: cmake_force
@@ -1288,11 +1312,12 @@ main_OBJECTS = \
 "CMakeFiles/main.dir/src/baseEngine.cpp.o" \
 "CMakeFiles/main.dir/src/common.cpp.o" \
 "CMakeFiles/main.dir/src/demo.cpp.o" \
+"CMakeFiles/main.dir/src/face_classifier.cpp.o" \
+"CMakeFiles/main.dir/src/face_embedder.cpp.o" \
 "CMakeFiles/main.dir/src/mtcnn.cpp.o" \
 "CMakeFiles/main.dir/src/network.cpp.o" \
 "CMakeFiles/main.dir/src/onet_rt.cpp.o" \
 "CMakeFiles/main.dir/src/pnet_rt.cpp.o" \
-"CMakeFiles/main.dir/src/recognize.cpp.o" \
 "CMakeFiles/main.dir/src/rnet_rt.cpp.o"
 
 # External object files for target main
@@ -1303,11 +1328,12 @@ main: CMakeFiles/main.dir/src/alignment.cpp.o
 main: CMakeFiles/main.dir/src/baseEngine.cpp.o
 main: CMakeFiles/main.dir/src/common.cpp.o
 main: CMakeFiles/main.dir/src/demo.cpp.o
+main: CMakeFiles/main.dir/src/face_classifier.cpp.o
+main: CMakeFiles/main.dir/src/face_embedder.cpp.o
 main: CMakeFiles/main.dir/src/mtcnn.cpp.o
 main: CMakeFiles/main.dir/src/network.cpp.o
 main: CMakeFiles/main.dir/src/onet_rt.cpp.o
 main: CMakeFiles/main.dir/src/pnet_rt.cpp.o
-main: CMakeFiles/main.dir/src/recognize.cpp.o
 main: CMakeFiles/main.dir/src/rnet_rt.cpp.o
 main: CMakeFiles/main.dir/src/main_generated_kernels.cu.o
 main: CMakeFiles/main.dir/build.make
@@ -1393,7 +1419,7 @@ main: /usr/lib/aarch64-linux-gnu/libcudnn.so
 main: /usr/local/cuda/lib64/libcurand.so
 main: /usr/local/cuda/lib64/libcusolver.so
 main: CMakeFiles/main.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX executable main"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/main.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -1405,11 +1431,12 @@ CMakeFiles/main.dir/requires: CMakeFiles/main.dir/src/alignment.cpp.o.requires
 CMakeFiles/main.dir/requires: CMakeFiles/main.dir/src/baseEngine.cpp.o.requires
 CMakeFiles/main.dir/requires: CMakeFiles/main.dir/src/common.cpp.o.requires
 CMakeFiles/main.dir/requires: CMakeFiles/main.dir/src/demo.cpp.o.requires
+CMakeFiles/main.dir/requires: CMakeFiles/main.dir/src/face_classifier.cpp.o.requires
+CMakeFiles/main.dir/requires: CMakeFiles/main.dir/src/face_embedder.cpp.o.requires
 CMakeFiles/main.dir/requires: CMakeFiles/main.dir/src/mtcnn.cpp.o.requires
 CMakeFiles/main.dir/requires: CMakeFiles/main.dir/src/network.cpp.o.requires
 CMakeFiles/main.dir/requires: CMakeFiles/main.dir/src/onet_rt.cpp.o.requires
 CMakeFiles/main.dir/requires: CMakeFiles/main.dir/src/pnet_rt.cpp.o.requires
-CMakeFiles/main.dir/requires: CMakeFiles/main.dir/src/recognize.cpp.o.requires
 CMakeFiles/main.dir/requires: CMakeFiles/main.dir/src/rnet_rt.cpp.o.requires
 
 .PHONY : CMakeFiles/main.dir/requires

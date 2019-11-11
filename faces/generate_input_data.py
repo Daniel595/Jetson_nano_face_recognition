@@ -59,6 +59,9 @@ label = "none"
 cnt = 0
 failed_paths = ""
 fail_cnt = 1
+num_labels = 0
+num_label_images = []
+labels = []
 
 for i in range(len(src)):
     print("source directory: " + src[i])
@@ -70,10 +73,14 @@ for i in range(len(src)):
             name = split[len(split)-1]
             
             if(name != label):
+                if(cnt > 0):
+                    num_label_images.append(cnt)
                 cnt = 0
                 print("new label: " + name)
                 label = name
+                labels.append(label)
                 os.mkdir(os.path.join(dst[i], label))
+                num_labels += 1
             
             image = dlib.load_rgb_image(os.path.join(path,f))
             print("processing " + f + " ..." + " (" + label + ")")
@@ -114,6 +121,23 @@ for i in range(len(src)):
             #new file
             cnt = cnt + 1    
 
+num_label_images.append(cnt)
+
+filename = "info.txt"
+info_path = os.path.abspath(os.path.join(os.path.dirname(__file__), filename))
+
+try:
+    os.remove(info_path)
+except:
+    print("failed accessing info.txt")
+
+info_file = open(info_path, "w+")
+info_file.write("training required!\n" + "num classes: " + str(num_labels) + "\n")
+info_file.write("#\tlabel:\timages:\n" )
+
+for i in range(len(num_label_images)):
+    info_file.write(str(i) + "\t" +labels[i] +"\t" + str(num_label_images[i]) + "\n")
+info_file.close()
 
 if(len(failed_paths) > 0):
     print("Face extraction from the following pictures didn't work: ")

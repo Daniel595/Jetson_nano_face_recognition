@@ -49,7 +49,7 @@ void get_new_keypoints(double rotation, cv::Rect *face, float* keypoints){
 
 void get_face_shift(float* keypoints, double *x_shift, double *y_shift){
     
-    if(*(keypoints + 2) - *(keypoints) >= 25){          //if nose is closer to the right eye
+    if(*(keypoints + 2) - *(keypoints) >= 25){          //if nose-x is closer to the right eye
         *x_shift = 50 - (double) *(keypoints);          //left eye alignment to coordinates (50|50)
         *y_shift = 50 - (double) *(keypoints + 5);
     }else{                                              // nose is closer to the left eye
@@ -60,6 +60,10 @@ void get_face_shift(float* keypoints, double *x_shift, double *y_shift){
 
     //TODO: detect bad face images and discard them - like a keypoint is out of the rectangle or something like that
 }
+
+
+
+ 
 
 
 void crop_and_align_faces(cv::cuda::GpuMat &gpuImage,                     //raw image
@@ -87,27 +91,29 @@ void crop_and_align_faces(cv::cuda::GpuMat &gpuImage,                     //raw 
         
         //calculate the "rotation" of the face. Its done by the keypoints of the left and the right eye.
         //for an aligned face, both eyes should be on the same y-coords.
-        rotation_rad = get_face_rotation(*(keypoints[0][cnt]), *(keypoints[0][cnt]+5) ,*(keypoints[0][cnt]+1) ,*(keypoints[0][cnt]+6));
+        rotation_rad = get_face_rotation( *(keypoints->at(cnt)), *(keypoints->at(cnt) + 5) ,*(keypoints->at(cnt) + 1) , *(keypoints->at(cnt) + 6) );
         rotation_deg = rotation_rad  * 180 / PI;
         
         //apply the resize operation and the rotation to the keypoints to have them available for alignment
-        get_new_keypoints(-rotation_rad, &(*it), keypoints[0][cnt]);
+        get_new_keypoints(-rotation_rad, &(*it), keypoints->at(cnt) );
 
         //after resize and rotation we want to shift the face to align the keypoints as it's required by the recognition-CNN
         //optimal for frontal faces: right eye at (100|50), left eye at(50|50), left mouth at(50|100) right mouth at (100|100), nose (75|75)
         //to make it as easy as possible we align one eye, depending on the face pose. 
         //The general face dimension should be quite OK after resize
-        get_face_shift(keypoints[0][cnt], &x_shift, &y_shift);
+        get_face_shift(keypoints->at(cnt) , &x_shift, &y_shift);
 
         //apply the alignment to the face - the calculated rotation and the shift of the face 
         cv::cuda::rotate(crop_gpu_buffer, crop_gpu, cv::Size(150, 150), rotation_deg, x_shift, y_shift);  
 
         //for testing: draw the new keypoints to the cropped face to make sure we calculated right coordinates 
-        for(int num=0;num<5;num++){
-            *(keypoints[0][cnt]+num) = (int)*(keypoints[0][cnt]+num) + x_shift;
-            *(keypoints[0][cnt]+num+5) = (int)*(keypoints[0][cnt]+num+5) + y_shift;
-            cv::circle(crop_cpu,cv::Point((int)*(keypoints[0][cnt]+num) , (int)*(keypoints[0][cnt]+num+5)),3,cv::Scalar(255,0,0), -1);     
-        }
+        /////Test
+        //for(int num=0;num<5;num++){
+        //    *(keypoints->at(cnt) + num) = (int)*(keypoints->at(cnt) + num) + x_shift;
+        //    *(keypoints->at(cnt) + num + 5) = (int)*(keypoints->at(cnt) + num + 5) + y_shift;
+        //    cv::circle(crop_cpu,cv::Point((int)*(keypoints->at(cnt) + num) , (int)*(keypoints->at(cnt) + num + 5)),3,cv::Scalar(255,0,0), -1);     
+        //}
+
         cudaDeviceSynchronize();  
 
         //generate network inputs from cv-format to the required dlib-format
@@ -116,6 +122,15 @@ void crop_and_align_faces(cv::cuda::GpuMat &gpuImage,                     //raw 
         assign_image(matrix, image);
         //store the aligned face to a CNN-input vector 
         cropped_faces->push_back(matrix);
+
+///Test - show the cropped and aligned faces
+        //cout << "add: " << cnt << " - " << keypoints->at(cnt) << endl;
+        //image_window my_win(matrix, "face");
+        //my_win.wait_until_closed();
+///
+
+        cnt++;
+
     }
 }
 
@@ -133,13 +148,36 @@ int get_detections( cv::Mat &origin_cpu, std::vector<struct Bbox> *detections,
             cv::Rect temp((*it).y1, (*it).x1, (*it).y2-(*it).y1, (*it).x2-(*it).x1);
             (*rects).push_back(temp);          
             keypoints->push_back(it->ppoint);
-
-            //draw box and keypoints to the original image
-            if(draw == true){
-                cv::rectangle(origin_cpu, temp, cv::Scalar(0,0,255), 2,8,0);
-                for(int num=0;num<5;num++)cv::circle(origin_cpu,cv::Point((int)*(it->ppoint+num), (int)*(it->ppoint+num+5)),3,cv::Scalar(255,0,0), -1); 
+            if(draw){
+                for(int num=0; num<5; num++){
+                    cv::circle(origin_cpu,cv::Point((int)*(it->ppoint + num) , 
+                        (int)*(it->ppoint + num + 5)),3,cv::Scalar(0,255,0), -2); 
+                }
             }
         }
     }
     return cnt;
 }
+
+
+
+
+
+
+void draw_detections(   cv::Mat &origin_cpu, 
+                        std::vector<cv::Rect> *rects, 
+                        std::vector<double> *labels,
+                        std::vector<std::string> *label_encodings){
+        
+    for(int i = 0; i<rects->size(); i++){
+        // rectangles
+        cv::rectangle(origin_cpu, rects->at(i), cv::Scalar(0,0,255), 2,8,0);        
+        // labels
+        string encoding = ((labels->at(i) >= 0) ? label_encodings->at(labels->at(i)) : "Unbekannt");
+        cv::putText(origin_cpu, encoding , cv::Point(rects->at(i).x,rects->at(i).y), 
+                    cv::FONT_HERSHEY_COMPLEX_SMALL, 1.0, cv::Scalar(255,255,255), 1 ); // mat, text, coord, font, scale, bgr color, line thickness
+    }                        
+}
+
+
+

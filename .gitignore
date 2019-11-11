@@ -6,4 +6,6 @@ faces/train/raw/*
 faces/train/cropped/*
 faces/test/raw/*
 faces/test/cropped/*
+svm/*
+main
 

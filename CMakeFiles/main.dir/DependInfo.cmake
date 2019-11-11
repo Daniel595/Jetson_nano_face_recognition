@@ -8,11 +8,12 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/nvidia/Workspace/gpu_mtcnn/src/baseEngine.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/baseEngine.cpp.o"
   "/home/nvidia/Workspace/gpu_mtcnn/src/common.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/common.cpp.o"
   "/home/nvidia/Workspace/gpu_mtcnn/src/demo.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/demo.cpp.o"
+  "/home/nvidia/Workspace/gpu_mtcnn/src/face_classifier.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/face_classifier.cpp.o"
+  "/home/nvidia/Workspace/gpu_mtcnn/src/face_embedder.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/face_embedder.cpp.o"
   "/home/nvidia/Workspace/gpu_mtcnn/src/mtcnn.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/mtcnn.cpp.o"
   "/home/nvidia/Workspace/gpu_mtcnn/src/network.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/network.cpp.o"
   "/home/nvidia/Workspace/gpu_mtcnn/src/onet_rt.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/onet_rt.cpp.o"
   "/home/nvidia/Workspace/gpu_mtcnn/src/pnet_rt.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/pnet_rt.cpp.o"
-  "/home/nvidia/Workspace/gpu_mtcnn/src/recognize.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/recognize.cpp.o"
   "/home/nvidia/Workspace/gpu_mtcnn/src/rnet_rt.cpp" "/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir/src/rnet_rt.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

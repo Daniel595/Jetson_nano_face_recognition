@@ -231,6 +231,60 @@ src/demo.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/demo.cpp.s
 .PHONY : src/demo.cpp.s
 
+src/face_classifier.o: src/face_classifier.cpp.o
+
+.PHONY : src/face_classifier.o
+
+# target to build an object file
+src/face_classifier.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/face_classifier.cpp.o
+.PHONY : src/face_classifier.cpp.o
+
+src/face_classifier.i: src/face_classifier.cpp.i
+
+.PHONY : src/face_classifier.i
+
+# target to preprocess a source file
+src/face_classifier.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/face_classifier.cpp.i
+.PHONY : src/face_classifier.cpp.i
+
+src/face_classifier.s: src/face_classifier.cpp.s
+
+.PHONY : src/face_classifier.s
+
+# target to generate assembly for a file
+src/face_classifier.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/face_classifier.cpp.s
+.PHONY : src/face_classifier.cpp.s
+
+src/face_embedder.o: src/face_embedder.cpp.o
+
+.PHONY : src/face_embedder.o
+
+# target to build an object file
+src/face_embedder.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/face_embedder.cpp.o
+.PHONY : src/face_embedder.cpp.o
+
+src/face_embedder.i: src/face_embedder.cpp.i
+
+.PHONY : src/face_embedder.i
+
+# target to preprocess a source file
+src/face_embedder.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/face_embedder.cpp.i
+.PHONY : src/face_embedder.cpp.i
+
+src/face_embedder.s: src/face_embedder.cpp.s
+
+.PHONY : src/face_embedder.s
+
+# target to generate assembly for a file
+src/face_embedder.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/face_embedder.cpp.s
+.PHONY : src/face_embedder.cpp.s
+
 src/mtcnn.o: src/mtcnn.cpp.o
 
 .PHONY : src/mtcnn.o
@@ -339,33 +393,6 @@ src/pnet_rt.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/pnet_rt.cpp.s
 .PHONY : src/pnet_rt.cpp.s
 
-src/recognize.o: src/recognize.cpp.o
-
-.PHONY : src/recognize.o
-
-# target to build an object file
-src/recognize.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/recognize.cpp.o
-.PHONY : src/recognize.cpp.o
-
-src/recognize.i: src/recognize.cpp.i
-
-.PHONY : src/recognize.i
-
-# target to preprocess a source file
-src/recognize.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/recognize.cpp.i
-.PHONY : src/recognize.cpp.i
-
-src/recognize.s: src/recognize.cpp.s
-
-.PHONY : src/recognize.s
-
-# target to generate assembly for a file
-src/recognize.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/recognize.cpp.s
-.PHONY : src/recognize.cpp.s
-
 src/rnet_rt.o: src/rnet_rt.cpp.o
 
 .PHONY : src/rnet_rt.o
@@ -414,6 +441,12 @@ help:
 	@echo "... src/demo.o"
 	@echo "... src/demo.i"
 	@echo "... src/demo.s"
+	@echo "... src/face_classifier.o"
+	@echo "... src/face_classifier.i"
+	@echo "... src/face_classifier.s"
+	@echo "... src/face_embedder.o"
+	@echo "... src/face_embedder.i"
+	@echo "... src/face_embedder.s"
 	@echo "... src/mtcnn.o"
 	@echo "... src/mtcnn.i"
 	@echo "... src/mtcnn.s"
@@ -426,9 +459,6 @@ help:
 	@echo "... src/pnet_rt.o"
 	@echo "... src/pnet_rt.i"
 	@echo "... src/pnet_rt.s"
-	@echo "... src/recognize.o"
-	@echo "... src/recognize.i"
-	@echo "... src/recognize.s"
 	@echo "... src/rnet_rt.o"
 	@echo "... src/rnet_rt.i"
 	@echo "... src/rnet_rt.s"
