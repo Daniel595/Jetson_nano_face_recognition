@@ -73,7 +73,7 @@ about 40 FPS at one face. Slowed down a lot by drawing bounding boxes and keypoi
 
 ## TODO
 1. clean up
-2. implement face tracker and improve classification with it
+2. implement face tracker, improve classification by considering the last predictions
 3. SVM cross validation - optimize parameters for training
 4. detections as objects
 5. test influence of using more samples for one/multiple classes
