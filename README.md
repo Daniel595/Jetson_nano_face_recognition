@@ -1,31 +1,26 @@
-trying to perform face recognition at jetson nano using:
+perform face recognition on jetson nano 
+my first C++ project
 
-mtcnn - face detection
+# MTCNN face detection
 
-dlib face recognition model - create face embeddings
+A fast MTCNN version from https://github.com/PKUZHOU/MTCNN_FaceDetection_TensorRT
 
-dlib svm - classify produced embeddings
+# face recognition
 
-Still a lot to do especially cleaning up code 
-
-# MTCNN_TensorRT
-
-https://github.com/PKUZHOU/MTCNN_FaceDetection_TensorRT
+1. dlib face recognition model to create face embeddings
+    TODO: 
+2. dlib SVM's for classification
+    TODO: cross validation - optimize parameters for training
 
 ## Notations
 
-
-
-## Required environments
-
 ## Build
-
 
 ## Results
 
-
 ## Speed
 
-
 ## TODO
-clean up
+1. clean up
+2. implement face tracker and improve classification with it
+
