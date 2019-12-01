@@ -36,6 +36,7 @@ A fast MTCNN version from https://github.com/PKUZHOU/MTCNN_FaceDetection_TensorR
     /src/model/dlib_face_recognition_resnet_model_v1.dat
     
     
+    
     Python: 
     
     face_recognition (face_recognition_models)
