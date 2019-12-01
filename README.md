@@ -72,6 +72,7 @@ classification works OK if every class has about the same amount of images. If i
 about 40 FPS at one face. Slowed down a lot by drawing bounding boxes and keypoints by CPU.
 
 ## TODO
+1. Serialize and deserialize TRT models for MTCNN
 1. clean up
 2. implement face tracker, improve classification by considering the last predictions
 3. SVM cross validation - optimize parameters for training
