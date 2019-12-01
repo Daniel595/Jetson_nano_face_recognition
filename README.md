@@ -8,8 +8,11 @@ A fast MTCNN version from https://github.com/PKUZHOU/MTCNN_FaceDetection_TensorR
 # face recognition
 
 1. dlib face recognition model to create face embeddings
+    
     TODO: 
+    
 2. dlib SVM's for classification
+    
     TODO: cross validation - optimize parameters for training
 
 ## Notations
