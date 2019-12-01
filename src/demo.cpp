@@ -19,6 +19,8 @@
 #include <vector>
 
 
+
+
 gstCamera* getCamera(){
     gstCamera* camera = gstCamera::Create(gstCamera::DefaultWidth, gstCamera::DefaultHeight, NULL);
 	if( !camera ){
@@ -99,7 +101,7 @@ void nv_image_test(const char* imgFilename){
 
 
 
-void nv_camera_stream(){
+void run(){
     gstCamera* camera = getCamera();
     bool user_quit = false;
     int imgWidth = camera->GetWidth();
@@ -110,8 +112,8 @@ void nv_camera_stream(){
     std::vector<std::string> label_encodings;
 
     //create networks
-    mtcnn finder(imgHeight, imgWidth);            //detection network
-    face_embedder embedder;                     //recognition network, generate face embeddings
+    mtcnn finder(imgHeight, imgWidth);              //detection network
+    face_embedder embedder;                         //recognition network, generate face embeddings
     face_classifier classifier(&embedder);
     glDisplay* display = getDisplay();
     classifier.get_label_encoding(&label_encodings);
@@ -124,7 +126,7 @@ void nv_camera_stream(){
     uchar* cropped_buffer_cpu[2] = {NULL,NULL};
     cudaAllocMapped( (void**) &cropped_buffer_cpu[0], (void**) &cropped_buffer_gpu[0], 150*150*3*sizeof(uchar) );
     cudaAllocMapped( (void**) &cropped_buffer_cpu[1], (void**) &cropped_buffer_gpu[1], 150*150*3*sizeof(uchar) );
-  
+    
     while(!user_quit){
         
         clk = clock();              //fps clock
@@ -152,31 +154,22 @@ void nv_camera_stream(){
         std::vector<matrix<rgb_pixel>> faces;
 
         num_dets = get_detections(origin_cpu, &detections, &rects, &keypoints);        
-        crop_and_align_faces(imgRGB_gpu, cropped_buffer_gpu, cropped_buffer_cpu, &rects, &faces, &keypoints);
         
-        //for testing: show cropped and aligned faces in a separate window for visual check if alignment works well
-       /* for(int i=0; i<num_dets; i++){
-            image_window my_win(faces[i], "win");
-            my_win.wait_until_closed();
-        }*/
-        
-        //pass the detected faces to the recognition network
-        //feed the face embeddings into a SVM
         if(num_dets > 0){
-            std::vector<matrix<float,0,1>> face_embeddings;
-            embedder.embeddings(&faces, &face_embeddings);
-            // layout
-            // rect 1       rect 2     rect 3    ...
-            // face 1       face 2     face 3    ...
-            // label 1      label 2    label 3   ...
-            // embedding1   emb 2      emb 3     ...
+            crop_and_align_faces(imgRGB_gpu, cropped_buffer_gpu, cropped_buffer_cpu, &rects, &faces, &keypoints);
             
+            //for testing: show cropped and aligned faces in a separate window for visual check if alignment works well
+            /*for(int i=0; i<num_dets; i++){
+                image_window my_win(faces[i], "win");
+                my_win.wait_until_closed();
+            }*/
+
+            std::vector<matrix<float,0,1>> face_embeddings;
+            embedder.embeddings(&faces, &face_embeddings);                          // create embeddings
+           
             // SVM prediction
-            classifier.prediction(&face_embeddings, &face_labels);
-            //for(int i = 0; i<face_labels.size(); i++){
-            //    cout << "detected face: " << face_labels[i] << " - " << label_encodings[face_labels[i]] << endl;
-            //}
-            draw_detections(origin_cpu, &rects, &face_labels, &label_encodings);
+            classifier.prediction(&face_embeddings, &face_labels);                  // classify embeddings
+            draw_detections(origin_cpu, &rects, &face_labels, &label_encodings);    // draw label to boundingbox
             
             // TODO: handle detections - reaction
         }
@@ -206,22 +199,9 @@ void nv_camera_stream(){
 
 
 
-
-void ttt(){
-    
-    face_embedder embedder;
-
-    face_classifier fc(&embedder);
-
-
-
-}
-
 int main()
 {
-    //test();
-    //ttt();
-    nv_camera_stream();
+    run();
     //nv_image_test("4.jpg");
 
     return 0;

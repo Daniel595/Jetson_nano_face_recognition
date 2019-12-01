@@ -18,6 +18,7 @@ class face_classifier{
     typedef svm_c_trainer<kernel_type> trainer_type;
     typedef decision_function<kernel_type> classifier_type;    
 
+
 public:
     face_classifier(face_embedder *embedder);
     ~face_classifier(void);
@@ -58,10 +59,12 @@ private:
 
     
     face_embedder embedder;
-    std::vector<std::string> label_encoding;
-    std::vector<classifier_type> classifiers;
-    std::vector<pair<double, double>> classifiersLabels;
+    std::vector<std::string> label_encoding;                // persons names
+    std::vector<classifier_type> classifiers;               // svm's
+    std::vector<pair<double, double>> classifiersLabels;    // positive and negative of each svm
 
+    int num_classes;
+    int num_classifiers;
 
 };
 

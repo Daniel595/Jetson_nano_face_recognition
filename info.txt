@@ -1,9 +1,0 @@
-train
-num classes: 6
-#	label:	images:
-0	Steffi	6
-1	Daniel	5
-2	Jana	5
-3	Dieter	6
-4	Leon	5
-5	Seona	5

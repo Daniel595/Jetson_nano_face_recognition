@@ -1341,6 +1341,7 @@ main: /usr/local/cuda/lib64/libcudart_static.a
 main: /usr/lib/aarch64-linux-gnu/librt.so
 main: /usr/lib/aarch64-linux-gnu/libboost_system.so
 main: /usr/lib/aarch64-linux-gnu/libboost_filesystem.so
+main: /usr/lib/aarch64-linux-gnu/libboost_python.so
 main: /usr/local/lib/libopencv_gapi.so.4.1.0
 main: /usr/local/lib/libopencv_stitching.so.4.1.0
 main: /usr/local/lib/libopencv_aruco.so.4.1.0
@@ -1375,6 +1376,7 @@ main: /usr/local/lib/libopencv_xobjdetect.so.4.1.0
 main: /usr/local/lib/libopencv_xphoto.so.4.1.0
 main: /usr/local/lib/libdlib.so.19.17.0
 main: /home/nvidia/jetson-inference/build/aarch64/lib/libjetson-utils.so
+main: /usr/lib/aarch64-linux-gnu/libpython3.6m.so
 main: /usr/local/lib/libopencv_shape.so.4.1.0
 main: /usr/local/lib/libopencv_datasets.so.4.1.0
 main: /usr/local/lib/libopencv_plot.so.4.1.0

@@ -173,7 +173,7 @@ void draw_detections(   cv::Mat &origin_cpu,
         // rectangles
         cv::rectangle(origin_cpu, rects->at(i), cv::Scalar(0,0,255), 2,8,0);        
         // labels
-        string encoding = ((labels->at(i) >= 0) ? label_encodings->at(labels->at(i)) : "Unbekannt");
+        string encoding = ((labels->at(i) >= 0) ? label_encodings->at(labels->at(i)) : "Unknown");
         cv::putText(origin_cpu, encoding , cv::Point(rects->at(i).x,rects->at(i).y), 
                     cv::FONT_HERSHEY_COMPLEX_SMALL, 1.0, cv::Scalar(255,255,255), 1 ); // mat, text, coord, font, scale, bgr color, line thickness
     }                        
