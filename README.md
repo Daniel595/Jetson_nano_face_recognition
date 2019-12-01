@@ -45,11 +45,11 @@ A fast MTCNN version from https://github.com/PKUZHOU/MTCNN_FaceDetection_TensorR
     
 3. Build/run: 
 
-    - cmake .
+    cmake .
     
-    - make
+    make
     
-    - ./main
+    ./main
 
 
 4. training:
