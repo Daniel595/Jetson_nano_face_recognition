@@ -131,48 +131,35 @@ void face_classifier::prediction(   std::vector<sample_type_embedding> *face_emb
         // run every classifier
         for(int k = 0; k < classifiers.size(); k++){
             double prediction = classifiers[k](sample);
-            cout << prediction << " : ";
+            //cout << prediction << " : ";
             
             if(abs(prediction) < threshold) {
-                cout << "-1" << endl;
+                //cout << "-1" << endl;
             } else if (prediction < 0) {
                 votes[classifiersLabels[k].first]++;                        // increment number of votes
-                cout << classifiersLabels[k].first << endl;
+                //cout << classifiersLabels[k].first << endl;
                 mean[(int)classifiersLabels[k].first] += abs(prediction);   // add value to positive
                 //mean[(int)classifiersLabels[k].second] -= abs(prediction);  // sub value from negative
             } else {
                 votes[classifiersLabels[k].second]++;
-                cout << classifiersLabels[k].second << endl;
+                //cout << classifiersLabels[k].second << endl;
                 mean[(int)classifiersLabels[k].second] += abs(prediction);
                 //mean[(int)classifiersLabels[k].first] -= abs(prediction); 
             }
         }
 
-        cout << "Votes: " << endl;
-        for(auto &vote : votes) {
-            cout << vote.first << ": " << vote.second << endl;
-        }
+        //cout << "Votes: " << endl;
+        //for(auto &vote : votes) {
+        //    cout << vote.first << ": " << vote.second << endl;
+        //}
 
-        //auto max = std::max_element(votes.begin(), votes.end(), 
-        //[](const pair<double, int>& p1, const pair<double, int>& p2) { return p1.second < p2.second; });
-
-
-        //TODO: implement weightened decision 
-        // max->first = class, max->second = number of votes
 
         double label = -1;
-        //label = max->first ;    // label = most votes
-        
-
-
-        //cout << "Label is " << label << endl;
-        //cout << "max: " << max->first << "   " << max->second << endl;
-
-
         double max = 0;
         int num_votes = 0;
         static int min_votes = this->num_classes/2 - 1;
         static double mean_threshold = 0.35;
+
         for(int i = 0; i<this->num_classes; i++){
             num_votes += votes[i];  
             if (votes[i] != 0){         // prevent Zero division
@@ -182,10 +169,10 @@ void face_classifier::prediction(   std::vector<sample_type_embedding> *face_emb
                     label = (max >= mean_threshold ? i : label);    // value above threshhold? -> new label
                 }
             } 
-            printf("class: %d: mean: %f\n", i, mean[i] );
+            //printf("class: %d: mean: %f\n", i, mean[i] );
         }
         printf("label is %f\n",label);
-        printf("-1 votes: %d\n", this->num_classifiers - num_votes);
+        //printf("-1 votes: %d\n", this->num_classifiers - num_votes);
 
         face_labels->push_back(label);
 
@@ -333,6 +320,7 @@ void face_classifier::training(std::vector<sample_type_embedding> *face_embeddin
                 labels4pair.emplace_back(+1);
             }
         }
+        randomize_samples(samples4pair, labels4pair);
 
         //training
         classifiers.emplace_back(trainer.train(samples4pair, labels4pair));         //train and store classifier
