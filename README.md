@@ -1,5 +1,3 @@
-my first C++ project
-
 face recognition on jetson nano - detection/recognition/classification
 
 # MTCNN face detection
@@ -10,21 +8,72 @@ A fast MTCNN version from https://github.com/PKUZHOU/MTCNN_FaceDetection_TensorR
 
 1. dlib face recognition model to create face embeddings
     
-    TODO: 
     
 2. dlib SVM's for classification
     
-    TODO: cross validation - optimize parameters for training
 
-## Notations
 
-## Build
+## Information
 
-## Results
+1. face images: 
+
+    image location: faces/train/raw/<class_name>/<images> (I used 5 images per class)
+    
+    preprocessing: faces/generate_input_data.py - detect, extract, crop, align faces, prepare for svm-training
+    
+    testdata: not used yet
+    
+2. Required:
+
+    C:
+
+    Dlib (cuda)
+    
+    Opencv (cuda)
+    
+    jetson-inference/includes (/src)
+    
+    /src/model/dlib_face_recognition_resnet_model_v1.dat
+    
+    
+    Python: 
+    
+    face_recognition (face_recognition_models)
+    
+    Opencv
+    
+    
+3. Build/run: 
+
+    - cmake .
+    
+    - make
+    
+    - ./main
+
+
+4. training:
+ 
+    SVM's will be trained on startup by "face_classifier" if required. 
+    
+    The trained SVM's will be "serialized" to "/svm". 
+    
+    The "face_classifier" detects if the training-data changed since the last training. If so the SVM's will be trained again, otherwise the trained SVM's will be deserialized from "/svm".
+    
+
+
+## Tests
+
+classification works OK if every class has about the same amount of images. If i put lot more images to one class it always predicts this class. TODO: check ML-basics - doing a common failure? 
 
 ## Speed
+
+about 40 FPS at one face. Slowed down a lot by drawing bounding boxes and keypoints by CPU.
 
 ## TODO
 1. clean up
 2. implement face tracker and improve classification with it
+3. SVM cross validation - optimize parameters for training
+4. detections as objects
+5. test influence of using more samples for one/multiple classes
 
