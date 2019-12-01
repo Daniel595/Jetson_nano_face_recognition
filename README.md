@@ -1,5 +1,6 @@
-perform face recognition on jetson nano 
 my first C++ project
+
+face recognition on jetson nano - detection/recognition/classification
 
 # MTCNN face detection
 
