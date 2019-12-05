@@ -2,7 +2,7 @@ face recognition on jetson nano - detection/recognition/classification
 
 # MTCNN face detection
 
-A fast MTCNN version from https://github.com/PKUZHOU/MTCNN_FaceDetection_TensorRT
+A fast C++ implementation of TensorRT and CUDA accelerated MTCNN from https://github.com/PKUZHOU/MTCNN_FaceDetection_TensorRT
 
 # face recognition
 
