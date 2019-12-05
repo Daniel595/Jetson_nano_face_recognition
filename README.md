@@ -15,49 +15,53 @@ A fast C++ implementation of TensorRT and CUDA accelerated MTCNN from https://gi
 
 ## Information
 
-1. face images: 
+1. where to place facial images? : 
 
-    image location: faces/train/raw/<class_name>/<images> (I used 5 images per class)
+        - location: faces/train/raw/<class_name>/<images> 
     
-    preprocessing: faces/generate_input_data.py - detect, extract, crop, align faces, prepare for svm-training
+        - preprocessing: faces/generate_input_data.py - detect, extract, crop, align faces, prepare for svm-training
     
-    testdata: not used yet
+        - testdata: not used yet
     
 2. Required:
 
     C:
 
-    Dlib (cuda)
+        - Dlib (cuda enabled)
     
-    Opencv (cuda)
+        - Opencv (cuda enabled)
     
-    jetson-inference/includes (/src)
+        - jetson-inference/includes (a built version of jetson-inference repo https://github.com/dusty-nv/jetson-inference)
     
-    /src/model/dlib_face_recognition_resnet_model_v1.dat
+        - /src/model/dlib_face_recognition_resnet_model_v1.dat
     
     
     
     Python: 
     
-    face_recognition (face_recognition_models)
+        - library face_recognition (https://pypi.org/project/face_recognition/)
     
-    Opencv
+        - Opencv
     
     
 3. Build/run: 
 
-    cmake .
+        - add train data
+        
+        - python faces/generate_input_data.py
+
+        - cmake .
     
-    make
+        - make
     
-    ./main
+        - ./main
 
 
 4. training:
  
     SVM's will be trained on startup by "face_classifier" if required. 
     
-    The trained SVM's will be "serialized" to "/svm". 
+    The trained SVM's will be serialized to "/svm". 
     
     The "face_classifier" detects if the training-data changed since the last training. If so the SVM's will be trained again, otherwise the trained SVM's will be deserialized from "/svm".
     
@@ -65,14 +69,16 @@ A fast C++ implementation of TensorRT and CUDA accelerated MTCNN from https://gi
 
 ## Tests
 
-classification works OK if every class has about the same amount of images. If i put lot more images to one class it always predicts this class. TODO: check ML-basics - doing a common failure? 
+classification - OK if every class has about the same amount of images. If I put more images to one class (like every class 5 and one class 20) it always predicts this class. TODO: ML-basics - doing a common failure? 
 
 ## Speed
 
-about 40 FPS at one face. Slowed down a lot by drawing bounding boxes and keypoints by CPU.
+about 40 FPS at one face. Slowed down a lot by drawing bounding boxes and keypoints by CPU. TODO: draw bounding boxes by CUDA
 
 ## TODO
-1. Serialize and deserialize TRT models for MTCNN, building them takes always about 3 mins
-2. implement face tracker, improve classification by considering the last predictions for tracked face
-3. SVM cross validation - optimize parameters for training
-4. new design for detections - as class
+```diff
+- Serialize and deserialize TRT models for MTCNN, building them takes always about 3 mins
+- implement face tracker, improve classification by considering the last predictions for tracked face
+- SVM cross validation - optimize parameters for training
+- new design for detections - as class
+```
