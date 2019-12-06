@@ -15,13 +15,12 @@ A fast C++ implementation of TensorRT and CUDA accelerated MTCNN from https://gi
 
 ## Information
 
-1. where to place facial images? : 
+1. about facial images: 
 
         - location: faces/train/raw/<class_name>/<images> 
     
-        - preprocessing: faces/generate_input_data.py - detect, extract, crop, align faces, prepare for svm-training
-    
-        - testdata: not used yet
+        - preprocessing: faces/generate_input_data.py - detect, extract, crop, align, prepare svm-training 
+        
     
 2. Required:
 
@@ -68,7 +67,7 @@ A fast C++ implementation of TensorRT and CUDA accelerated MTCNN from https://gi
     
 5. run:
     
-    At the first run the network will build cuda engines what takes about 3 mins. The engines will be serialized and reused. Note: if the image size changes the pnet engines need to be rebuilt since.
+    At the first run the network will build cuda engines what takes about 3 mins. The engines will be serialized and reused. If the MTCNN input size changes the pnet engines need to be rebuilt because their inputsize depends on MTCNN iniputsize.
 
 
 ## Tests
