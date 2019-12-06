@@ -41,8 +41,6 @@ void Pnet_engine::init(int row, int col, size_t index) {
     protofile.write(contents.c_str(), contents.size());
     protofile.close();
     IHostMemory *gieModelStream{nullptr};
-    // how to identify model? with this info
-    cout << "row:" << row << ", col:" << col << ", index:" << index << endl;
     
     // check if this model already exists and try do deserialize
     string filename = filename_base + to_string((int)index) + "_" + to_string(row) + "_" + to_string(col) + ".engine";

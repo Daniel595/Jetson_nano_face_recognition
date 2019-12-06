@@ -41,7 +41,8 @@ mtcnn::mtcnn(int row, int col){
     }
 
     cout<<"Start generating TenosrRT runtime models"<<endl;
-    //generate pnet models
+    
+    //generate pnet models (multiple instances with different inputs)
     printf("generate P-net\n");
     pnet_engine = new Pnet_engine[scales_.size()];
     simpleFace_ = (Pnet**)malloc(sizeof(Pnet*)*scales_.size());

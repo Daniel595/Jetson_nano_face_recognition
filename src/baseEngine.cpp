@@ -60,9 +60,9 @@ void baseEngine::caffeToGIEModel(const std::string &deployFile,                /
 
 
 void baseEngine::serialize_engine(const std::string &name){
-    cout << "serialize engine " << name  << endl;
-
     std::string store_file = engine_path + name;
+    cout << "serialize engine: " << store_file  << endl;
+    
     IHostMemory * serializedModel = context->getEngine().serialize();
     std::ofstream ofs(store_file.c_str(), std::ios::binary);
     ofs.write((char*)(serializedModel->data()), serializedModel->size());
@@ -71,10 +71,10 @@ void baseEngine::serialize_engine(const std::string &name){
 }
 
 
-bool baseEngine::deserialize_engine(const std::string &name){
-    printf("try to deserialize engine\n");
-    
+bool baseEngine::deserialize_engine(const std::string &name){   
     std::string check_file = engine_path + name;
+    cout << "try to deserialize engine: " << check_file << endl;
+    
     std::vector<char> trtModelStream_;
     size_t size{ 0 };
 
@@ -85,7 +85,6 @@ bool baseEngine::deserialize_engine(const std::string &name){
         size = file.tellg();
         file.seekg(0, file.beg);
         trtModelStream_.resize(size);
-        std::cout << "size" << trtModelStream_.size() << std::endl;
         file.read(trtModelStream_.data(), size);
         file.close();
     }else{
@@ -93,7 +92,6 @@ bool baseEngine::deserialize_engine(const std::string &name){
         return false;
     } 
     
-    std::cout << "size" << size << endl;
     IRuntime* runtime = createInferRuntime(gLogger);
     assert(runtime != nullptr);
     ICudaEngine* engine = runtime->deserializeCudaEngine(trtModelStream_.data(), size, nullptr);

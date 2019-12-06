@@ -7,6 +7,7 @@
 
 //#define LOG   //show the time consumption of the stages
 
+
 class mtcnn
 {
 public:
