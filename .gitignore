@@ -2,7 +2,6 @@ CMakeCache.txt
 cmake_install.cmake
 CMakeFiles/*
 src/models/dlib*
-faces/train/raw/*
 faces/train/cropped/*
 faces/test/raw/*
 faces/test/cropped/*
