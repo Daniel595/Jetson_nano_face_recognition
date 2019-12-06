@@ -77,7 +77,6 @@ about 40 FPS at one face. Slowed down a lot by drawing bounding boxes and keypoi
 
 ## TODO
 ```diff
-- Serialize and deserialize TRT models for MTCNN, building them takes always about 3 mins. BUT Different input size needs different TRT-engine 
 - implement face tracker, improve classification by considering the last predictions for tracked face
 - SVM cross validation - optimize parameters for training
 - new design for detections - as class
