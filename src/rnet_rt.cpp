@@ -21,12 +21,14 @@ void Rnet_engine::init(int row, int col) {
 
     IHostMemory *gieModelStream{nullptr};
     const int max_batch_size = 2048;
-    //generate Tensorrt model
-    caffeToGIEModel(prototxt, model, std::vector<std::string>{OUTPUT_PROB_NAME, OUTPUT_LOCATION_NAME}, max_batch_size,
-                    gieModelStream);
-    
+    std::string filename = filename_base + to_string(row) + "_" + to_string(col) + ".engine";
+    if(!deserialize_engine(filename)){
+        // generate Tensorrt model
+        caffeToGIEModel(prototxt, model, std::vector<std::string>{OUTPUT_PROB_NAME, OUTPUT_LOCATION_NAME}, max_batch_size,
+                        gieModelStream);
+        serialize_engine(filename);
+    }
 }
-
 
 Rnet::Rnet(const Rnet_engine &rnet_engine) : BatchSize(2048),
                                              INPUT_C(3),

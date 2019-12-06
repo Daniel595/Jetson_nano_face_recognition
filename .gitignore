@@ -8,5 +8,7 @@ faces/test/raw/*
 faces/test/cropped/*
 svm/*
 main
+engines/*.engine
+
 
 

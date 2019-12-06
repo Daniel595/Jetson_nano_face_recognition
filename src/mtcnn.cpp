@@ -10,7 +10,7 @@ mtcnn::mtcnn(int row, int col){
     nms_threshold[1] = 0.6;
     nms_threshold[2] = 0.6;
 
-    //set minimal face size (weidth in pixels)
+    //set minimal face size (width in pixels)
     int minsize = 40;
 
     /*config  the pyramids */
@@ -48,7 +48,7 @@ mtcnn::mtcnn(int row, int col){
     for (size_t i = 0; i < scales_.size(); i++) {
         int changedH = (int)ceil(row*scales_.at(i));
         int changedW = (int)ceil(col*scales_.at(i));
-        pnet_engine[i].init(changedH,changedW);
+        pnet_engine[i].init(changedH,changedW, i);
         simpleFace_[i] =  new Pnet(changedH,changedW,pnet_engine[i]);
     }
 

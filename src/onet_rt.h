@@ -14,6 +14,7 @@ public:
     Onet_engine();
     ~Onet_engine();
     void init(int row, int col);
+    std::string filename_base = "onet_engine_";
     friend class Onet;
 
 };

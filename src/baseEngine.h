@@ -28,6 +28,8 @@ public:
                                  unsigned int maxBatchSize,					// batch size - NB must be at least as large as the batch we want to run with)
                                  IHostMemory *&gieModelStream);             // output buffer for the GIE model
     virtual void init(int row,int col);
+    bool deserialize_engine(const std::string &name);
+    void serialize_engine(const std::string &name);
     friend class Pnet;
     const string prototxt;
     const string model   ;
@@ -37,5 +39,7 @@ public:
     const char *OUTPUT_POINT_NAME;
     Logger gLogger;
     IExecutionContext *context;
+
+    string engine_path = "engines/";
 };
 #endif //MAIN_BASEENGINE_H

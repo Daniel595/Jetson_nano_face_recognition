@@ -26,6 +26,8 @@ void baseEngine::caffeToGIEModel(const std::string &deployFile,                /
                                   unsigned int maxBatchSize,                    // batch size - NB must be at least as large as the batch we want to run with)
                                   IHostMemory *&gieModelStream)    // output buffer for the GIE model
 {
+    cout<<"build cuda engine for " << model << endl;
+    
     // create the builder
     IBuilder *builder = createInferBuilder(gLogger);
 
@@ -53,4 +55,59 @@ void baseEngine::caffeToGIEModel(const std::string &deployFile,                /
     parser->destroy();
     builder->destroy();
 
+}
+
+
+
+void baseEngine::serialize_engine(const std::string &name){
+    cout << "serialize engine " << name  << endl;
+
+    std::string store_file = engine_path + name;
+    IHostMemory * serializedModel = context->getEngine().serialize();
+    std::ofstream ofs(store_file.c_str(), std::ios::binary);
+    ofs.write((char*)(serializedModel->data()), serializedModel->size());
+    ofs.close();
+    serializedModel->destroy();
+}
+
+
+bool baseEngine::deserialize_engine(const std::string &name){
+    printf("try to deserialize engine\n");
+    
+    std::string check_file = engine_path + name;
+    std::vector<char> trtModelStream_;
+    size_t size{ 0 };
+
+    std::ifstream file(check_file.c_str(), std::ios::binary);
+    if (file.good())
+    {
+        file.seekg(0, file.end);
+        size = file.tellg();
+        file.seekg(0, file.beg);
+        trtModelStream_.resize(size);
+        std::cout << "size" << trtModelStream_.size() << std::endl;
+        file.read(trtModelStream_.data(), size);
+        file.close();
+    }else{
+        cout << "engine does not exist!" << endl;
+        return false;
+    } 
+    
+    std::cout << "size" << size << endl;
+    IRuntime* runtime = createInferRuntime(gLogger);
+    assert(runtime != nullptr);
+    ICudaEngine* engine = runtime->deserializeCudaEngine(trtModelStream_.data(), size, nullptr);
+    assert(engine);
+    context = engine->createExecutionContext();
+
+    if(!engine){
+        printf("failed to deserialize engine\n");
+        return false;
+    }
+    if( !context ){
+		printf("failed to create execution context\n");
+        return false;
+	}
+    
+    return true;
 }

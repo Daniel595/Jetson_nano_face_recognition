@@ -16,7 +16,7 @@ Pnet_engine::Pnet_engine() : baseEngine("det1_relu.prototxt",
 Pnet_engine::~Pnet_engine() {
     shutdownProtobufLibrary();
 }
-void Pnet_engine::init(int row, int col) {
+void Pnet_engine::init(int row, int col, size_t index) {
 
     //modifiy the input shape of prototxt, write to temp.prototxt
     int first_spce = 16, second_space = 4;
@@ -41,9 +41,18 @@ void Pnet_engine::init(int row, int col) {
     protofile.write(contents.c_str(), contents.size());
     protofile.close();
     IHostMemory *gieModelStream{nullptr};
-    //generate Tensorrt model
-    caffeToGIEModel("temp.prototxt", model, std::vector<std::string>{OUTPUT_PROB_NAME, OUTPUT_LOCATION_NAME}, 1,
-                    gieModelStream);
+    // how to identify model? with this info
+    cout << "row:" << row << ", col:" << col << ", index:" << index << endl;
+    
+    // check if this model already exists and try do deserialize
+    string filename = filename_base + to_string((int)index) + "_" + to_string(row) + "_" + to_string(col) + ".engine";
+    if (!deserialize_engine(filename)){ 
+        // if deserialization is not possible generate Tensorrt model
+        caffeToGIEModel("temp.prototxt", model, std::vector<std::string>{OUTPUT_PROB_NAME, OUTPUT_LOCATION_NAME}, 1,
+                        gieModelStream);
+        // and save it for later use
+        serialize_engine(filename);
+    }
 
 }
 

@@ -13,7 +13,9 @@ class Rnet_engine : public baseEngine {
 public:
     Rnet_engine();
     ~Rnet_engine();
+    void serialize();
     void init(int row, int col);
+    std::string filename_base = "rnet_engine_";
     friend class Rnet;
 };
 

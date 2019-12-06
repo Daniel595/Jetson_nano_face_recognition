@@ -18,7 +18,8 @@ class Pnet_engine:public baseEngine
 public:
     Pnet_engine();
     ~Pnet_engine();
-    void init(int row,int col);
+    void init(int row,int col, size_t index);
+    string filename_base = "pnet_engine_";
     friend class Pnet;
 
 };
