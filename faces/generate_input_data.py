@@ -69,57 +69,58 @@ for i in range(len(src)):
     for path, dirs, files in os.walk(src[i]):
 
         for f in files:
-            split = path.split("/")
-            name = split[len(split)-1]
-            
-            if(name != label):
-                if(cnt > 0):
-                    num_label_images.append(cnt)
-                cnt = 0
-                print("new label: " + name)
-                label = name
-                labels.append(label)
-                os.mkdir(os.path.join(dst[i], label))
-                num_labels += 1
-            
-            image = dlib.load_rgb_image(os.path.join(path,f))
-            print("processing " + f + " ..." + " (" + label + ")")
+            if not f.endswith(".gitignore"):
+                split = path.split("/")
+                name = split[len(split)-1]
+                
+                if(name != label):
+                    if(cnt > 0):
+                        num_label_images.append(cnt)
+                    cnt = 0
+                    print("new label: " + name)
+                    label = name
+                    labels.append(label)
+                    os.mkdir(os.path.join(dst[i], label))
+                    num_labels += 1
+                
+                image = dlib.load_rgb_image(os.path.join(path,f))
+                print("processing " + f + " ..." + " (" + label + ")")
 
-            #size image down
-            div = (max(image.shape[0], image.shape[1]) / 800)
-            new_wid = (int)(image.shape[0]/div)
-            new_height = (int)(image.shape[1]/div)
-            image = dlib.resize_image(image,new_wid, new_height)
-            
-            dets = face_detector(image, 1)
-            
-            if(len(dets) == 0):
-                print("#### Failed to extract face: no face detected ####\n")
-                failed_paths = failed_paths + str(fail_cnt) + ". " + os.path.join(path,f) + " -- no face detected. \n"
-                fail_cnt = fail_cnt + 1
-            elif(len(dets) > 1):
-                print("#### Failed to extract face: too many faces in this picture ####\n")   
-                failed_paths = failed_paths + str(fail_cnt) + ". " +  os.path.join(path,f) + " -- more than one face detected. \n"
-                fail_cnt = fail_cnt + 1
-            else:            
-                for face in dets:
-                    rect = _css_to_rect(_trim_css_to_bounds(_rect_to_css(face.rect), image.shape))
-                    shape = shape_predictor(image, rect)
-                    #face_chip extracts the face in a way that is expected as input by the recognition model
-                    chip = dlib.get_face_chip(image,shape)
+                #size image down
+                div = (max(image.shape[0], image.shape[1]) / 800)
+                new_wid = (int)(image.shape[0]/div)
+                new_height = (int)(image.shape[1]/div)
+                image = dlib.resize_image(image,new_wid, new_height)
+                
+                dets = face_detector(image, 1)
+                
+                if(len(dets) == 0):
+                    print("#### Failed to extract face: no face detected ####\n")
+                    failed_paths = failed_paths + str(fail_cnt) + ". " + os.path.join(path,f) + " -- no face detected. \n"
+                    fail_cnt = fail_cnt + 1
+                elif(len(dets) > 1):
+                    print("#### Failed to extract face: too many faces in this picture ####\n")   
+                    failed_paths = failed_paths + str(fail_cnt) + ". " +  os.path.join(path,f) + " -- more than one face detected. \n"
+                    fail_cnt = fail_cnt + 1
+                else:            
+                    for face in dets:
+                        rect = _css_to_rect(_trim_css_to_bounds(_rect_to_css(face.rect), image.shape))
+                        shape = shape_predictor(image, rect)
+                        #face_chip extracts the face in a way that is expected as input by the recognition model
+                        chip = dlib.get_face_chip(image,shape)
 
-                    prefix = "chip_" + label + "_"
-                    number = ""
-                    if(cnt < 10):
-                        number = "0"
-                    number = number + str(cnt)
-                    filetype = f.split(".")
-                    suffix = "." + filetype[len(filetype) - 1]
-                    chip_name =   prefix + number + suffix
-                    dlib.save_image(chip, os.path.join(dst[i], label, chip_name))
-                    print("Face successfully extracted!\n")
-            #new file
-            cnt = cnt + 1    
+                        prefix = "chip_" + label + "_"
+                        number = ""
+                        if(cnt < 10):
+                            number = "0"
+                        number = number + str(cnt)
+                        filetype = f.split(".")
+                        suffix = "." + filetype[len(filetype) - 1]
+                        chip_name =   prefix + number + suffix
+                        dlib.save_image(chip, os.path.join(dst[i], label, chip_name))
+                        print("Face successfully extracted!\n")
+                #new file
+                cnt = cnt + 1    
 
 num_label_images.append(cnt)
 

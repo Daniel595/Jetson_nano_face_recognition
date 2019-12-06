@@ -5,7 +5,7 @@
 #include "rnet_rt.h"
 #include "onet_rt.h"
 
-//#define LOG   //show the time consumption of the stages
+#define LOG   //show the time consumption of the stages
 
 
 class mtcnn

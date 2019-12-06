@@ -20,7 +20,7 @@
 
 
 
-
+// create high performace jetson camera - loads the image directly to gpumem/sharedmem
 gstCamera* getCamera(){
     gstCamera* camera = gstCamera::Create(gstCamera::DefaultWidth, gstCamera::DefaultHeight, NULL);
 	if( !camera ){
@@ -40,7 +40,7 @@ gstCamera* getCamera(){
     return camera;
 }
 
-
+// create high performance jetson display - show image directly from gpumem/sharedmem
 glDisplay* getDisplay(){
     glDisplay* display = glDisplay::Create();
 	if( !display ) 
@@ -102,23 +102,31 @@ void nv_image_test(const char* imgFilename){
 
 
 void run(){
-    gstCamera* camera = getCamera();
+    
+    // -------------- Initialization -------------------
+
+    // Camera stuff
+    gstCamera* camera = getCamera();                // create jetson camera - PiCamera. USB-Cam needs different operations in Loop!! not implemented!
     bool user_quit = false;
     int imgWidth = camera->GetWidth();
     int imgHeight = camera->GetHeight();
+    
+    // FPS stuff
     double fps = 10.0;
     clock_t clk;
-    int num_dets = 0;
-    std::vector<std::string> label_encodings;
-
-    //create networks
-    mtcnn finder(imgHeight, imgWidth);              //detection network
-    face_embedder embedder;                         //recognition network, generate face embeddings
-    face_classifier classifier(&embedder);
-    glDisplay* display = getDisplay();
-    classifier.get_label_encoding(&label_encodings);
     
-    //malloc shared memory for images for access with cpu and gpu without copying data
+    // Detection vars
+    int num_dets = 0;
+    std::vector<std::string> label_encodings;       // vector for the real names of the classes/persons
+
+    // create networks
+    mtcnn finder(imgHeight, imgWidth);              // build OR deserialize TensorRT detection network
+    face_embedder embedder;                         // deserialize recognition network 
+    face_classifier classifier(&embedder);          // train OR deserialize classification SVM's 
+    glDisplay* display = getDisplay();              // create jetson display
+    
+    // malloc shared memory for images for access with cpu and gpu without copying data
+    // cudaAllocMapped is used from jetson-inference
     uchar* rgb_gpu = NULL;
     uchar* rgb_cpu = NULL;
     cudaAllocMapped( (void**) &rgb_cpu, (void**) &rgb_gpu, imgWidth*imgHeight*3*sizeof(uchar) );
@@ -127,66 +135,73 @@ void run(){
     cudaAllocMapped( (void**) &cropped_buffer_cpu[0], (void**) &cropped_buffer_gpu[0], 150*150*3*sizeof(uchar) );
     cudaAllocMapped( (void**) &cropped_buffer_cpu[1], (void**) &cropped_buffer_gpu[1], 150*150*3*sizeof(uchar) );
     
+    // get the possible class names
+    classifier.get_label_encoding(&label_encodings);
+    
+
+    // ------------------ "Detection" Loop -----------------------
+
     while(!user_quit){
-        
-        clk = clock();              //fps clock
-		float* imgOrigin = NULL;    //camera image  
-        // the 2nd arg 1000 defines timeout, true is for the "zeroCopy" means the image will be at shared memory        
-        if( !camera->CaptureRGBA(&imgOrigin, 1000, true))
+
+        clk = clock();              // fps clock
+		float* imgOrigin = NULL;    // camera image  
+        // the 2nd arg 1000 defines timeout, true is for the "zeroCopy" means the image will be located at shared memory what is pretty nice         
+        if( !camera->CaptureRGBA(&imgOrigin, 1000, true))                                   // store image directly into shared memory ! 
 			printf("failed to capture RGBA image from camera\n");
         
-        //since the captured image is located at shared memory, we easily can access it from cpu 
-        // - we even can define a cv::Mat for it without copying data. We use the Mat only to draw the detections onto the Image
+        //since the captured image is located at shared memory, we also can access it from cpu 
+        // - we even can define a cv::Mat (cpu image format) for it without copying data. 
+        // We use the Mat/CPU only to draw the detections onto the image - TODO: draw detections by CUDA
         cv::Mat origin_cpu(imgHeight, imgWidth, CV_32FC4, imgOrigin);
 
-        //the mtcnn pipeline is based on GpuMat 8bit values 3 channels - so we remove the A-channel and size vals down
+        // the mtcnn pipeline is based on GpuMat 8bit values 3 channels - so we remove the A-channel and size vals down
+        // we've got a kernel from jetson-inference for that job, thank you guys
         cudaRGBA32ToBGR8( (float4*)imgOrigin, (uchar3*)rgb_gpu, imgWidth, imgHeight );      //Transform the memory layout 
         //cudaRGBA32ToRGB8( (float4*)imgOrigin, (uchar3*)rgb_gpu, imgWidth, imgHeight );    //Transform the memory layout  TODO: test which one is better
+        
+        // make a opencv gpumat header for the new image
         cv::cuda::GpuMat imgRGB_gpu(imgHeight, imgWidth, CV_8UC3, rgb_gpu);                 // Image as opencv cuda format
 
-        //pass image to detection Network MTCNN and get face detections
+        // pass the image to the MTCNN and get face detections
         std::vector<struct Bbox> detections;
         finder.findFace(imgRGB_gpu, &detections);
 
+        // check if faces were detected, get face locations, bounding boxes and keypoints
         std::vector<cv::Rect> rects;
         std::vector<float*> keypoints;
-        std::vector<double> face_labels;
-        std::vector<matrix<rgb_pixel>> faces;
-
-        num_dets = get_detections(origin_cpu, &detections, &rects, &keypoints);        
+        num_dets = get_detections(origin_cpu, &detections, &rects, &keypoints);             // check for detections
         
+        // if faces detected
         if(num_dets > 0){
+            
+            // crop and align the faces. Get faces to format for "dlib_face_recognition_model" to create embeddings
+            std::vector<matrix<rgb_pixel>> faces;                                   // crop faces
             crop_and_align_faces(imgRGB_gpu, cropped_buffer_gpu, cropped_buffer_cpu, &rects, &faces, &keypoints);
             
-            //for testing: show cropped and aligned faces in a separate window for visual check if alignment works well
-            /*for(int i=0; i<num_dets; i++){
-                image_window my_win(faces[i], "win");
-                my_win.wait_until_closed();
-            }*/
-
+            // generate face embeddings out of the cropped faces and store them in a vector
             std::vector<matrix<float,0,1>> face_embeddings;
             embedder.embeddings(&faces, &face_embeddings);                          // create embeddings
            
-            // SVM prediction
-            classifier.prediction(&face_embeddings, &face_labels);                  // classify embeddings
-            draw_detections(origin_cpu, &rects, &face_labels, &label_encodings);    // draw label to boundingbox
-            
-            // TODO: handle detections - reaction
+            // feed the embeddings to the pretrained SVM's. Store the predictions in a vector
+            std::vector<double> face_labels;
+            classifier.prediction(&face_embeddings, &face_labels);                  // classification
+
+            // draw bounding boxes and labels to the original image (by CPU, TODO: draw from CUDA)
+            draw_detections(origin_cpu, &rects, &face_labels, &label_encodings);    // draw detections
         }
 
-        //Render captured image, print the FPS to the windowbar
+        //Render captured image
         if( display != NULL ){
-            display->RenderOnce(imgOrigin, imgWidth, imgHeight);
+            display->RenderOnce(imgOrigin, imgWidth, imgHeight);                        // display image directly from gpumem/sharedmem
             char str[256];
-            fps = (0.95 * fps) + (0.05 * (1 / ((double)(clock()-clk)/CLOCKS_PER_SEC)));
-            sprintf(str, "TensorRT  %.0f FPS", fps);
+            fps = (0.95 * fps) + (0.05 * (1 / ((double)(clock()-clk)/CLOCKS_PER_SEC))); // smooth FPS
+            sprintf(str, "TensorRT  %.0f FPS", fps);                                    // print the FPS to the bar
             display->SetTitle(str);
-            //check if user quit
-            if( display->IsClosed() )
+            
+            if( display->IsClosed() )                                                   //check if user quit
 				user_quit = true;
         }
     }   
-
 
     SAFE_DELETE(camera);
     SAFE_DELETE(display);
@@ -202,7 +217,5 @@ void run(){
 int main()
 {
     run();
-    //nv_image_test("4.jpg");
-
     return 0;
 }
