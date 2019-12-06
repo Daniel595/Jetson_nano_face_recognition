@@ -1,5 +1,6 @@
 #include "face_embedder.h"
 
+// load dlib embedding model
 face_embedder::face_embedder(void){
 
     deserialize("src/models/dlib_face_recognition_resnet_model_v1.dat") >> net; 
@@ -12,16 +13,16 @@ face_embedder::~face_embedder(void){
 
 }    
 
+// create a first embedding 
 void face_embedder::init(){
     printf("initialization of embedding network!\n");
     matrix<rgb_pixel> img;
     matrix<float,0,1> face_embedding;
     load_image(img, "faces/test.jpg");
     this->embedding(&img, &face_embedding);
-    //check if test image matches
 }
 
-//get embeddings from a single cropped face
+// get embeddings from a single cropped face
 void face_embedder::embedding(matrix<rgb_pixel> *face_chip, matrix<float,0,1> *face_embedding){
     
     *face_embedding = net(*face_chip);
@@ -29,7 +30,7 @@ void face_embedder::embedding(matrix<rgb_pixel> *face_chip, matrix<float,0,1> *f
     
 }
 
-//get embeddings from a vector of cropped faces
+// get embeddings from a vector of cropped faces
 void face_embedder::embeddings(std::vector<matrix<rgb_pixel>> *face_chips, std::vector<matrix<float,0,1>> *face_embeddings){
 
     *face_embeddings = net(*face_chips);
@@ -40,8 +41,8 @@ void face_embedder::embeddings(std::vector<matrix<rgb_pixel>> *face_chips, std::
 }
 
 
-//print out the network architecture
+// print out the network architecture
 void face_embedder::tell(){
-    cout << "The net has " << net.num_layers << " layers in it." << endl;
+    cout << "The net consists of " << net.num_layers << " layers." << endl;
     cout << net << endl;
 }

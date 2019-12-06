@@ -14,6 +14,8 @@ class face_classifier{
 
     typedef matrix<float, 0, 1> sample_type_embedding;          //type: collumn-vector with dynamic size to store the training-face embeddings
     typedef matrix<double, 0, 1> sample_type_svm;               //type: collumn-vector with dtype double which is required to train a SVM
+    
+    // SVM stuff 
     typedef histogram_intersection_kernel<sample_type_svm> kernel_type;
     typedef svm_c_trainer<kernel_type> trainer_type;
     typedef decision_function<kernel_type> classifier_type;    
@@ -30,38 +32,30 @@ public:
 
 private:
     void init();
-
     int deserialize_svm(int classes);
-
     void train_svm(std::vector<string> *info);
-
     void get_training_data(std::vector<sample_type_embedding> *face_embeddings, 
                             std::vector<double> *labels, 
                             std::vector<double> *total_labels );
-
     void training(std::vector<sample_type_embedding> *face_embeddings, 
                     std::vector<double> *labels, 
                     std::vector<double> *total_labels );
-
     void serialize_svm();
-
     int get_info(std::vector<string> *info);
-
     int get_labels();
 
     sample_type_embedding test_embedding;
-
-    std::string test_dir = "faces/test.jpg";
-    std::string labels_dir = "faces/labels.txt";     //file containing the class names
-    std::string info_dir = "faces/info.txt";
-    std::string svm_dir = "svm/";
-    std::string train_data_dir = "faces/train/cropped/";
+    std::string test_dir = "faces/test.jpg";                // a test image
+    std::string labels_dir = "faces/labels.txt";            // file containing the class names
+    std::string info_dir = "faces/info.txt";                // information about svm training
+    std::string svm_dir = "svm/";                           // dir to store the svm for later reuse
+    std::string train_data_dir = "faces/train/cropped/";    // dir containing the training face-images
 
     
-    face_embedder embedder;
-    std::vector<std::string> label_encoding;                // persons names
-    std::vector<classifier_type> classifiers;               // svm's
-    std::vector<pair<double, double>> classifiersLabels;    // positive and negative of each svm
+    face_embedder embedder;                                 // embeddings network for generate training data
+    std::vector<std::string> label_encoding;                // persons/class names
+    std::vector<classifier_type> classifiers;               // actual classifiers/svm's
+    std::vector<pair<double, double>> classifiersLabels;    // labels/positive and negative of each svm
 
     int num_classes;
     int num_classifiers;
