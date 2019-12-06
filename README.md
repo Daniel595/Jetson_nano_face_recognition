@@ -65,6 +65,10 @@ A fast C++ implementation of TensorRT and CUDA accelerated MTCNN from https://gi
     
     The "face_classifier" detects if the training-data changed since the last training. If so the SVM's will be trained again, otherwise the trained SVM's will be deserialized from "/svm".
     
+    
+5. run:
+    
+    At the first run the network will build cuda engines what takes about 3 mins. The engines will be serialized and reused. Note: if the image size changes the pnet engines need to be rebuilt since.
 
 
 ## Tests
