@@ -69,7 +69,9 @@ A fast C++ implementation of TensorRT and CUDA accelerated MTCNN from https://gi
     
     At the first run the network will build cuda engines what takes about 3 mins. The engines will be serialized and reused. If the MTCNN input size changes the pnet engines need to be rebuilt because their inputsize depends on MTCNN iniputsize.
     
-    I found out that the engines don't work if you rebuild the C++ app. TODO: delete engines after Building app (or find out why)
+6. Issues: 
+
+    I found out that the engines sometimes don't work if you rebuild the C++ app. In this case it gets stuck in MTCNN face detection.  
 
 
 ## Tests
