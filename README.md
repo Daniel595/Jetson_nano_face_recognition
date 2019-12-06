@@ -71,9 +71,7 @@ A fast C++ implementation of TensorRT and CUDA accelerated MTCNN from https://gi
     
 6. Issues: 
 
-    I found out that the engines sometimes don't work if you rebuild the C++ app. In this case it gets stuck in MTCNN face detection.  
-        
-        - seems not to happen in case of clean build
+        - I found out that the engines sometimes don't work if you rebuild the C++ app. In this case it gets stuck in MTCNN face detection. Seems not to happen in case of clean build.
 
 
 ## Tests
