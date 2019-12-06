@@ -1,3 +1,5 @@
+//Author : Daniel595
+
 #include "face_classifier.h"   
    
 

@@ -1,3 +1,5 @@
+//Author : Daniel595
+
 #include "face_embedder.h"
 
 // load dlib embedding model

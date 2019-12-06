@@ -261,10 +261,10 @@ network.h
 /home/nvidia/Workspace/gpu_mtcnn/src/network.h
 
 /home/nvidia/Workspace/gpu_mtcnn/src/network.h
-opencv4/opencv2/imgproc/imgproc.hpp
-/home/nvidia/Workspace/gpu_mtcnn/src/opencv4/opencv2/imgproc/imgproc.hpp
-opencv4/opencv2/highgui/highgui.hpp
-/home/nvidia/Workspace/gpu_mtcnn/src/opencv4/opencv2/highgui/highgui.hpp
+opencv2/imgproc/imgproc.hpp
+-
+opencv2/highgui/highgui.hpp
+-
 algorithm
 -
 stdlib.h
@@ -299,17 +299,17 @@ NvInfer.h
 /home/nvidia/Workspace/gpu_mtcnn/src/NvInfer.h
 NvCaffeParser.h
 /home/nvidia/Workspace/gpu_mtcnn/src/NvCaffeParser.h
-opencv4/opencv2/cudaimgproc.hpp
+opencv2/cudaimgproc.hpp
 -
-opencv4/opencv2/cudafeatures2d.hpp
+opencv2/cudafeatures2d.hpp
 -
-opencv4/opencv2/cudawarping.hpp
+opencv2/cudawarping.hpp
 -
-opencv4/opencv2/core/cuda_stream_accessor.hpp
+opencv2/core/cuda_stream_accessor.hpp
 -
-opencv4/opencv2/core.hpp
+opencv2/core.hpp
 -
-opencv4/opencv2/cudaarithm.hpp
+opencv2/cudaarithm.hpp
 -
 
 /home/nvidia/Workspace/gpu_mtcnn/src/onet_rt.cpp

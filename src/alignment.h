@@ -1,3 +1,5 @@
+//Author : Daniel595
+
 #include <math.h>
 #include <opencv2/cudawarping.hpp>
 #include "network.h"

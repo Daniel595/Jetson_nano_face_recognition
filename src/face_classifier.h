@@ -1,3 +1,5 @@
+//Author : Daniel595
+
 #ifndef FACE_CLASSIFIER_H
 #define FACE_CLASSIFIER_H
 

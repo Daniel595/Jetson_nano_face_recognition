@@ -1,3 +1,5 @@
+//Author : Daniel595
+
 #ifndef FACE_EMBEDDER_H
 #define FACE_EMBEDDER_H
 #include <dlib/dnn.h>

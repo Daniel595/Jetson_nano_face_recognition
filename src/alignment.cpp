@@ -1,3 +1,5 @@
+//Author : Daniel595
+
 #include "alignment.h"
 
 //local prototypes
