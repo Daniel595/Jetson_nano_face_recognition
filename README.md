@@ -70,25 +70,22 @@ A fast C++ implementation of MTCNN, TensorRT & CUDA accelerated from https://git
     
     At the first run the network will build cuda engines what takes about 3 mins. The engines will be serialized and reused. If the MTCNN input size changes the pnet engines need to be rebuilt because their inputsize depends on MTCNN iniputsize.
     
-6. Issues: 
 
-        - I found out that the engines sometimes don't work if you rebuild the C++ app. 
-        In this case it gets stuck in MTCNN face detection. 
-        Seems not to happen in case of clean build.
+## Issues
+
+Every class should have the same amount of training-images. If I put more images to one class (like every class 5 and one class 20) it always predicts this class. (wanna check SVM-basics - can i prevent this failure?) 
 
 
-## Tests
-
-Every class should have the same amount of images. If I put more images to one class (like every class 5 and one class 20) it always predicts this class. (wanna check SVM-basics - can i prevent this failure?) 
+I found out that deserialized engines sometimes do not work after rebuilding some C++ modules. In this case it gets stuck during using the engine and you have to kill the process. It seems not to happen in case of a clean build. (??)
 
 ## Speed
 
-about 40 FPS at one face. Slowed down a lot by drawing bounding boxes and keypoints by CPU. TODO: draw bounding boxes by CUDA
+it detects me with 40 FPS (one face). Slowed down a lot by drawing bounding boxes and keypoints by CPU. TODO: CUDA
 
 ## TODO
 ```diff
-- initial testrun of all instances
-- implement face tracker, improve classification by considering the last predictions for tracked face
-- SVM cross validation - optimize parameters for training
+- draw bounding and keypoints boxes from CUDA instead of CPU
+- implement tracker to improve classification by considering the last predictions for the tracked face
+- SVM basics like SVM cross validation (param. optimization) and the problem with the different number of training data
 - new design for detections - as class
 ```
