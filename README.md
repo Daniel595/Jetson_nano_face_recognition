@@ -86,6 +86,6 @@ it detects me with 40 FPS (one face). Slowed down a lot by drawing bounding boxe
 ```diff
 - draw bounding and keypoints boxes from CUDA instead of CPU
 - implement tracker to improve classification by considering the last predictions for the tracked face
-- SVM basics like SVM cross validation (param. optimization) and the problem with the different number of training data
-- new design for detections - as class
+- SVM basics: SVM cross validation (param. optimization), different number of training samples
+- Redesign "detections" as class, prepare for tracker implementation
 ```
