@@ -87,7 +87,7 @@ I found out that deserialized engines sometimes do not work after rebuilding som
 
 ## Speed
 
-it detects me with 40 FPS (one face). Slowed down a lot by drawing bounding boxes and keypoints by CPU. TODO: CUDA
+Not really tested yet. The only things I can say is: it detects me with about 40 FPS (one face). It is slowed down a lot by drawing bounding boxes and keypoints from CPU (TODO - from GPU). It still looks "fluent" at a detection of about 5 persons.
 
 ## TODO
 ```diff
