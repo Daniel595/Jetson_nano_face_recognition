@@ -1,4 +1,11 @@
-face recognition on jetson nano - detection/recognition/classification
+face recognition on jetson
+
+detection: high performant MTCNN - CUDA/TensorRT/C++
+
+recognition: dlib_face_recognition_model - using "face embeddings" similar to FaceNet
+
+classification: dlib SVM's 
+
 
 # MTCNN face detection
 
