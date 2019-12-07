@@ -1,8 +1,8 @@
 face recognition on jetson
 
-detection: high performant MTCNN - CUDA/TensorRT/C++
+detection: high performance MTCNN  (CUDA/TensorRT/C++)
 
-recognition: dlib_face_recognition_model - using "face embeddings" similar to FaceNet
+recognition: dlib_face_recognition_model - using "face embeddings" similar to well known "FaceNet"
 
 classification: dlib SVM's 
 
