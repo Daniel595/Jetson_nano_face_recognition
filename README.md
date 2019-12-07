@@ -2,7 +2,7 @@ face recognition on jetson nano - detection/recognition/classification
 
 # MTCNN face detection
 
-A fast C++ implementation of TensorRT and CUDA accelerated MTCNN from https://github.com/PKUZHOU/MTCNN_FaceDetection_TensorRT
+A fast C++ implementation of MTCNN, TensorRT & CUDA accelerated from https://github.com/PKUZHOU/MTCNN_FaceDetection_TensorRT
 
 # face recognition
 
@@ -79,7 +79,7 @@ A fast C++ implementation of TensorRT and CUDA accelerated MTCNN from https://gi
 
 ## Tests
 
-classification - OK if every class has about the same amount of images. If I put more images to one class (like every class 5 and one class 20) it always predicts this class. TODO: ML-basics - doing a common failure? 
+Every class should have the same amount of images. If I put more images to one class (like every class 5 and one class 20) it always predicts this class. (wanna check SVM-basics - can i prevent this failure?) 
 
 ## Speed
 
