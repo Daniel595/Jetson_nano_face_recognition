@@ -53,9 +53,9 @@ A fast C++ implementation of MTCNN, TensorRT & CUDA accelerated from https://git
     
 3. Build/run: 
 
-        - add train data
+        - add the training data, same num of pictures per face
         
-        - python3 faces/generate_input_data.py
+        - python3 faces/generate_input_data.py (prepare training data)
 
         - cmake .
     
