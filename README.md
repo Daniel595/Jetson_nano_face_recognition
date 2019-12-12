@@ -37,8 +37,8 @@ A fast C++ implementation of MTCNN, TensorRT & CUDA accelerated from https://git
     
         - Opencv (cuda enabled)
     
-        - jetson-inference/includes (a built version of jetson-inference repo 
-        https://github.com/dusty-nv/jetson-inference)
+        - a built version of jetson-inference repo 
+        https://github.com/dusty-nv/jetson-inference
     
         - /src/model/dlib_face_recognition_resnet_model_v1.dat
     
