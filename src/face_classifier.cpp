@@ -6,39 +6,41 @@
 
     
 face_classifier::face_classifier(face_embedder *embedder){
-    this->embedder = *embedder;
-    
-    int svm_trained = 1;                            
+
+    int svm_trained = 1;     
+    this->restart = 0;                      
     // check if labels exist
     svm_trained &= get_labels();
     std::vector<string> info;
     svm_trained &= get_info(&info);
-    cout << "svms trained? : " << svm_trained << endl;
 
     if(svm_trained == 1){     
         int success = deserialize_svm(label_encoding.size());
-        if(success == 0) train_svm(&info);
+        if(success == 0) train_svm(&info, embedder);
     }else{
-        train_svm(&info);                                        
+        train_svm(&info, embedder);                                        
     }
 
     this->num_classes = label_encoding.size();
     this->num_classifiers = this->num_classes * (this->num_classes - 1) / 2;
     
-    init();
+    init(embedder);
 }
 
 face_classifier::~face_classifier(){
 
 }
 
+int face_classifier::need_restart() {
+    return restart;
+}
 
 // make first prediction 
-void face_classifier::init(){
+void face_classifier::init(face_embedder *embedder){
     
     matrix<rgb_pixel> img;   
     dlib::load_image(img, test_dir);   // load test file
-    this->embedder.embedding(&img, &test_embedding);
+    embedder->embedding(&img, &test_embedding);
     
     double label;
     prediction(&test_embedding, &label);
@@ -46,7 +48,7 @@ void face_classifier::init(){
     cout << "selftest classifier - label of test image is: " << label << " - " << label_encoding[label] << endl; 
     // prediction OK?   
 }
-    
+
 
 
 // get the labels of the classes / the persons names
@@ -134,52 +136,55 @@ void face_classifier::prediction(   std::vector<sample_type_embedding> *face_emb
 
         sample = matrix_cast<double>(face_embeddings->at(i));   // get next sample and cast it to required double format
         std::map<double, int> votes;                // map of class , num_of_votes
-        double mean[this->num_classes] = {0};       // some kind of "confidence" per class
+        double summed[this->num_classes] = {0};
         
         // run every classifier
         for(int k = 0; k < classifiers.size(); k++){
             double prediction = classifiers[k](sample);
-            //cout << prediction << " : ";
+            
             
             if(abs(prediction) < threshold) {
-                //cout << "-1" << endl;
+                //cout << "N";
             } else if (prediction < 0) {
                 votes[classifiersLabels[k].first]++;                        // increment number of votes
-                //cout << classifiersLabels[k].first << endl;
-                mean[(int)classifiersLabels[k].first] += abs(prediction);   // add value to positive
-                //mean[(int)classifiersLabels[k].second] -= abs(prediction);  // sub value from negative
+                //cout << classifiersLabels[k].first ;
+                summed[(int)classifiersLabels[k].first] += abs(prediction);   // add value to positive
+                //summed[(int)classifiersLabels[k].second] -= abs(prediction);  // sub value from negative
             } else {
                 votes[classifiersLabels[k].second]++;
-                //cout << classifiersLabels[k].second << endl;
-                mean[(int)classifiersLabels[k].second] += abs(prediction);
-                //mean[(int)classifiersLabels[k].first] -= abs(prediction); 
+                //cout << classifiersLabels[k].second ;
+                summed[(int)classifiersLabels[k].second] += abs(prediction);
+                //summed[(int)classifiersLabels[k].first] -= abs(prediction); 
             }
+            //cout << " : " << prediction << endl;
         }
+
         
         //cout << "Votes: " << endl;
         //for(auto &vote : votes) {
         //    cout << vote.first << ": " << vote.second << endl;
         //}
 
+        // Classify by mean value
         double label = -1;
         double max = 0;
-        int num_votes = 0;
+        double mean = 0;
         static int min_votes = this->num_classes/2 - 1;
-        static double mean_threshold = 0.35;
+        static double mean_threshold = 0.6;
+        static double sum_threshold = 2.5;
 
         // check for highest mean value
         for(int i = 0; i<this->num_classes; i++){
-            num_votes += votes[i];  
             if (votes[i] != 0){         // prevent Zero division
-                mean[i] = (mean[i] < 0 ? 0 : mean[i]/votes[i]);    // claculate mean value
-                if (mean[i] > max && votes[i] > min_votes){         // new maximum and at least 2 votes?
-                    max = mean[i];                      
-                    label = (max >= mean_threshold ? i : label);    // value above threshhold? -> new label
+                mean = (summed[i] < sum_threshold ? 0 : summed[i]/votes[i]);    // claculate mean value
+                if (mean>max && votes[i]>min_votes){         // new maximum and at least min_votes?
+                    max = mean;                      
+                    label = (max >= mean_threshold ? i : label);    // set label
                 }
-            } 
-            //printf("class: %d: mean: %f\n", i, mean[i] );
+            }
+            printf("class: %d:\tmean: %f\tvotes: %d\n\t\tsumm: %f\n", i, mean, votes[i],summed[i]);
         }
-        printf("label is %f\n",label);
+        printf("label: %f\n\n",label);
         //printf("-1 votes: %d\n", this->num_classifiers - num_votes);
 
         face_labels->push_back(label);
@@ -197,7 +202,8 @@ void face_classifier::prediction(   std::vector<sample_type_embedding> *face_emb
 //  - store all unique labels to "total_labels" and the labels sequence of the training data to "labels" 
 void face_classifier::get_training_data(std::vector<sample_type_embedding> *face_embeddings, 
                                             std::vector<double> *labels, 
-                                            std::vector<double> *total_labels ){
+                                            std::vector<double> *total_labels, 
+                                            face_embedder *embedder){
 
     using namespace boost::filesystem;
     path p(train_data_dir);                             //path where the cropped training data is located
@@ -240,7 +246,7 @@ void face_classifier::get_training_data(std::vector<sample_type_embedding> *face
         } else cout << p << " does not exist\n";                                                // catch
         
         // create the actual training data, the face embeddings
-        embedder.embeddings(&faces, face_embeddings);                   
+        embedder->embeddings(&faces, face_embeddings);                   
     }
     catch (const filesystem_error& ex)      // catch
     {
@@ -305,6 +311,7 @@ void clear_svm_dir(string svm_dir){
 
 
 
+
 // perform SVM training
 //  - train and serialize: N*(N-1)/2   SVM's (all vs. all)
 void face_classifier::training(std::vector<sample_type_embedding> *face_embeddings, 
@@ -322,7 +329,7 @@ void face_classifier::training(std::vector<sample_type_embedding> *face_embeddin
     for(int i = 0; i < num_trainers ; i++) {
         trainers.emplace_back(trainer_type());
         trainers[i].set_kernel(kernel_type());
-        trainers[i].set_c(10);
+        trainers[i].set_c(5);
     }
 
     // 
@@ -347,6 +354,7 @@ void face_classifier::training(std::vector<sample_type_embedding> *face_embeddin
                 labels4pair.emplace_back(+1);
             }
         }
+        randomize_samples(samples4pair, labels4pair);
 
         // here the actual training happens
         classifiers.emplace_back(trainer.train(samples4pair, labels4pair));             // train and get classifier 
@@ -376,7 +384,7 @@ void face_classifier::training(std::vector<sample_type_embedding> *face_embeddin
 //  - initialize training of SVM's
 //  - write write labels to labels.txt for later use
 //  - write a flag to info.txt which says that no training is required until dataset changes
-void face_classifier::train_svm(std::vector<string> *info){
+void face_classifier::train_svm(std::vector<string> *info, face_embedder *embedder){
     
     clear_svm_dir(svm_dir);         // delete old svms
     label_encoding.clear();         // delete old encodings                             
@@ -385,7 +393,7 @@ void face_classifier::train_svm(std::vector<string> *info){
     std::vector<sample_type_embedding> face_embeddings;             // all training face embeddings (per training image)
     std::vector<double> labels;                                     // all training labels for the embeddings (per training image)
     std::vector<double> total_labels;                               // unique labels/possible labels
-    get_training_data(&face_embeddings, &labels, &total_labels);    // get training data
+    get_training_data(&face_embeddings, &labels, &total_labels, embedder);    // get training data
     
     // train svm and initialize the classifiers
     training(&face_embeddings, &labels, &total_labels);
@@ -406,5 +414,7 @@ void face_classifier::train_svm(std::vector<string> *info){
     }
     info_o.close();
 
+    this->restart = 1;      // set flag 
+    cout << "train: " << this->restart << endl;
 }
  

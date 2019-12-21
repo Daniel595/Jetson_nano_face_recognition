@@ -54,12 +54,31 @@ void get_new_keypoints(double rotation, cv::Rect *face, float* keypoints){
 
 // check if the face needs to be shifted to x and y (for embedding network alignment) 
 void get_face_shift(float* keypoints, double *x_shift, double *y_shift){  
-    if(*(keypoints + 2) - *(keypoints) >= 25){          // if nose-x is closer to the right eye
-        *x_shift = 50 - (double) *(keypoints);          // left eye alignment to coordinates (50|50)
-        *y_shift = 50 - (double) *(keypoints + 5);
-    }else{                                              // nose is closer to the left eye
-        *x_shift = 100 - (double) *(keypoints + 1);     // right eye alignment to coordinates (100|50)
+
+    // side view to the face from right ?
+    //  nose_x          >   left_eye_x
+    if(*(keypoints + 2) < *(keypoints) ){
+        // assign right eye to middle
+        *x_shift = 75 - (double) *(keypoints + 1);     // right eye alignment to coordinates (75|50)
         *y_shift = 50 - (double) *(keypoints + 6);
+
+    // side view to the face from left ? 
+    //          nose_x       <      right_eye_x
+    }else if(*(keypoints + 2) > *(keypoints+1) ){
+        // assign left eye to middle
+        *x_shift = 75 - (double) *(keypoints);          // left eye alignment to coordinates (75|50)
+        *y_shift = 50 - (double) *(keypoints + 5);
+    }else{
+        // nose closer to the right eye?
+        //    nose_X        -   left_eye_x
+        if(*(keypoints + 2) - *(keypoints) >= 25){          // if nose-x is closer to the right eye
+            *x_shift = 50 - (double) *(keypoints);          // left eye alignment to coordinates (50|50)
+            *y_shift = 50 - (double) *(keypoints + 5);
+        // nose closer to the left eye?
+        }else{                                              // nose is closer to the left eye
+            *x_shift = 100 - (double) *(keypoints + 1);     // right eye alignment to coordinates (100|50)
+            *y_shift = 50 - (double) *(keypoints + 6);
+        } 
     }
     //printf("shift: %f | %f\n", *x_shift, *y_shift);
     //TODO: detect bad face images (?) and discard them
@@ -108,9 +127,11 @@ void crop_and_align_faces(cv::cuda::GpuMat &gpuImage,           //raw image
         //The general face dimension should be quite OK after resize
         get_face_shift(keypoints->at(cnt) , &x_shift, &y_shift);
 
-        //apply the alignment to the face - the calculated rotation and the shift of the face 
+        // apply the alignment to the face - the calculated rotation and the shift of the face 
         cv::cuda::rotate(crop_gpu_buffer, crop_gpu, cv::Size(150, 150), rotation_deg, x_shift, y_shift);  
-
+        // convert to RGB since its the format the Embedding CNN is trained for
+        cv::cuda::cvtColor(crop_gpu, crop_gpu, cv::COLOR_BGR2RGB);  
+        
         //for testing: draw the new keypoints to the cropped face to make sure we calculated right coordinates 
         /////Test
         //for(int num=0;num<5;num++){
@@ -127,14 +148,12 @@ void crop_and_align_faces(cv::cuda::GpuMat &gpuImage,           //raw image
         assign_image(matrix, image);
         //store the aligned face to a CNN-input vector 
         cropped_faces->push_back(matrix);
-
-///Test - show the cropped and aligned faces
-        //cout << "add: " << cnt << " - " << keypoints->at(cnt) << endl;
-        //image_window my_win(matrix, "face");
-        //my_win.wait_until_closed();
-
         cnt++;
     }
+
+    // test - show first detected face
+    //image_window my_win(cropped_faces->at(0), "face");
+    //my_win.wait_until_closed();
 }
 
 
@@ -175,12 +194,22 @@ void draw_detections(   cv::Mat &origin_cpu,
                         std::vector<std::string> *label_encodings){
         
     for(int i = 0; i<rects->size(); i++){
-        // draw bounding boxes/rectangles
-        cv::rectangle(origin_cpu, rects->at(i), cv::Scalar(0,0,255), 2,8,0);        
-        // print labels to the image
-        string encoding = ((labels->at(i) >= 0) ? label_encodings->at(labels->at(i)) : "Unknown");
+        cv::Scalar bbox_color(0,255,0);
+        // get label 
+        string encoding = "";
+        if(labels->at(i) >= 0){
+            encoding =  label_encodings->at(labels->at(i));
+        }else{
+            encoding = "Unknown";
+            bbox_color=cv::Scalar(255,0,0);
+        }
+        // draw bounding boxes around the face
+        cv::rectangle(origin_cpu, rects->at(i), bbox_color, 2,8,0);
+        //string encoding = ((labels->at(i) >= 0) ? label_encodings->at(labels->at(i)) : "Unknown");
+        // print label to the bounding box
         cv::putText(origin_cpu, encoding , cv::Point(rects->at(i).x,rects->at(i).y), 
                     cv::FONT_HERSHEY_COMPLEX_SMALL, 1.0, cv::Scalar(255,255,255), 1 ); // mat, text, coord, font, scale, bgr color, line thickness
+
     }                        
 }
 

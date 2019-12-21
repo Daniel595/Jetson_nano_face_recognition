@@ -31,14 +31,16 @@ public:
     void prediction(sample_type_embedding *face_embedding, 
                     double *face_label);
     void get_label_encoding(std::vector<std::string> *labels);
+    int need_restart();
 
 private:
-    void init();
+    void init(face_embedder *embedder);
     int deserialize_svm(int classes);
-    void train_svm(std::vector<string> *info);
+    void train_svm(std::vector<string> *info, face_embedder *embedder);
     void get_training_data(std::vector<sample_type_embedding> *face_embeddings, 
                             std::vector<double> *labels, 
-                            std::vector<double> *total_labels );
+                            std::vector<double> *total_labels,
+                            face_embedder *embedder);
     void training(std::vector<sample_type_embedding> *face_embeddings, 
                     std::vector<double> *labels, 
                     std::vector<double> *total_labels );
@@ -54,13 +56,14 @@ private:
     std::string train_data_dir = "faces/train/cropped/";    // dir containing the training face-images
 
     
-    face_embedder embedder;                                 // embeddings network for generate training data
+    //face_embedder embedder;                                 // embeddings network for generate training data
     std::vector<std::string> label_encoding;                // persons/class names
     std::vector<classifier_type> classifiers;               // actual classifiers/svm's
     std::vector<pair<double, double>> classifiersLabels;    // labels/positive and negative of each svm
 
     int num_classes;
     int num_classifiers;
+    int restart;
 
 };
 

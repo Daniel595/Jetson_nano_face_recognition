@@ -6,6 +6,7 @@ import os
 import dlib
 import shutil
 import argparse
+import random
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--test', help='pass \"--test=1\" if testpictures should be processed (default 0, not processing)', type=int, default=0)
@@ -22,6 +23,14 @@ def _css_to_rect(css):
 def _trim_css_to_bounds(css, image_shape):
     return max(css[0], 0), min(css[1], image_shape[1]), min(css[2], image_shape[0]), max(css[3], 0)
 
+def _augment(img, alpha, beta):
+   return  cv2.convertScaleAbs(img, alpha=alpha, beta=beta)
+
+# for augmentation:
+# beta -100 to 100 brightness
+brightness = [-25, +15, 0]
+# alpha 1-3 contrast
+contrast = [1, 1.3, 0.7]
 
 
 #paths
@@ -108,7 +117,8 @@ for i in range(len(src)):
                         shape = shape_predictor(image, rect)
                         #face_chip extracts the face in a way that is expected as input by the recognition model
                         chip = dlib.get_face_chip(image,shape)
-
+                        chip = cv2.medianBlur(chip, 3)
+                        flip_chip = np.fliplr(chip)
                         prefix = "chip_" + label + "_"
                         number = ""
                         if(cnt < 10):
@@ -116,8 +126,14 @@ for i in range(len(src)):
                         number = number + str(cnt)
                         filetype = f.split(".")
                         suffix = "." + filetype[len(filetype) - 1]
-                        chip_name =   prefix + number + suffix
-                        dlib.save_image(chip, os.path.join(dst[i], label, chip_name))
+                        chip_name =   prefix + number + "_aug" 
+                        aug = 0
+                        for lev in brightness:
+                            #dlib.save_image(chip, os.path.join(dst[i], label, chip_name + "0" + suffix ))
+                            dlib.save_image(_augment(chip, random.choice(contrast), lev), os.path.join(dst[i], label, chip_name + str(aug) + suffix ))
+                            dlib.save_image(_augment(flip_chip, random.choice(contrast), lev), os.path.join(dst[i], label, chip_name + str(aug+1) + suffix))
+                            aug+=2
+
                         print("Face successfully extracted!\n")
                 #new file
                 cnt = cnt + 1    
@@ -137,7 +153,7 @@ info_file.write("training required!\n" + "num classes: " + str(num_labels) + "\n
 info_file.write("#\tlabel:\timages:\n" )
 
 for i in range(len(num_label_images)):
-    info_file.write(str(i) + "\t" +labels[i] +"\t" + str(num_label_images[i]) + "\n")
+    info_file.write(str(i) + "\t" +labels[i] +"\t" + str(num_label_images[i]) +  "\n")
 info_file.close()
 
 if(len(failed_paths) > 0):

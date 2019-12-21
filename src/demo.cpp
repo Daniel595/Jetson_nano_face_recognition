@@ -51,7 +51,7 @@ glDisplay* getDisplay(){
 
 /*
 void nv_image_test(const char* imgFilename){
-	glDisplay* display = getDisplay();
+
 	float* imgCPU    = NULL;
 	float* imgCUDA   = NULL;
     uchar* rgb = NULL;
@@ -63,36 +63,12 @@ void nv_image_test(const char* imgFilename){
 		printf("failed to load image '%s'\n", imgFilename);
 	}
     CHECK(cudaMalloc(&rgb, imgWidth*imgHeight*3*sizeof(uchar)));
-    
-    //malloc shared memory for access with cpu and gpu without copying data
-    uchar* rgb_gpu = NULL;
-    uchar* rgb_cpu = NULL;
-    cudaAllocMapped( (void**) &rgb_cpu, (void**) &rgb_gpu, imgWidth*imgHeight*3*sizeof(uchar) );
-    uchar* cropped_buffer_gpu[2] = {NULL,NULL};
-    uchar* cropped_buffer_cpu[2] = {NULL,NULL};
-    cudaAllocMapped( (void**) &cropped_buffer_cpu[0], (void**) &cropped_buffer_gpu[0], 150*150*3*sizeof(uchar) );
-    cudaAllocMapped( (void**) &cropped_buffer_cpu[1], (void**) &cropped_buffer_gpu[1], 150*150*3*sizeof(uchar) );
-
-    cudaRGBA32ToBGR8( (float4*)imgCUDA, (uchar3*)rgb, imgWidth, imgHeight );
-    cv::cuda::GpuMat imageRGB(imgHeight, imgWidth, CV_8UC3, rgb);
-    
-    //find faces
-    mtcnn find(imgHeight, imgWidth);
-    
-    //create cv rectangles and keypoints from the detections and draw them to the origin image (if arg 5 is true)
-    std::vector<cv::Rect> rects;
-    std::vector<float*> keypoints;
-    num_dets = get_detections(origin_cpu, &detections, &rects, &keypoints, false);
-
-    //crop and align the faces -> generate inputs for the recognition CNN
-    std::vector<matrix<rgb_pixel>> faces;
-    crop_and_align_faces(imgRGB_gpu, cropped_buffer_gpu, cropped_buffer_cpu, &rects, &faces, &keypoints);
-
-    for(int i=0;i<10;i++){
-        start = clock();
-        find.findFace(imageRGB);
-    }
-
+    // do sth
+    cv::Mat origin_cpu(imgHeight, imgWidth, CV_32FC4, imgCUDA);
+    cudaRGBA32ToBGR8( (float4*)imgCUDA, (uchar3*)rgb, imgWidth, imgHeight );      //Transform the memory layout 
+    cv::cuda::GpuMat imgRGB_gpu(imgHeight, imgWidth, CV_8UC3, rgb_gpu);                 // Image as opencv cuda format
+    std::vector<struct Bbox> detections;
+    finder.findFace(imgRGB_gpu, &detections);
 
     SAFE_DELETE(display);
     CHECK(cudaFree(rgb));
@@ -101,28 +77,21 @@ void nv_image_test(const char* imgFilename){
 
 
 
-void run(){
+int run(){
     
     // -------------- Initialization -------------------
+    
+    face_embedder embedder;                         // deserialize recognition network 
+    face_classifier classifier(&embedder);          // train OR deserialize classification SVM's 
+    if(classifier.need_restart() == 1) return 1;    // small workaround - if svms were trained theres some kind of memory problem when generate mtcnn
 
-    // Camera stuff
+    // create camera
     gstCamera* camera = getCamera();                // create jetson camera - PiCamera. USB-Cam needs different operations in Loop!! not implemented!
     bool user_quit = false;
     int imgWidth = camera->GetWidth();
     int imgHeight = camera->GetHeight();
-    
-    // FPS stuff
-    double fps = 10.0;
-    clock_t clk;
-    
-    // Detection vars
-    int num_dets = 0;
-    std::vector<std::string> label_encodings;       // vector for the real names of the classes/persons
 
-    // create networks
     mtcnn finder(imgHeight, imgWidth);              // build OR deserialize TensorRT detection network
-    face_embedder embedder;                         // deserialize recognition network 
-    face_classifier classifier(&embedder);          // train OR deserialize classification SVM's 
     glDisplay* display = getDisplay();              // create jetson display
     
     // malloc shared memory for images for access with cpu and gpu without copying data
@@ -135,9 +104,19 @@ void run(){
     cudaAllocMapped( (void**) &cropped_buffer_cpu[0], (void**) &cropped_buffer_gpu[0], 150*150*3*sizeof(uchar) );
     cudaAllocMapped( (void**) &cropped_buffer_cpu[1], (void**) &cropped_buffer_gpu[1], 150*150*3*sizeof(uchar) );
     
+    // calculate fps
+    double fps = 0.0;
+    clock_t clk;
+    
+    // Detection vars
+    int num_dets = 0;
+    std::vector<std::string> label_encodings;       // vector for the real names of the classes/persons
+
     // get the possible class names
     classifier.get_label_encoding(&label_encodings);
     
+    // init all networks
+
 
     // ------------------ "Detection" Loop -----------------------
 
@@ -155,9 +134,8 @@ void run(){
         cv::Mat origin_cpu(imgHeight, imgWidth, CV_32FC4, imgOrigin);
 
         // the mtcnn pipeline is based on GpuMat 8bit values 3 channels - so we remove the A-channel and size vals down
-        // we've got a kernel from jetson-inference for that job, thank you guys
+        // i use a kernel from jetson-inference for that job
         cudaRGBA32ToBGR8( (float4*)imgOrigin, (uchar3*)rgb_gpu, imgWidth, imgHeight );      //Transform the memory layout 
-        //cudaRGBA32ToRGB8( (float4*)imgOrigin, (uchar3*)rgb_gpu, imgWidth, imgHeight );    //Transform the memory layout  TODO: test which one is better
         
         // make a opencv gpumat header for the new image
         cv::cuda::GpuMat imgRGB_gpu(imgHeight, imgWidth, CV_8UC3, rgb_gpu);                 // Image as opencv cuda format
@@ -173,7 +151,6 @@ void run(){
         
         // if faces detected
         if(num_dets > 0){
-            
             // crop and align the faces. Get faces to format for "dlib_face_recognition_model" to create embeddings
             std::vector<matrix<rgb_pixel>> faces;                                   // crop faces
             crop_and_align_faces(imgRGB_gpu, cropped_buffer_gpu, cropped_buffer_cpu, &rects, &faces, &keypoints);
@@ -194,13 +171,12 @@ void run(){
         if( display != NULL ){
             display->RenderOnce(imgOrigin, imgWidth, imgHeight);                        // display image directly from gpumem/sharedmem
             char str[256];
-            fps = (0.95 * fps) + (0.05 * (1 / ((double)(clock()-clk)/CLOCKS_PER_SEC))); // smooth FPS
             sprintf(str, "TensorRT  %.0f FPS", fps);                                    // print the FPS to the bar
             display->SetTitle(str);
-            
             if( display->IsClosed() )                                                   //check if user quit
 				user_quit = true;
         }
+        fps = (0.90 * fps) + (0.1 * (1 / ((double)(clock()-clk)/CLOCKS_PER_SEC)));      // get smooth FPS
     }   
 
     SAFE_DELETE(camera);
@@ -208,14 +184,14 @@ void run(){
     CHECK(cudaFreeHost(rgb_cpu));
     CHECK(cudaFreeHost(cropped_buffer_cpu[0]));
     CHECK(cudaFreeHost(cropped_buffer_cpu[1]));
+    return 0;
 }
-
-
 
 
 
 int main()
 {
-    run();
+    int state = run();
+    if(state == 1) cout << "Restart is required! Please type ./main again." << endl;
     return 0;
 }

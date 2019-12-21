@@ -5,7 +5,7 @@
 #include "rnet_rt.h"
 #include "onet_rt.h"
 
-#define LOG   //show the time consumption of the stages
+//#define LOG   //show the time consumption of the stages
 
 
 class mtcnn
@@ -14,6 +14,7 @@ public:
     mtcnn(int row, int col);
     ~mtcnn();
     void findFace(cv::cuda::GpuMat &image, vector<struct Bbox> * detections);
+    //inline char need_restart(){return this->restart;}
 
     //for second stage
     const static int pnet_max_pymid_depth = 256;
@@ -50,6 +51,7 @@ private:
     vector<struct Bbox> thirdBbox_;
     vector<struct orderScore> thirdBboxScore_;
 
+    //char restart = 0;
 
 };
 
