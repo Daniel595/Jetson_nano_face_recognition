@@ -15,11 +15,11 @@ recognition: dlib_face_recognition_model - using "face embeddings" similar to we
 classification: dlib SVM's 
 
 
-# MTCNN face detection
+## MTCNN face detection
 
 A fast C++ implementation of MTCNN, TensorRT & CUDA accelerated from https://github.com/PKUZHOU/MTCNN_FaceDetection_TensorRT
 
-# face recognition
+## face recognition
 
 1. dlib face recognition model to create face embeddings
     
