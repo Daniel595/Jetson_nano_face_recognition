@@ -24,11 +24,11 @@ A fast C++ implementation of MTCNN, TensorRT & CUDA accelerated from https://git
 
 ## Information
 
-1. about facial images: 
+1. facial images for training: 
 
-        - location: faces/train/raw/<class_name>/<images> 
+        - location: faces/train/datasets/<set>/<class_name>/<images> 
     
-        - preprocessing: faces/generate_input_data.py - detect, extract, crop, align, prepare svm-training 
+        - preprocessing: python3 faces/generate_train_data.py datasets/<set> - detect, extract, crop, align, prepare svm-training 
         
     
 2. Required:
