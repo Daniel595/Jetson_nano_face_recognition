@@ -3,8 +3,14 @@ cmake_install.cmake
 CMakeFiles/*
 src/models/dlib*
 faces/train/cropped/*
-faces/test/raw/*
-faces/test/cropped/*
+faces/train/datasets/family/*
+faces/bbt/testdata/raw/*
+!faces/bbt/testdata/raw/group.jpg
+faces/bbt/testdata/result/*
+!faces/bbt/testdata/result/0.png
+faces/bbt/testdata/test/*
+!faces/bbt/testdata/test/resized_0.png
+
 main
 
 

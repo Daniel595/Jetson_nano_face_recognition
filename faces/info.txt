@@ -1,9 +1,10 @@
-training required!
-num classes: 6
++
+num classes: 7
 #	label:	images:
-0	Steffi	9
-1	Daniel	9
-2	Jana	8
-3	Dieter	9
-4	Leon	7
-5	Seona	5
+0	Bernadette	9
+1	Amy	8
+2	Rajesh	7
+3	Penny	8
+4	Howard	7
+5	Sheldon	8
+6	Leonard	8

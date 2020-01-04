@@ -49,31 +49,105 @@ glDisplay* getDisplay(){
 }
 
 
-/*
-void nv_image_test(const char* imgFilename){
 
+int image_run(){
+
+    using namespace boost::filesystem;
+    path p("faces/bbt/testdata/test/");
+    
+    // get recognition network and classifier
+    face_embedder embedder;                         
+    face_classifier classifier(&embedder);          
+    if(classifier.need_restart() == 1) return 1;    
+    // get detection network
+    mtcnn finder(720, 1280);              
+    // Detection vars
+    int num_dets = 0;
+    int num_images = 0;
+    std::vector<std::string> label_encodings;       
+    // get the possible class names
+    classifier.get_label_encoding(&label_encodings);
+    // gpu/cpu memory pointer to load image from disk    
 	float* imgCPU    = NULL;
 	float* imgCUDA   = NULL;
-    uchar* rgb = NULL;
-    
-    int imgWidth = 0;
-    int imgHeight = 0;
-	if( !loadImageRGBA(imgFilename, (float4**)&imgCPU, (float4**)&imgCUDA, &imgWidth, &imgHeight) )
-	{
-		printf("failed to load image '%s'\n", imgFilename);
-	}
-    CHECK(cudaMalloc(&rgb, imgWidth*imgHeight*3*sizeof(uchar)));
-    // do sth
-    cv::Mat origin_cpu(imgHeight, imgWidth, CV_32FC4, imgCUDA);
-    cudaRGBA32ToBGR8( (float4*)imgCUDA, (uchar3*)rgb, imgWidth, imgHeight );      //Transform the memory layout 
-    cv::cuda::GpuMat imgRGB_gpu(imgHeight, imgWidth, CV_8UC3, rgb_gpu);                 // Image as opencv cuda format
-    std::vector<struct Bbox> detections;
-    finder.findFace(imgRGB_gpu, &detections);
+	int    imgWidth  = 0;
+	int    imgHeight = 0;
+    // for preprocessed images
+    uchar* rgb_gpu = NULL;
+    uchar* rgb_cpu = NULL;
+    cudaAllocMapped( (void**) &rgb_cpu, (void**) &rgb_gpu, 720*1280*3*sizeof(uchar) );
+    uchar* cropped_buffer_gpu[2] = {NULL,NULL};
+    uchar* cropped_buffer_cpu[2] = {NULL,NULL};
+    cudaAllocMapped( (void**) &cropped_buffer_cpu[0], (void**) &cropped_buffer_gpu[0], 150*150*3*sizeof(uchar) );
+    cudaAllocMapped( (void**) &cropped_buffer_cpu[1], (void**) &cropped_buffer_gpu[1], 150*150*3*sizeof(uchar) );
+    //int loops = 5;
+    try
+    {
+        if (exists(p))    
+        {
+            if (is_regular_file(p))
+                cout << p << "is a file" << endl;
+            else if (is_directory(p))   
+            {
+                recursive_directory_iterator dir(p), end;                 
+                while(dir != end){
+                    
+                    if(is_directory(dir->path())) {    
+                        cout << "enter: " << dir->path().filename().string() << endl;
+                    }
+                    else {                 
+                       	if( !loadImageRGBA(dir->path().string().c_str(), (float4**)&imgCPU, (float4**)&imgCUDA, &imgWidth, &imgHeight) )
+                            printf("failed to load image '%s'\n", dir->path().filename().string().c_str());
+                        if((imgWidth != 1280) || (imgHeight != 720)){
+                            cout << "image has wrong size!" << endl;
+                        }else{
+                            cv::Mat origin_cpu(imgHeight, imgWidth, CV_32FC4, imgCPU);
+                            cudaRGBA32ToBGR8( (float4*)imgCUDA, (uchar3*)rgb_gpu, imgWidth, imgHeight );     
+                            cv::cuda::GpuMat imgRGB_gpu(imgHeight, imgWidth, CV_8UC3, rgb_gpu);                
+                            std::vector<struct Bbox> detections;
+                            finder.findFace(imgRGB_gpu, &detections);
+                            std::vector<cv::Rect> rects;
+                            std::vector<float*> keypoints;
+                            num_dets = get_detections(origin_cpu, &detections, &rects, &keypoints);             
+                            if(num_dets > 0){
+                                std::vector<matrix<rgb_pixel>> faces;                                  
+                                crop_and_align_faces(imgRGB_gpu, cropped_buffer_gpu, cropped_buffer_cpu, &rects, &faces, &keypoints);
+                                std::vector<matrix<float,0,1>> face_embeddings;
+                                embedder.embeddings(&faces, &face_embeddings);                         
+                                std::vector<double> face_labels;
+                                classifier.prediction(&face_embeddings, &face_labels);                  
+                                draw_detections(origin_cpu, &rects, &face_labels, &label_encodings);   
+                            }        
+                            CUDA(cudaDeviceSynchronize());                    
+                            string outputFilename = "faces/bbt/testdata/result/" + to_string(num_images) + ".png";
+                            if( !saveImageRGBA(outputFilename.c_str(), (float4*)imgCPU, imgWidth, imgHeight, 255) )
+			                    printf("failed saving %ix%i image to '%s'\n", imgWidth, imgHeight, outputFilename.c_str());
+                            num_images++;    
+                        }    
+                    }
+                    CUDA(cudaDeviceSynchronize());
+                    CUDA(cudaFreeHost(imgCPU));
+                    ++dir;
+                    //loops--;
+                    //if(loops == 0)dir=end;
+                }
+            } else cout << p << " exists, but is neither a regular file nor a directory\n";    
+        } else cout << p << " does not exist\n";                                              
+        
+                        
+    }
+    catch (const filesystem_error& ex)      
+    {
+        cout << ex.what() << '\n';
+    }
 
-    SAFE_DELETE(display);
-    CHECK(cudaFree(rgb));
+    CHECK(cudaFreeHost(rgb_cpu));
+    CHECK(cudaFreeHost(cropped_buffer_cpu[0]));
+    CHECK(cudaFreeHost(cropped_buffer_cpu[1]));
+    
+    return 0;
 }
-*/
+
 
 
 
@@ -115,9 +189,7 @@ int run(){
     // get the possible class names
     classifier.get_label_encoding(&label_encodings);
     
-    // init all networks
-
-
+    
     // ------------------ "Detection" Loop -----------------------
 
     while(!user_quit){
@@ -191,7 +263,11 @@ int run(){
 
 int main()
 {
-    int state = run();
+    //int state = run();
+    //if(state == 1) cout << "Restart is required! Please type ./main again." << endl;
+
+    int state = image_run();
     if(state == 1) cout << "Restart is required! Please type ./main again." << endl;
+
     return 0;
 }

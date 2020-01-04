@@ -177,6 +177,8 @@ glTexture.h
 /home/nvidia/Workspace/gpu_mtcnn/src/includes/glTexture.h
 time.h
 -
+vector
+-
 
 /home/nvidia/Workspace/gpu_mtcnn/src/includes/glTexture.h
 cudaUtility.h

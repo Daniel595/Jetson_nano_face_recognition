@@ -175,7 +175,7 @@ int get_detections( cv::Mat &origin_cpu, std::vector<struct Bbox> *detections,
             if(draw){
                 for(int num=0; num<5; num++){
                     cv::circle(origin_cpu,cv::Point((int)*(it->ppoint + num) , 
-                        (int)*(it->ppoint + num + 5)),3,cv::Scalar(0,255,0), -2); 
+                        (int)*(it->ppoint + num + 5)),3,cv::Scalar(0,255,0,255), -2); 
                 }
             }
         }
@@ -194,21 +194,23 @@ void draw_detections(   cv::Mat &origin_cpu,
                         std::vector<std::string> *label_encodings){
         
     for(int i = 0; i<rects->size(); i++){
-        cv::Scalar bbox_color(0,255,0);
+        cv::Scalar bbox_color(0,255,0,255);
         // get label 
         string encoding = "";
         if(labels->at(i) >= 0){
             encoding =  label_encodings->at(labels->at(i));
         }else{
             encoding = "Unknown";
-            bbox_color=cv::Scalar(255,0,0);
+            bbox_color=cv::Scalar(255,0,0,255);
         }
         // draw bounding boxes around the face
         cv::rectangle(origin_cpu, rects->at(i), bbox_color, 2,8,0);
         //string encoding = ((labels->at(i) >= 0) ? label_encodings->at(labels->at(i)) : "Unknown");
         // print label to the bounding box
         cv::putText(origin_cpu, encoding , cv::Point(rects->at(i).x,rects->at(i).y), 
-                    cv::FONT_HERSHEY_COMPLEX_SMALL, 1.0, cv::Scalar(255,255,255), 1 ); // mat, text, coord, font, scale, bgr color, line thickness
+                    cv::FONT_HERSHEY_COMPLEX_SMALL, 1.0, cv::Scalar(255,255,255,255), 3 ); // mat, text, coord, font, scale, bgr color, line thickness
+        cv::putText(origin_cpu, encoding , cv::Point(rects->at(i).x,rects->at(i).y), 
+                    cv::FONT_HERSHEY_COMPLEX_SMALL, 1.0, cv::Scalar(0,0,0,255), 1 );
 
     }                        
 }
