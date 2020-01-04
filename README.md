@@ -1,9 +1,6 @@
 face recognition on jetson nano
 
 ![alt text](https://github.com/Daniel595/BBT-faces/blob/master/test/result/96.png)
-![alt text](https://github.com/Daniel595/BBT-faces/blob/master/test/result/47.png)
-![alt text](https://github.com/Daniel595/BBT-faces/blob/master/test/result/49.png)
-
 
 detection: high performance MTCNN  (CUDA/TensorRT/C++)
 
