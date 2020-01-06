@@ -9,11 +9,11 @@ more results at https://github.com/Daniel595/testdata/tree/master/result
 
 ## Parts:
 
-1. detection: high performance MTCNN  (CUDA/TensorRT/C++). A fast C++ implementation of MTCNN, TensorRT & CUDA accelerated from https://github.com/PKUZHOU/MTCNN_FaceDetection_TensorRT. MTCNN detects face locations wich will be cropped, aligned and fed into the "dlib_face_recognition_model"
+1. detection: high performance MTCNN  (CUDA/TensorRT/C++). A fast C++ implementation of MTCNN, TensorRT & CUDA accelerated from https://github.com/PKUZHOU/MTCNN_FaceDetection_TensorRT. MTCNN detects face locations wich will be cropped, aligned and fed into the "dlib_face_recognition_model".
 
-2. recognition: dlib_face_recognition_model creates a 128-d face embedding for every input face. This will be used as SVM input for classification
+2. recognition: dlib_face_recognition_model creates a 128-d face embedding for every input face. This will be used as SVM input for classification.
 
-3. classification: svms will be trained based on the prepared dataset. 
+3. classification: svms will be trained based on the prepared dataset. We will have N*(N-1)/2 SVMs for N classes. Every input will be fed into every SVM and the "weight" of every class gets summed. For the summed values I use a threshold and he highest value above threshold wins.
 
 
 
@@ -22,9 +22,10 @@ more results at https://github.com/Daniel595/testdata/tree/master/result
 1. facial images for training: 
 
         - location: faces/train/datasets/<set>/<class_name>/<images> 
+                (see the bbt example)
     
         - preprocessing(prepare svm training): python3 faces/generate_train_data.py datasets/<set>   
-        
+                (after doing this the ./main will train the svms automatically)
     
 2. Required:
 
@@ -61,23 +62,23 @@ more results at https://github.com/Daniel595/testdata/tree/master/result
         - ./main
 
 
-4. training:
+4. training SVMs:
  
-    SVM's will be trained on startup by "face_classifier" if required. 
+    A call of "python3 faces/generate_train_data.py datasets/<set>" generates training data. It will detect, crop, align and augment faces which will be used for training from ./main. 
     
-    The trained SVM's will be serialized to "/svm". 
     
-    The "face_classifier" detects if the training-data changed since the last training. If so the SVM's will be trained again, otherwise the trained SVM's will be deserialized from "/svm".
+    When calling "./main" the app detects if training data has changed since the last training. In this case it will train and store SVMs to "/svm" and asks for calling "./main" again. If training data has not changed the svms will be deserialized/read from "/svm"
+
     
     
 5. run:
     
-    At the first run the network will build cuda engines what takes about 3 mins. The engines will be serialized and reused. If the MTCNN input size changes the pnet engines need to be rebuilt because their inputsize depends on MTCNN iniputsize.
+    Calling "./main" the first time the app will build TensorRT cuda engines for the MTCNN what takes about 3 mins. The engines will be serialized and reused. You can only feed images with the size the MTCNN was build for. Changing size will require new cuda engines for the first MTCNN-stage (P-net)
     
 
 ## Issues
 
-Every class should have the same amount of training-images. If I put more images to one class (like every class 5 and one class 20) it always predicts this class.
+Every class should have ~the same amount of training-images. If I put more images to one class (like every class 5 and one class 20) it always predicts this class.
 
 
 ## Speed
