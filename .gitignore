@@ -1,6 +1,7 @@
 CMakeCache.txt
 cmake_install.cmake
 CMakeFiles/*
+CMakeFiles
 src/models/dlib*
 faces/train/cropped/*
 faces/train/datasets/family/*
