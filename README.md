@@ -27,26 +27,26 @@ more results at https://github.com/Daniel595/testdata/tree/master/result
 
 ## Build/Run
 
-a. git clone https://github.com/Daniel595/Jetson_nano_face_recognition.git (without bbt testdata)
+- git clone https://github.com/Daniel595/Jetson_nano_face_recognition.git (without bbt testdata)
         or with bbt testdata:
         git clone --recurse-submodules -j8 https://github.com/Daniel595/Jetson_nano_face_recognition.git
-c. add training data (~same num of pictures for each face)  
-d. ensure path dependencies (CMake(TODO), src/includes/, TODO)
-e. "python3 faces/generate_input_data.py" (prepare training data)
-f. "cmake ."
-g. "make"
-h. "./main"
-j. "./main" (if SVMs were trained)
+- add training data (~same num of pictures for each face)  
+- ensure path dependencies (CMake(TODO), src/includes/, TODO)
+- "python3 faces/generate_input_data.py" (prepare training data)
+- "cmake ."
+- "make"
+- "./main"
+- "./main" (if SVMs were trained)
 
 
 ## train face classifier (SVM) 
 
 Trainingdata:
 
-- location: faces/train/datasets/<set>/<class_name>/<images> (jpg, png works)
+- location: faces/train/datasets/<set>/<class_name>/<images> (tested: .jpg, .png)
                 (see the bbt example)    
         
-- preprocessing(prepare svm training): "python3 faces/generate_train_data.py datasets/<set>"   
+- preprocessing: "python3 faces/generate_train_data.py datasets/<set>"   
                 (after doing this the ./main will train the svms automatically)
     
 Training:
