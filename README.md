@@ -3,7 +3,7 @@
 live with camera / or with images from disk
 
 recognition example - trained to the main BBT-characters:
-![alt text](https://github.com/Daniel595/BBT-faces/blob/master/test/result/96.png)
+![alt text](https://github.com/Daniel595/BBT-faces/blob/master/testdata/result/96.png)
 
 
 Parts:
