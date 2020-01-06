@@ -9,24 +9,12 @@ more results at https://github.com/Daniel595/testdata/tree/master/result
 
 ## Parts:
 
-detection: high performance MTCNN  (CUDA/TensorRT/C++)
+1. detection: high performance MTCNN  (CUDA/TensorRT/C++). A fast C++ implementation of MTCNN, TensorRT & CUDA accelerated from https://github.com/PKUZHOU/MTCNN_FaceDetection_TensorRT
 
-recognition: dlib_face_recognition_model - using "face embeddings" similar to well known "FaceNet"
+2. recognition: dlib_face_recognition_model - using "face embeddings" 
 
-classification: dlib SVM's 
+3. classification: dlib SVM's 
 
-
-## MTCNN face detection
-
-A fast C++ implementation of MTCNN, TensorRT & CUDA accelerated from https://github.com/PKUZHOU/MTCNN_FaceDetection_TensorRT
-
-## face recognition
-
-1. dlib face recognition model to create face embeddings
-    
-    
-2. dlib SVM's for classification
-    
 
 
 ## Information
@@ -62,7 +50,7 @@ A fast C++ implementation of MTCNN, TensorRT & CUDA accelerated from https://git
     
 3. Build/run: 
 
-        - add the training data, same num of pictures per face
+        - add the training data, ~same num of pictures for each face
         
         - python3 faces/generate_input_data.py (prepare training data)
 
@@ -89,19 +77,16 @@ A fast C++ implementation of MTCNN, TensorRT & CUDA accelerated from https://git
 
 ## Issues
 
-Every class should have the same amount of training-images. If I put more images to one class (like every class 5 and one class 20) it always predicts this class. (wanna check SVM-basics - can i prevent this failure?) 
+Every class should have the same amount of training-images. If I put more images to one class (like every class 5 and one class 20) it always predicts this class.
 
-
-I found out that deserialized engines sometimes do not work after rebuilding some C++ modules. In this case it gets stuck during using the engine and you have to kill the process. It seems not to happen in case of a clean build. (??)
 
 ## Speed
 
-Not really tested yet. The only things I can say is: it detects me with about 40 FPS (one face). It is slowed down a lot by drawing bounding boxes and keypoints from CPU (TODO - from GPU). It still looks "fluent" at a detection of about 5 persons.
+No documented tests. It detects me with about ~30 FPS (one face) trained for 6 people. It is slowed down a lot by drawing bounding boxes and keypoints from CPU (TODO - from GPU). It still looks "fluent" at a detection of 5 persons. Adding more known faces will reduce the speed (because of more SVMs).
 
 ## TODO
 ```diff
 - draw bounding and keypoints boxes from CUDA instead of CPU
 - implement tracker to improve classification by considering the last predictions for the tracked face
-- SVM basics: SVM cross validation (param. optimization), different number of training samples
-- Redesign "detections" as class, prepare for tracker implementation
+- improve SVM evaluation
 ```
