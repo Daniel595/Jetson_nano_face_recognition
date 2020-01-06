@@ -80,7 +80,7 @@ more results at https://github.com/Daniel595/testdata/tree/master/result
 
 Every class should have ~the same amount of training-images. If I put more images to one class (like every class 5 and one class 20) it always predicts this class.
 
-In some rare cases the pipeline gets stuck after building the app partially. I didn't figured out why that happens but "make -B" and reboot do help here.
+In some rare cases the MTCNN-pipeline gets stuck after building the app partially. I didn't figured out why that happens an I can't see a pattern but building the entire project ("make -B") and reboot do fix the problem. To avoid this you coul'd always run "make -B" but it takes relatively long.
 
 
 ## Speed
