@@ -80,6 +80,8 @@ more results at https://github.com/Daniel595/testdata/tree/master/result
 
 Every class should have ~the same amount of training-images. If I put more images to one class (like every class 5 and one class 20) it always predicts this class.
 
+In some rare cases the pipeline gets stuck after building the app partially. I didn't figured out why that happens but "make -B" and reboot do help here.
+
 
 ## Speed
 
