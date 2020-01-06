@@ -1,3 +1,0 @@
-/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/rebuild_cache.dir
-/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/main.dir
-/home/nvidia/Workspace/gpu_mtcnn/CMakeFiles/edit_cache.dir
