@@ -1,4 +1,12 @@
-face recognition on jetson
+# Jetson nano face recognition
+
+live with camera / or with images from disk
+
+recognition example - trained to the main BBT-characters:
+![alt text](https://github.com/Daniel595/BBT-faces/blob/master/test/result/96.png)
+
+
+Parts:
 
 detection: high performance MTCNN  (CUDA/TensorRT/C++)
 
@@ -7,11 +15,11 @@ recognition: dlib_face_recognition_model - using "face embeddings" similar to we
 classification: dlib SVM's 
 
 
-# MTCNN face detection
+## MTCNN face detection
 
 A fast C++ implementation of MTCNN, TensorRT & CUDA accelerated from https://github.com/PKUZHOU/MTCNN_FaceDetection_TensorRT
 
-# face recognition
+## face recognition
 
 1. dlib face recognition model to create face embeddings
     
@@ -22,11 +30,11 @@ A fast C++ implementation of MTCNN, TensorRT & CUDA accelerated from https://git
 
 ## Information
 
-1. about facial images: 
+1. facial images for training: 
 
-        - location: faces/train/raw/<class_name>/<images> 
+        - location: faces/train/datasets/<set>/<class_name>/<images> 
     
-        - preprocessing: faces/generate_input_data.py - detect, extract, crop, align, prepare svm-training 
+        - preprocessing: python3 faces/generate_train_data.py datasets/<set> - detect, extract, crop, align, prepare svm-training 
         
     
 2. Required:
