@@ -74,7 +74,14 @@ more results at https://github.com/Daniel595/testdata/tree/master/result
 5. run:
     
     Calling "./main" the first time the app will build TensorRT cuda engines for the MTCNN what takes about 3 mins. The engines will be serialized and reused. You can only feed images with the size the MTCNN was build for. Changing size will require new cuda engines for the first MTCNN-stage (P-net)
-    
+
+
+## clone
+
+The repo contains a submodule with some testdata for the bbt dataset. To clone the project including testdata and testresults:
+
+- git clone --recurse-submodules -j8 <url>
+
 
 ## Issues
 
