@@ -7,7 +7,7 @@ recognition example - trained to the main BBT-characters:
 more results at https://github.com/Daniel595/testdata/tree/master/result
 
 
-Parts:
+## Parts:
 
 detection: high performance MTCNN  (CUDA/TensorRT/C++)
 
@@ -35,7 +35,7 @@ A fast C++ implementation of MTCNN, TensorRT & CUDA accelerated from https://git
 
         - location: faces/train/datasets/<set>/<class_name>/<images> 
     
-        - preprocessing: python3 faces/generate_train_data.py datasets/<set> - detect, extract, crop, align, prepare svm-training 
+        - preprocessing(prepare svm training): python3 faces/generate_train_data.py datasets/<set>   
         
     
 2. Required:
