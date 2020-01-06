@@ -4,6 +4,7 @@ live with camera / or with images from disk
 
 recognition example - trained to the main BBT-characters:
 ![alt text](https://github.com/Daniel595/testdata/blob/master/result/96.png)
+more results at https://github.com/Daniel595/testdata/tree/master/result
 
 
 Parts:
