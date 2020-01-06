@@ -21,7 +21,7 @@ more results at https://github.com/Daniel595/testdata/tree/master/result
 - Dlib (cuda enabled)
 - Opencv (cuda enabled)
 - a built version of jetson-inference repo https://github.com/dusty-nv/jetson-inference
-- /src/model/dlib_face_recognition_resnet_model_v1.dat
+- dlib_face_recognition_resnet_model_v1.dat https://github.com/davisking/dlib-models/blob/master/dlib_face_recognition_resnet_model_v1.dat.bz2 at "src/model/"
 - face_recognition (https://pypi.org/project/face_recognition/)
 
 
