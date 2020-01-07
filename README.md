@@ -31,12 +31,13 @@ more results at https://github.com/Daniel595/testdata/tree/master/result
         or with bbt testdata:        
         git clone --recurse-submodules -j8 https://github.com/Daniel595/Jetson_nano_face_recognition.git
 - add training data (~same num of pictures for each face)  
-- ensure path dependencies (CMake(TODO), src/includes/, TODO)
-- "python3 faces/generate_input_data.py" (prepare training data)
+- replace the path dependencies in CMakeList with the paths on your System
+- make sure the link "src/includes/" points to the includes-dir of your built "jetson-inference" repo
+- prepare training data: "python3 faces/generate_input_data.py" 
 - "cmake ."
-- "make"
-- "./main"
-- "./main" (if SVMs were trained)
+- build project: "make"
+- run svm training: "./main" (only first use after generating training data)
+- run: "./main" (if SVMs were trained)
 
 
 ## train face classifier (SVM) 
