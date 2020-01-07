@@ -36,7 +36,7 @@ more results at https://github.com/Daniel595/testdata/tree/master/result
 - prepare training data: "python3 faces/generate_input_data.py" 
 - "cmake ."
 - build project: "make"
-- run svm training: "./main" (only first use after generating training data)
+- run svm training: "./main" (training required only at first run after generating training data)
 - run: "./main" (if SVMs were trained)
 
 
