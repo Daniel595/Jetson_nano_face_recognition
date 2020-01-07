@@ -17,25 +17,27 @@ more results at https://github.com/Daniel595/testdata/tree/master/result
 
 
 ## Dependencies
+I Recommend 64GB SD if you want to build OpenCV/Dlib
 
-- Dlib (cuda enabled)
-- Opencv (cuda enabled)
-- a built version of jetson-inference repo https://github.com/dusty-nv/jetson-inference
-- dlib_face_recognition_resnet_model_v1.dat https://github.com/davisking/dlib-models/blob/master/dlib_face_recognition_resnet_model_v1.dat.bz2 at "src/model/"
-- face_recognition (https://pypi.org/project/face_recognition/)
+- I set my nano up as described here https://medium.com/@ageitgey/build-a-hardware-based-face-recognition-system-for-150-with-the-nvidia-jetson-nano-and-python-a25cb8c891fd (including building Dlib from source)
+- cuda enabled Dlib (Python and C, 19.17.0 tested)
+- cuda enabled Opencv (Python and C, 4.1.0 tested, https://github.com/mdegans/nano_build_opencv) 
+- a built version of jetson-inference repo (see: https://github.com/dusty-nv/jetson-inference)
+- install python lib face_recognition (https://pypi.org/project/face_recognition/, "pip install face_recognition")
+- git clone https://github.com/Daniel595/Jetson_nano_face_recognition.git (without bbt testdata)
+        or with bbt testdata:        
+        git clone --recurse-submodules -j8 https://github.com/Daniel595/Jetson_nano_face_recognition.git
+- Download dlib_face_recognition_resnet_model_v1.dat to "src/model/" (https://github.com/davisking/dlib-models/blob/master/dlib_face_recognition_resnet_model_v1.dat.bz2)
+- replace the path dependencies in CMakeList with the paths on your System
+- make sure the link "src/includes/" points to the includes-dir of your built "jetson-inference" repo
 
 
 ## Build/Run
 
-- git clone https://github.com/Daniel595/Jetson_nano_face_recognition.git (without bbt testdata)
-        or with bbt testdata:        
-        git clone --recurse-submodules -j8 https://github.com/Daniel595/Jetson_nano_face_recognition.git
-- add training data (~same num of pictures for each face)  
-- replace the path dependencies in CMakeList with the paths on your System
-- make sure the link "src/includes/" points to the includes-dir of your built "jetson-inference" repo
-- prepare training data: "python3 faces/generate_input_data.py" 
+- add training data (~same num of pictures for each class)  
+- prepare training data: "python3 faces/generate_input_data.py train/datasets/bbt" (can be the path to any dataset) 
 - "cmake ."
-- build project: "make"
+- build project: "make -j"
 - run svm training: "./main" (training required only at first run after generating training data)
 - run: "./main" (if SVMs were trained)
 
@@ -69,7 +71,7 @@ In some rare cases the MTCNN-pipeline gets stuck after building the app partiall
 
 ## Speed
 
-No documented tests. It detects me with about ~30 FPS (one face) trained for 6 people. It is slowed down a lot by drawing bounding boxes and keypoints from CPU (TODO - from GPU). It still looks "fluent" at a detection of 5 persons. Adding more known faces will reduce the speed (because of more SVMs).
+No documented tests. It detects me with about ~30 FPS (one face) trained for 6 people. It is slowed down a lot by drawing bounding boxes and keypoints from CPU (TODO - do it from GPU). It still looks "fluent" at a detection of 5 persons. Adding more known faces will reduce the speed (because of more SVMs).
 
 ## TODO
 ```diff
