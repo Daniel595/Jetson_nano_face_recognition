@@ -10,5 +10,5 @@
 
 - python3 generate_training_data.py "path/to/dataset"
 
-This will crop, align and augment faces from the choosen dataset. The Labels will be given by the name of the directories.
+This will crop, align and augment faces from the choosen dataset and store it to a path which is knwon in ./main. The Labels will be given by the name of the directories.
 
