@@ -15,8 +15,6 @@ more results at https://github.com/Daniel595/testdata/tree/master/result
 
 3. classification: svms will be trained based on the prepared dataset. We will have N*(N-1)/2 SVMs for N classes. Every input will be fed into every SVM and the "weight" of every class gets summed. For the summed values I use a threshold and he highest value above threshold wins.
 
-![alt text](https://github.com/Daniel595/Jetson_nano_face_recognition/blob/master/pictures/pipeline.png)
-
 
 ## Dependencies
 I Recommend 64GB SD if you want to build OpenCV/Dlib
@@ -74,6 +72,7 @@ In some rare cases the MTCNN-pipeline gets stuck after building the app partiall
 ## Speed
 
 No documented tests. It detects me with about ~30 FPS (one face) trained for 6 people. It is slowed down a lot by drawing bounding boxes and keypoints from CPU (TODO - do it from GPU). It still looks "fluent" at a detection of 5 persons. Adding more known faces will reduce the speed (because of more SVMs).
+
 
 ## TODO
 ```diff
