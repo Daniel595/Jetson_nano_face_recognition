@@ -15,6 +15,8 @@ more results at https://github.com/Daniel595/testdata/tree/master/result
 
 3. classification: svms will be trained based on the prepared dataset. We will have N*(N-1)/2 SVMs for N classes. Every input will be fed into every SVM and the "weight" of every class gets summed. For the summed values I use a threshold and he highest value above threshold wins.
 
+![alt text](https://github.com/Daniel595/Jetson_nano_face_recognition/blob/master/pictures/pipeline.png)
+
 
 ## Dependencies
 I Recommend 64GB SD if you want to build OpenCV/Dlib
