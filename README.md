@@ -9,7 +9,7 @@ more results at https://github.com/Daniel595/testdata/tree/master/result
 
 ## Parts:
 
-1. detection: high performance MTCNN  (CUDA/TensorRT/C++). A fast C++ implementation of MTCNN, TensorRT & CUDA accelerated from https://github.com/PKUZHOU/MTCNN_FaceDetection_TensorRT. MTCNN detects face locations wich will be cropped, aligned and fed into the "dlib_face_recognition_model".
+1. detection: high performance MTCNN  (CUDA/TensorRT/C++). A fast C++ implementation of MTCNN, TensorRT & CUDA accelerated from https://github.com/PKUZHOU/MTCNN_FaceDetection_TensorRT. I adapted the to the Jetson Nano. MTCNN detects face locations wich will be cropped, aligned and fed into the "dlib_face_recognition_model". 
 
 2. recognition: dlib_face_recognition_model creates a 128-d face embedding for every input face. This will be used as SVM input for classification.
 
