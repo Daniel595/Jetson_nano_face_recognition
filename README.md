@@ -76,7 +76,7 @@ No documented tests. It detects me with about ~30 FPS (one face) trained for 6 p
 ## TODO
 ```diff
 - Dependencies: setup for all dependencies
-- 
+- make non rectangular Bboxes (partially out of view faces (rare)) rectangular befor resizing to keep ratio 
 - draw bounding and keypoints boxes from CUDA instead of CPU
 - implement tracker to improve classification by considering the last predictions for the tracked face
 - improve SVM evaluation
