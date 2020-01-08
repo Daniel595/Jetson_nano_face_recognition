@@ -46,10 +46,10 @@ I Recommend 64GB SD if you want to build OpenCV/Dlib
 
 Trainingdata:
 
-- location: faces/train/datasets/<set>/<class_name>/<images> (tested: .jpg, .png)
+- location: faces/train/datasets/"set"/"class_name"/"images"  (tested: .jpg, .png)
                 (see the bbt example)    
         
-- preprocessing: "python3 faces/generate_train_data.py datasets/<set>"   
+- preprocessing: "python3 faces/generate_train_data.py datasets/"set""   
                 (after doing this the ./main will train the svms automatically)
     
 Training:
