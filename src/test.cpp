@@ -150,9 +150,7 @@ namespace test{
 
 
 
-
-
-    int test_fps_image(const char* input_image, const char* output_image){
+    int test_prediction_fps_image(const char* input_image, const char* output_image){
         face_embedder embedder;                         
         face_classifier classifier(&embedder);         
         if(classifier.need_restart() == 1) return 1;    
@@ -233,9 +231,92 @@ namespace test{
         CHECK(cudaFreeHost(cropped_buffer_cpu[0]));
         CHECK(cudaFreeHost(cropped_buffer_cpu[1]));
         CHECK(cudaFreeHost(CPU_mem));
+        CHECK(cudaFreeHost(imgCPU));
         
         return 0;
     }
+
+
+
+
+
+
+
+    int test_detection_fps_image(const char* input_image, const char* output_image){
+   
+        mtcnn finder(720, 1280);              
+        glDisplay* display = getDisplay();              
+
+        float* imgCPU    = NULL;
+        float* imgCUDA   = NULL;
+        int    imgWidth  = 0;
+        int    imgHeight = 0;
+
+        uchar* rgb_gpu = NULL;
+        uchar* rgb_cpu = NULL;
+        cudaAllocMapped( (void**) &rgb_cpu, (void**) &rgb_gpu, 1280*720*3*sizeof(uchar) );
+
+
+        double fps = 0.0;
+        clock_t clk;
+        int num_dets = 0;
+   
+        if( !loadImageRGBA(input_image, (float4**)&imgCPU, (float4**)&imgCUDA, &imgWidth, &imgHeight) )
+            printf("failed to load image \n");     
+        bool user_quit = false;
+
+        float* CPU_mem = NULL;
+        float* GPU_mem = NULL;
+        size_t size = 1280*720*4*sizeof(float);
+        cudaAllocMapped( (void**) &CPU_mem, (void**) &GPU_mem,  size );
+
+        while(!user_quit){
+            if((imgWidth == 1280) && (imgHeight==720)){
+                clk = clock();
+                cudaMemcpy((void*)GPU_mem, (void*)imgCUDA, size, cudaMemcpyDeviceToDevice);
+
+                cv::Mat origin_cpu(imgHeight, imgWidth, CV_32FC4, CPU_mem);
+                cudaRGBA32ToBGR8( (float4*)GPU_mem, (uchar3*)rgb_gpu, imgWidth, imgHeight );      
+                cv::cuda::GpuMat imgRGB_gpu(imgHeight, imgWidth, CV_8UC3, rgb_gpu);                 
+                std::vector<struct Bbox> detections;
+                finder.findFace(imgRGB_gpu, &detections);
+                std::vector<cv::Rect> rects;
+                std::vector<float*> keypoints;
+                num_dets = get_detections(origin_cpu, &detections, &rects, &keypoints);             
+                if(num_dets > 0){
+                    for(int i = 0; i<rects.size(); i++) cv::rectangle(origin_cpu, rects.at(i), cv::Scalar(0,255,0,255), 2,8,0);   
+                }
+                cv::putText(origin_cpu, to_string(fps) + " FPS", cv::Point(20,40), 
+                        cv::FONT_HERSHEY_COMPLEX_SMALL, 2.0, cv::Scalar(255,0,0,255), 2 );
+
+                if( display != NULL ){
+                    display->RenderOnce(GPU_mem, imgWidth, imgHeight);                        
+                    char str[256];
+                    sprintf(str, "TensorRT  %.0f FPS", fps);                                    
+                    display->SetTitle(str);
+                    if( display->IsClosed() ){                                                   
+                        user_quit = true;
+                        // saveImageRGBA(output_image, (float4*)CPU_mem, imgWidth, imgHeight, 255);
+                    }
+                }
+                
+                fps = (0.90 * fps) + (0.1 * (1 / ((double)(clock()-clk)/CLOCKS_PER_SEC)));      
+            }else{
+                cout << "wrong image size!" << endl;
+                break;
+            }
+        }   
+
+        SAFE_DELETE(display);
+        CHECK(cudaFreeHost(CPU_mem));
+        CHECK(cudaFreeHost(imgCPU));
+        CHECK(cudaFreeHost(rgb_cpu));
+        
+        return 0;
+    }
+
+
+
 
 
 

@@ -137,12 +137,21 @@ int camera_face_recognition(){
 
 int main()
 {
+    int state = 0;
+
+    // predict camera input
+    state = camera_face_recognition();
     
-    //int state = camera_face_recognition();
-    //int state = test::test_prediction_images();
-    int state = test::test_fps_image("pictures/fps/bbt_4.png", "pictures/fps/result_4.png");
+    // test prediction at a set of test images
+    //state = test::test_prediction_images();
+    
+    // test prediction fps on a single image
+    //state = test::test_prediction_fps_image("pictures/fps/bbt_4.png", "pictures/fps/result_4.png");
+    
+    // test MTCNN detection fps on single image
+    //test::test_detection_fps_image("pictures/fps/bbt_4.png", "pictures/fps/result_4.png");
 
     if(state == 1) cout << "Restart is required! Please type ./main again." << endl;
-
+    
     return 0;
 }

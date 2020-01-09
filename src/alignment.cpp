@@ -205,7 +205,7 @@ void draw_detections(   cv::Mat &origin_cpu,
         }
         // draw bounding boxes around the face
         cv::rectangle(origin_cpu, rects->at(i), bbox_color, 2,8,0);
-        //string encoding = ((labels->at(i) >= 0) ? label_encodings->at(labels->at(i)) : "Unknown");
+
         // print label to the bounding box
         cv::putText(origin_cpu, encoding , cv::Point(rects->at(i).x,rects->at(i).y), 
                     cv::FONT_HERSHEY_COMPLEX_SMALL, 1.0, cv::Scalar(255,255,255,255), 3 ); // mat, text, coord, font, scale, bgr color, line thickness
@@ -214,6 +214,4 @@ void draw_detections(   cv::Mat &origin_cpu,
 
     }                        
 }
-
-
 

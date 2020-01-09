@@ -20,6 +20,7 @@
 
 namespace test{
     glDisplay* getDisplay();
-    int test_fps_image(const char* input_image, const char* output_image);
+    int test_prediction_fps_image(const char* input_image, const char* output_image);
+    int test_detection_fps_image(const char* input_image, const char* output_image);
     int test_prediction_images();
 }
