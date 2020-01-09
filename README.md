@@ -72,7 +72,7 @@ In some rare cases the MTCNN-pipeline gets stuck after building the app partiall
 
 In Camera-mode it detects me with about ~30 FPS (one face) trained on 6 classes. It is slowed down a lot by drawing bounding boxes and keypoints from CPU (TODO - do it from GPU). Adding more known classes will reduce the speed because of more SVMs.
 
-In a fps-test function i read a picture and loop over it. I create copy of the image at the begin of every iteration, feed it to the Pipeline and show the result. For 10 Faces I got about 10 FPS
+To test FPS I read in a picture with a known amount of faces and loop over it. I create copy of the image at the begin of every iteration to simulate approximately the capturing by camera, feed it to the Pipeline and show the result. For 10 Faces I got about 10 FPS.
 
 ![alt text](https://github.com/Daniel595/Jetson_nano_face_recognition/blob/master/pictures/fps/result_10.png)
 
