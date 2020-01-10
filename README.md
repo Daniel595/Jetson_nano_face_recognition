@@ -63,9 +63,7 @@ Calling "./main" the first time the app will build TensorRT cuda engines for the
 
 ## Issues
 
-Every class should have ~the same amount of training-images. If I put more images to one class (like every class 5 and one class 20) it always predicts this class.
-
-In some rare cases the MTCNN-pipeline gets stuck after building the app partially. I didn't figured out why that happens an I can't see a pattern but building the entire project ("make -B") and reboot do fix the problem. To avoid this you coul'd always run "make -B" but it takes relatively long.
+Sometimes the MTCNN-pipeline gets stuck after building the project partially. I didn't figure out why that happens. But building the entire project ("make -B") and reboot does fix the problem. To avoid this you could always run "make -B" what takes longer than just make.
 
 
 ## Speed
