@@ -32,34 +32,32 @@ I Recommend 64GB SD if you want to build OpenCV/Dlib
 - make sure the link "src/includes/" points to the includes-dir of your built "jetson-inference" repo
 
 
-## Build/Run
-
-- add training data (approx. same num of pictures for each class, 5 pictures recommended as different as possible, see my [bbt-example](https://github.com/Daniel595/Jetson_nano_face_recognition/tree/master/faces/train/datasets/bbt))  
-- prepare training data: "python3 faces/generate_input_data.py train/datasets/bbt" (can be any dataset) 
-- "cmake ."
-- build project: "make -j"
-- run svm training: "./main" (training required only at first run after generating training data)
-- run: "./main" (if SVMs were trained)
-
-
 ## train face classifier (SVM) 
+Training happens automatically after adding and preprocessing training data.
 
-Trainingdata:
-
-- supposed location: faces/train/datasets/"set"/"class_name"/"images.x"  (tested: .jpg, .png, see the bbt example)    
+- data location: faces/train/datasets/"set"/"class_name"/"img"  (.jpg, .png, see the [bbt-example](https://github.com/Daniel595/Jetson_nano_face_recognition/tree/master/faces/train/datasets/bbt))    
         
-- preprocessing: "python3 faces/generate_train_data.py datasets/"set""   
+- data preprocessing: "python3 faces/generate_train_data.py datasets/"set""   
                 (after doing this the ./main will train the svms automatically)
     
-Training:
 
-"python3 faces/generate_train_data.py datasets/<set>" will detect, crop, align and augment faces which will be stored and used for training. When calling "./main" the app detects if training data has changed since the last training. In this case it will train and store SVMs to "/svm" and asks for calling "./main" again. If training data has not changed the svms will be deserialized/read from "/svm".
+"python3 faces/generate_train_data.py datasets/<set>" will detect, crop, align and augment faces which will be stored and used for training. When calling "./main" the app detects if the training data has changed since the last training. In this case it will train and store SVMs to "/svm" and ask for calling "./main" again. If training data has not changed the svms will be deserialized from "/svm".
 
-    
+
 ## Generate TensorRT MTCNN
 
 Calling "./main" the first time the app will build TensorRT cuda engines for the MTCNN what takes about 3 mins. The engines will be serialized and reused in dir "engines/". You can only feed images with the size the MTCNN was build for. Changing size will require new cuda engines for the first MTCNN-stage (P-net)
 
+
+## Build/Run
+
+- prepare training data 
+- build: "cmake ."
+- build: "make -j"
+- run: "./main" 
+- run: "./main" ( required a second time if svms were trained )
+    
+    
 
 ## Issues
 
