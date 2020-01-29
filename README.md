@@ -27,7 +27,7 @@ I Recommend 64GB SD if you want to build OpenCV/Dlib
 - git clone https://github.com/Daniel595/Jetson_nano_face_recognition.git (without bbt testdata)
         or with bbt testdata:        
         git clone --recurse-submodules -j8 https://github.com/Daniel595/Jetson_nano_face_recognition.git
-- Download [dlib_face_recognition_resnet_model_v1.dat](https://github.com/davisking/dlib-models/blob/master/dlib_face_recognition_resnet_model_v1.dat.bz2 to "src/model/"
+- Download [dlib_face_recognition_resnet_model_v1.dat](https://github.com/davisking/dlib-models/blob/master/dlib_face_recognition_resnet_model_v1.dat.bz2) to "src/model/"
 - replace the path dependencies in CMakeList with the paths on your System
 - make sure the link "src/includes/" points to the includes-dir of your built "jetson-inference" repo
 
