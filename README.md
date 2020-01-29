@@ -34,8 +34,8 @@ I Recommend 64GB SD if you want to build OpenCV/Dlib
 
 ## Build/Run
 
-- add training data (~same num of pictures for each class)  
-- prepare training data: "python3 faces/generate_input_data.py train/datasets/bbt" (can be the path to any dataset) 
+- add training data (approx. same num of pictures for each class, 5 pictures recommended as different as possible, see my [bbt-example](https://github.com/Daniel595/Jetson_nano_face_recognition/tree/master/faces/train/datasets/bbt))  
+- prepare training data: "python3 faces/generate_input_data.py train/datasets/bbt" (can be any dataset) 
 - "cmake ."
 - build project: "make -j"
 - run svm training: "./main" (training required only at first run after generating training data)
