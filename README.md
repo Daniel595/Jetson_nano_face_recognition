@@ -9,7 +9,7 @@ more results at https://github.com/Daniel595/testdata/tree/master/result
 
 ## Parts:
 
-1. detection: high performance MTCNN  (CUDA/TensorRT/C++). A fast C++ implementation of MTCNN, TensorRT & CUDA accelerated from https://github.com/PKUZHOU/MTCNN_FaceDetection_TensorRT. I adapted the to the Jetson Nano. MTCNN detects face locations wich will be cropped, aligned and fed into the "dlib_face_recognition_model". 
+1. detection: high performance MTCNN  (CUDA/TensorRT/C++). A fast C++ implementation of MTCNN, TensorRT & CUDA accelerated from [here](https://github.com/PKUZHOU/MTCNN_FaceDetection_TensorRT). I adapted the to the Jetson Nano. MTCNN detects face locations wich will be cropped, aligned and fed into the "dlib_face_recognition_model". 
 
 2. recognition: dlib_face_recognition_model creates a 128-d face embedding for every input face. This will be used as SVM input for classification.
 
@@ -19,15 +19,15 @@ more results at https://github.com/Daniel595/testdata/tree/master/result
 ## Dependencies
 I Recommend 64GB SD if you want to build OpenCV/Dlib
 
-- I set my nano up as described here https://medium.com/@ageitgey/build-a-hardware-based-face-recognition-system-for-150-with-the-nvidia-jetson-nano-and-python-a25cb8c891fd (including building Dlib from source)
+- I set my nano up as described [here](https://medium.com/@ageitgey/build-a-hardware-based-face-recognition-system-for-150-with-the-nvidia-jetson-nano-and-python-a25cb8c891fd) (including building Dlib from source)
 - cuda enabled Dlib (Python and C, 19.17.0 tested)
-- cuda enabled Opencv (Python and C, 4.1.0 tested, https://github.com/mdegans/nano_build_opencv) 
-- a built version of jetson-inference repo (see: https://github.com/dusty-nv/jetson-inference)
-- install python lib face_recognition (https://pypi.org/project/face_recognition/, "pip install face_recognition")
+- cuda enabled Opencv (Python and C, 4.1.0 tested, [link](https://github.com/mdegans/nano_build_opencv) )
+- a built version of jetson-inference repo ([link](https://github.com/dusty-nv/jetson-inference))
+- install python lib face_recognition ([link](https://pypi.org/project/face_recognition/), "pip install face_recognition")
 - git clone https://github.com/Daniel595/Jetson_nano_face_recognition.git (without bbt testdata)
         or with bbt testdata:        
         git clone --recurse-submodules -j8 https://github.com/Daniel595/Jetson_nano_face_recognition.git
-- Download dlib_face_recognition_resnet_model_v1.dat to "src/model/" (https://github.com/davisking/dlib-models/blob/master/dlib_face_recognition_resnet_model_v1.dat.bz2)
+- Download dlib_face_recognition_resnet_model_v1.dat to "src/model/" ([link](https://github.com/davisking/dlib-models/blob/master/dlib_face_recognition_resnet_model_v1.dat.bz2))
 - replace the path dependencies in CMakeList with the paths on your System
 - make sure the link "src/includes/" points to the includes-dir of your built "jetson-inference" repo
 
