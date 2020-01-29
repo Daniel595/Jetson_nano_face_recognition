@@ -79,9 +79,9 @@ To test FPS I read in a picture with some faces and "loop over" it. I create cop
 
 ## TODO
 ```diff
-- Dependencies: setup for all dependencies
-- make non rectangular Bboxes (partially out of view faces (rare)) rectangular befor resizing to keep ratio 
-- draw bounding and keypoints boxes from CUDA instead of CPU
-- implement tracker to improve classification by considering the last predictions for the tracked face
-- improve SVM evaluation
+- setup
+- make non rectangular Bboxes rectangular to keep face ratio (case: face partially out of the camera range (rare))
+- draw bounding box and keypoints from CUDA instead of CPU
+- implement object tracker to improve classification by considering the last predictions for the tracked face
+- improve SVM evaluation (kernel, cross validation, parameters)
 ```
