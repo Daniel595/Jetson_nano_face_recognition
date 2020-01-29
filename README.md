@@ -58,7 +58,7 @@ Training:
     
 ## Generate TensorRT MTCNN
 
-Calling "./main" the first time the app will build TensorRT cuda engines for the MTCNN what takes ~3 mins. The engines will be serialized and reused in dir "engines/". You can only feed images with the size the MTCNN was build for. Changing size will require new cuda engines for the first MTCNN-stage (P-net)
+Calling "./main" the first time the app will build TensorRT cuda engines for the MTCNN what takes about 3 mins. The engines will be serialized and reused in dir "engines/". You can only feed images with the size the MTCNN was build for. Changing size will require new cuda engines for the first MTCNN-stage (P-net)
 
 
 ## Issues
@@ -68,7 +68,7 @@ Sometimes the MTCNN-pipeline gets stuck after building the project partially. I 
 
 ## Speed
 
-In Camera-mode it detects me with about ~30 FPS (one face) trained on 6 classes. It is slowed down a lot by drawing bounding boxes and keypoints from CPU (TODO - do it from GPU). Adding more known classes will reduce the speed because of more SVMs.
+In Camera-mode it detects me with about 30 FPS (one face) trained on 6 classes. It is slowed down a lot by drawing bounding boxes and keypoints from CPU (TODO - do it from GPU). Adding more known classes will reduce the speed because of more SVMs.
 
 To test FPS I read in a picture with some faces and "loop over" it. I create copy of the image at the begin of every iteration to approx. simulate the image capturing by camera, feed it to the Pipeline and show the result. For 10 faces at image and 7 classes trained it runs at about 10 FPS.
 
