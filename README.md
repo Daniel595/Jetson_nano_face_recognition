@@ -1,6 +1,7 @@
+This repo is inactive 
+
 # Jetson nano face recognition
 
-Inactive and no maintaining
 
 live with camera / or with images from disk
 
