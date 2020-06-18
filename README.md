@@ -1,5 +1,7 @@
 # Jetson nano face recognition
 
+Inactive and no maintaining
+
 live with camera / or with images from disk
 
 recognition example - trained to the main BBT-characters:
